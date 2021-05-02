@@ -1,0 +1,13 @@
+{
+  "culture": "en",
+  "texts": {
+    "Menu:Home": "Home",
+    "Welcome": "Welcome",
+    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
+    "Permission:Courses.Create": "Create new course",
+    "Permission:Courses.Update": "Update a course",
+    "Permission:Courses.Delete": "Delete a course",
+    "Permission:Courses.Get": "Get a course",
+    "Permission:Courses.GetAll": "Get all courses"
+  }
+}
