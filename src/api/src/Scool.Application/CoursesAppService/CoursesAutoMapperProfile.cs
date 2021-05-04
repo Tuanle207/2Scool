@@ -10,6 +10,7 @@ namespace Scool.Application.CoursesAppService
         {
             // CreateMap
             CreateMap<Course, CourseDto>();
+            CreateMap<Course, CourseListDto>();
             CreateMap<CreateUpdateCourseDto, Course>();
         }
     }

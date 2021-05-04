@@ -1,17 +1,16 @@
 using System;
 using Scool.Application.Contracts.Courses.Dtos;
-using Volo.Abp.Application.Dtos;
-using Volo.Abp.Application.Services;
+using Scool.Infrastructure.Standard.AppService;
 
-namespace Scool.Application.Contracts.Courses
+namespace Scool.Application.Contracts.CoursesAppService
 {
-    public interface ICoursesAppService: ICrudAppService<
-        CourseDto,
+    public interface ICoursesAppService: IBasicCrudAppService<
         Guid,
-        PagedAndSortedResultRequestDto,
+        CourseDto,
+        CourseListDto,
+        CreateUpdateCourseDto,
         CreateUpdateCourseDto
       >
     {
-         
     }
 }
