@@ -13,9 +13,9 @@ const sidebarItems = [
   },
   {
     key: 1,
-    title: 'View 1',
+    title: 'Roles',
     Icon: Dashboard,
-    route: '/view1'
+    route: '/roles'
   },
   {
     key: 2,

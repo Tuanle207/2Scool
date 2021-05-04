@@ -1,4 +1,4 @@
-namespace Scool.Application.Contracts.Permissions
+namespace Scool.Application.Contracts.Courses.Permissions
 {
     public class CoursesPermissions
     {

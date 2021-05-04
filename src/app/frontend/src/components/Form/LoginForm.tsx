@@ -14,7 +14,7 @@ interface Props {
 
 const LoginForm: React.FC<Props> = ({ history, auth, postLogin }) => {
 
-  const styles = useLoginFormStyles()();
+  const styles = useLoginFormStyles();
   
   const [ email, setEmail ] = React.useState<string>('');
   const [ password, setPassword ] = React.useState<string>('');

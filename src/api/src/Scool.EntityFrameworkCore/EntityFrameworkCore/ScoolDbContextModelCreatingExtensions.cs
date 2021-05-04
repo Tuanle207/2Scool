@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Scool.Domain.Courses.Model;
 using Volo.Abp;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 
 namespace Scool.EntityFrameworkCore
 {
@@ -10,6 +12,11 @@ namespace Scool.EntityFrameworkCore
             Check.NotNull(builder, nameof(builder));
 
             /* Configure your own tables/entities inside here */
+
+            builder.Entity<Course>(b => {
+              b.ToTable(ScoolConsts.DbTablePrefix + "Courses", ScoolConsts.DbSchema);
+              b.ConfigureByConvention();
+            });
 
             //builder.Entity<YourEntity>(b =>
             //{
