@@ -15,7 +15,7 @@ export const theme = responsiveFontSizes(createMuiTheme({
       black: `${appColor.black}`,
     },
     primary: {
-      main: `${appColor.green}`
+      main: `${appColor.blueStrong}`
     },
     secondary: {
       main: `${appColor.black}`

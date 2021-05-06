@@ -28,6 +28,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 
 namespace Scool
 {
@@ -60,6 +61,7 @@ namespace Scool
             ConfigureVirtualFileSystem(context);
             ConfigureCors(context, configuration);
             ConfigureSwaggerServices(context, configuration);
+            ConfigureAutoAntiForgery();
         }
 
         private void ConfigureBundles()
@@ -188,6 +190,18 @@ namespace Scool
                         .AllowAnyMethod()
                         .AllowCredentials();
                 });
+            });
+        }
+
+        private void ConfigureAutoAntiForgery()
+        {
+            //TODO: Configuring Auto-AnttiForgery properly - Current: Ignore all endpoints.
+            Configure<AbpAntiForgeryOptions>(options =>
+            {
+                options.TokenCookie.Expiration = TimeSpan.FromDays(365);
+                // options.AutoValidateIgnoredHttpMethods.Remove("GET");
+                options.AutoValidateFilter =
+                    type => !type.Namespace.StartsWith("Scool");
             });
         }
 

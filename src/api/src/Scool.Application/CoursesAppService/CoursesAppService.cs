@@ -9,12 +9,12 @@ namespace Scool.Application.CoursesAppService
 {
     public class CoursesAppService :
         BasicCrudAppService<
-          Course,
-          Guid,
-          CourseDto,
-          CourseListDto,
-          CreateUpdateCourseDto,
-          CreateUpdateCourseDto
+            Course,
+            Guid,
+            CourseDto,
+            CourseListDto,
+            CreateUpdateCourseDto,
+            CreateUpdateCourseDto
         >, ICoursesAppService
     {
         public CoursesAppService(IRepository<Course, Guid> courseRepo) : base(courseRepo)

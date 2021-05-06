@@ -32,7 +32,6 @@ export const isTokenValid = (token: string): boolean => {
     if (!decoded || typeof(decoded) !== 'object' || !decoded.exp) {
       return false;
     }
-    console.log({decoded});
     const now = new Date().valueOf();
     return now/1000 < decoded.exp;
   } catch (err) {

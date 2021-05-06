@@ -1,4 +1,5 @@
 const appColor = {
+  blueStrong: '#3e66fb',
   green: '#18a61a',
   black: '#041d18',
   white: '#f3faff',

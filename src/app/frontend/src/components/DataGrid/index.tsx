@@ -1,32 +1,31 @@
 import React from 'react';
-import { DataGrid as RawDataGrid, GridRowProps, GridColDef } from '@material-ui/data-grid';
+import { DataGrid as RawDataGrid, GridColDef, GridPageChangeParams } from '@material-ui/data-grid';
 import { Container, makeStyles } from '@material-ui/core';
-
-const roles = {
-  data: Array.from(Array(10).keys()).map((el) => ({
-      id: el,
-      name: `admin ${el}`,
-      description: `admin ${el}`
-  })),
-  totalItems: 125,
-  totalPages: 7,
-  pageLimit: 20,
-  pageIndex: 1
-}
-
-const rows = roles.data;
+import { ReqBody } from '@common/interfaces';
+import { CoursesService } from '@common/api';
+import { useFetch } from '@common/hooks';
 
 const cols: GridColDef[] =  [
   {
-    field: 'name',
-    headerName: 'Tên',
+    field: 'id',
+    headerName: 'Mã',
     width: 150
   },
   {
-    field: 'description',
-    headerName: 'Mô tả',
+    field: 'name',
+    headerName: 'Tên khóa học',
+    width: 300
+  },
+  {
+    field: 'startTime',
+    headerName: 'Thời gian bắt đầu',
     width: 150
   },
+  {
+    field: 'finishTime',
+    headerName: 'Thời gian kết thúc',
+    width: 150
+  }
 ];
 
 const useStyles = makeStyles(theme => ({
@@ -51,15 +50,36 @@ const useStyles = makeStyles(theme => ({
 
 const DataGrid = () => {
 
+  const [pagingInfo, setPagingInfo] = React.useState<ReqBody.PagingInfo>({
+    pageIndex: 0,
+    pageSize: 5
+  });
+
   const classes = useStyles();
+
+  const {loading, data, error} = useFetch(
+    CoursesService.getAllCourses, 
+    JSON.stringify({ ...pagingInfo, pageIndex: pagingInfo.pageIndex! + 1 })
+  );
+  
+
+  const onPageChange = (params: GridPageChangeParams) => {
+    setPagingInfo(prev => ({...prev, pageIndex: params.page}));
+  };
 
   return (
     <Container className={classes.root}>
       <RawDataGrid
-        rows={rows} 
-        columns={cols} 
-        pageSize={5} 
-        checkboxSelection 
+        columns={cols}
+        rows={data.items}
+        pageSize={data.pageSize} 
+        rowCount={data.totalCount}
+        onPageChange={onPageChange}
+        loading={loading}
+        page={pagingInfo.pageIndex}
+        error={error}
+        checkboxSelection
+        paginationMode='server'
       />
     </Container>
   );

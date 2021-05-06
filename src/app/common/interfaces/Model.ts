@@ -33,4 +33,12 @@ export namespace Model {
   }
 
   //#endregion
+
+  export interface Course {
+    id: string;
+    name: string;
+    description: string;
+    startTime: Date;
+    finishTime: Date;
+  }
 }

@@ -56,7 +56,7 @@ export class HttpClient {
     return this;
   }
 
-  async get<T>(endpoint: string, params: Util.IObject = {}): Promise<IHttpResponse<T>> {
+  async get<T>(endpoint: string, params: Util.IObject = {}): Promise<T> {
     try {
       const queryString = parseQueryString(params);
       const reqEndpoint = `${endpoint}${queryString}`;
@@ -67,7 +67,7 @@ export class HttpClient {
     }
   }
 
-  async post<T>(endpoint: string, body: Util.IObject | string = {}): Promise<IHttpResponse<T>> {
+  async post<T>(endpoint: string, body: Util.IObject | string = {}): Promise<T> {
     try {
       const result = await this.instance.post(endpoint, body);
       return result?.data;
@@ -76,7 +76,7 @@ export class HttpClient {
     }
   }
 
-  async postFormData<T>(endpoint: string, body: Util.IObject = {}): Promise<IHttpResponse<T>> {
+  async postFormData<T>(endpoint: string, body: Util.IObject = {}): Promise<T> {
     try {
       const headers = {
         'Content-Type': 'multipart/form-data',
@@ -90,7 +90,7 @@ export class HttpClient {
     }
   }
 
-  async put<T>(endpoint: string, body: Util.IObject = {}): Promise<IHttpResponse<T>> {
+  async put<T>(endpoint: string, body: Util.IObject = {}): Promise<T> {
     try {
       const result = await this.instance.put(endpoint, body);
       return result?.data;
@@ -99,7 +99,7 @@ export class HttpClient {
     }
   }
 
-  async patch<T>(endpoint: string, body: Util.IObject = {}): Promise<IHttpResponse<T>> {
+  async patch<T>(endpoint: string, body: Util.IObject = {}): Promise<T> {
     try {
       const result = await this.instance.patch(endpoint, body);
       return result?.data;
@@ -108,12 +108,11 @@ export class HttpClient {
     }
   }
 
-  async delete<T>(endpoint: string, body: Util.IObject = {}): Promise<IHttpResponse<T>> {
+  async delete(endpoint: string, body: Util.IObject = {}): Promise<void> {
     try {
-      const result = await this.instance.delete(endpoint, {
+      await this.instance.delete(endpoint, {
         data: body
       });
-      return result?.data;
     } catch (error) {
       throw this.createHttpException(error);
     }

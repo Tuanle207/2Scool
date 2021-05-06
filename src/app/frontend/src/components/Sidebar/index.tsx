@@ -7,15 +7,15 @@ import useSidebarStyles from '@assets/jss/components/Sidebar/sidebarStyles';
 const sidebarItems = [
   {
     key: 0,
-    title: 'Overview',
+    title: 'Trang chủ',
     Icon: Dashboard,
     route: '/dashboard'
   },
   {
     key: 1,
-    title: 'Roles',
+    title: 'Khóa học',
     Icon: Dashboard,
-    route: '/roles'
+    route: '/courses'
   },
   {
     key: 2,

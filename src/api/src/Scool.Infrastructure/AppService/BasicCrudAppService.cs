@@ -43,10 +43,9 @@ namespace Scool.Infrastructure.AppService
 
     public async Task<PagingModel<TGetListDto>> PostPagingAsync(PageInfoRequestDto input)
     {
-        var query = Repository
-                .Filter(input.Filter)
-                .OrderBy(input.SortName, input.Ascend)
-                .Page(input.PageIndex, input.PageSize);
+        var query = Repository.Filter(input.Filter);
+        query = string.IsNullOrEmpty(input.SortName) ? query.OrderBy(x => x.Id) : query.OrderBy(input.SortName, input.Ascend);
+        query = query.Page(input.PageIndex, input.PageSize);
 
         var items = ObjectMapper.Map<List<TEntity>, List<TGetListDto>>(await query.ToListAsync());
         var totalCount = await Repository.Filter(input.Filter).CountAsync();

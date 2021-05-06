@@ -6,7 +6,6 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import useHeaderStyles from '@assets/jss/components/Header/headerStyles';
 import { configEnv } from '@common/@config';
-import { IdentityService, AppConfigService } from '@common/api';
 import { withRedux } from '@common/utils/ReduxConnect';
 import { AuthActions } from '@common/store/actions';
 
@@ -15,14 +14,6 @@ interface Props {
 }
 
 const Header: React.FC<Props> = ({ postlogoutAsync }) => {
-
-  React.useEffect(() => {
-    configEnv();
-    // exampler dispatch action to call api
-    IdentityService.getUserProfile().then(data => console.log({data})).catch(err => console.log({err}));
-    IdentityService.getAllRoles().then(data => console.log({data})).catch(err => console.log({err}));
-    AppConfigService.getAppConfig().then(data => console.log({data})).catch(err => console.log({err}));
-  });
 
   const classes = useHeaderStyles();
 

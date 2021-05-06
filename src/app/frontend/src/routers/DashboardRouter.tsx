@@ -3,7 +3,7 @@ import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-d
 import Dashboard from '@views/Dashboard';
 import SchoolManagementDashboard from '@views/SchoolManagementDashboard';
 import ProtectedRoute from '@components/Router/ProtectedRoute';
-import RolesManagement from '@views/RolesManagement';
+import CoursesPage from '@views/CoursesPage';
 import View2 from '@views/View2';
 
 interface Props {
@@ -20,9 +20,9 @@ const DashboardRouter: React.FC<Props> = ({ isAuth = false }) => {
           component={Dashboard}
         />
         <Route 
-          path='/roles' 
+          path='/courses' 
           exact
-          component={RolesManagement}
+          component={CoursesPage}
         />
         <Route 
           path='/view2'
