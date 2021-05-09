@@ -1,9 +1,9 @@
 import { createAction } from '@reduxjs/toolkit';
-import { Model } from '../../interfaces';
+import { User } from '../../interfaces';
 
 const postLoginAsync = createAction( 
   'app/AuthAction/postLoginAsync', 
-  (payload: Model.LoginReqBody) => ({payload}) 
+  (payload: User.LoginReqBody) => ({payload}) 
 );
 
 const setLogin = createAction( 

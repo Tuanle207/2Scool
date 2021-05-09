@@ -1,12 +1,12 @@
 import qs from 'query-string';
-import { ReqBody, ResBody } from '../../interfaces';
+import { User } from '../../interfaces';
 import { getAuthService, getDefaultOAuthOptions } from '../BaseApiService';
 import Endpoint from './@endpoint';
 
-export default async (body: ReqBody.Login) => {
+export default async (body: User.Login) => {
   try {
     const authService = getAuthService();
-    const result = await authService.post<ResBody.Login>(Endpoint.Login(), qs.stringify({
+    const result = await authService.post<User.LoginResponse>(Endpoint.Login(), qs.stringify({
       ...body, 
       ...getDefaultOAuthOptions()
     }));

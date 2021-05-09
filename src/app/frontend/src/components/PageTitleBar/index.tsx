@@ -18,11 +18,11 @@ const PageTitleBar: React.FC<Props> = ({ title, onMainButtonClick, onOptionsButt
       <Typography variant='h5' className={classes.title} display='inline'>{ title }</Typography>
       <Box>
         <Button variant={'contained'} className={`${classes.button} ${classes.buttonMoreOptions}`}
-          onClick={() => onMainButtonClick && onMainButtonClick()}>
+          onClick={() => onOptionsButtonClick && onOptionsButtonClick()}>
           <MoreHorizIcon />
         </Button>
         <Button variant={'contained'}  color={'primary'} className={`${classes.button}`}
-          onClick={() => onOptionsButtonClick && onOptionsButtonClick()}>
+          onClick={() => onMainButtonClick && onMainButtonClick()}>
           Thêm
         </Button>
       </Box>

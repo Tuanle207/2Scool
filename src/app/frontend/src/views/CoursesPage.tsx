@@ -1,19 +1,20 @@
 import React from 'react';
-import { Container, Grid, makeStyles, Button, IconButton, Typography } from '@material-ui/core';
+import { Container, Grid, makeStyles, IconButton, Typography } from '@material-ui/core';
 import Sidebar from '@components/Sidebar';
 import Header from '@components/Header';
 import PageTitleBar from '@components/PageTitleBar';
 import { DataGrid, GridColDef, GridPageChangeParams, GridValueFormatterParams } from '@material-ui/data-grid';
-import { ReqBody, ResBody } from '@common/interfaces';
+import { Course } from '@common/interfaces';
 import { CoursesService } from '@common/api';
-import { useFetch } from '@common/hooks';
+import { useFetch, usePagingInfo } from '@common/hooks';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { formatDate } from '@common/utils/TimeHelper';
 import { useSelectedItems } from '../hooks';
 import ActionModal from '@components/Modal';
-import TestForm from './TestForm';
+import CreateOrUpdateCourseRequest from '@components/Modal/CreateOrUpdateCourseRequest';
+import { comparers } from '@common/appConsts';
 
 
 const cols: GridColDef[] =  [
@@ -65,24 +66,39 @@ const CoursesPage = () => {
   
   const classes = useStyles();
 
-  const [pagingInfo, setPagingInfo] = React.useState<ReqBody.PagingInfo>({ pageIndex: 0, pageSize: 5 });
+  const {pagingInfo, setPageIndex, setFilter} = usePagingInfo();
   const {loading, data, error, resetCache} = useFetch(
     CoursesService.getAllCourses, 
     { ...pagingInfo, pageIndex: pagingInfo.pageIndex! + 1 } // DataGrid's start page count from 0, but API count from 1.
   );
-  const {selectedItems, changeSelection} = useSelectedItems<ResBody.Course>();
+  const {selectedItems, changeSelection} = useSelectedItems<Course.Course>();
   
   const onPageChange = (param: GridPageChangeParams) => {
-    setPagingInfo(prev => ({...prev, pageIndex: param.page}));
+    setPageIndex(param.page);
   };
 
   const onRequestDelete = async (courseId: string) => {
     await CoursesService.removeCourse({courseId});
-    console.log(`Xóa Khóa học ${courseId} thành công`);
+    console.log(`Xóa khóa học ${courseId} thành công`);
     resetCache();
   };
-  const getSelectedItem = (): ResBody.Course | null => {
-    return selectedItems && selectedItems.length > 0 ? selectedItems[selectedItems.length - 1] : null;
+
+  const onRequestCreate = async (data: Course.CreateOrUpdateCourseDto) => {
+    await CoursesService.createCourse(data);
+    console.log(`Thêm khóa học thành công`);
+    resetCache();
+  };
+
+  const onRequestUpdate = async (data: Course.CreateOrUpdateCourseDto) => {
+    await CoursesService.updateCourse({id: getSelectedItem()!.id, data});
+    console.log(`Sửa khóa học thành công`);
+    resetCache();
+  };
+
+  const getSelectedItem = (): Course.Course | null => {
+    return selectedItems && selectedItems.length > 0 
+      ? selectedItems[selectedItems.length - 1] 
+      : null;
   };
 
   return (
@@ -93,11 +109,20 @@ const CoursesPage = () => {
         </Grid>
         <Grid style={{ background: '#fff', flexGrow: 1 }} item container xs={8} sm={9} md={10} direction='column'>
           <Grid item >
-            <Header />
+            <Header onTextChange={(value) => setFilter({key: 'Name', comparison: comparers.Contains, value: value })} />
           </Grid>
           <Grid item container direction='column' style={{ backgroundColor: '#DFE0EB', flexGrow: 1 }}>
             <Grid item>
-              <PageTitleBar title={`Khóa học`} />
+              <PageTitleBar 
+                title={`Khóa học`} 
+                onMainButtonClick={() => ActionModal.show({
+                  title: 'Thêm khóa học mới',
+                  acceptText: 'Lưu',
+                  cancelText: 'Hủy',
+                  component: <CreateOrUpdateCourseRequest />,
+                  onAccept: onRequestCreate
+                })}
+              />
               <Grid container justify='space-between' style={{padding: 10, paddingLeft: 64}}>
                 <Grid item>
                   <Typography variant='h6'>Danh sách khóa học</Typography>
@@ -115,16 +140,18 @@ const CoursesPage = () => {
                   <IconButton  
                     disabled={selectedItems.length === 0} 
                     onClick={() => ActionModal.show({
-                      title: 'Test Form',
-                      component: <TestForm />,
-                      onAccept: (data: any) => {console.log({data}) }
+                      title: 'Cập nhật thông tin khóa học',
+                      acceptText: 'Lưu',
+                      cancelText: 'Hủy',
+                      component: <CreateOrUpdateCourseRequest id={getSelectedItem()!.id}/>,
+                      onAccept: onRequestUpdate
                     })} 
                   >
                     <EditIcon />
                   </IconButton>
                   <IconButton
                     disabled={selectedItems.length === 0} 
-                    onClick={() => ActionModal.show()} 
+                    // onClick={} 
                   >
                     <ErrorOutlineIcon />
                   </IconButton>

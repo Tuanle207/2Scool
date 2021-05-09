@@ -1,14 +1,10 @@
-import { Util } from './Util'
-import { Model } from './Model';
-import { ReqParams } from './ReqParams';
-import { ReqBody } from './ReqBody';
-import { ResBody } from './ResBody';
+import { Util } from './Util';
+import { User } from './User';
+import { Course } from './Course';
 
 
 export {
   Util,
-  Model,
-  ReqParams,
-  ReqBody,
-  ResBody
+  User,
+  Course
 };

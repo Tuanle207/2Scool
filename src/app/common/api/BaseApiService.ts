@@ -1,5 +1,3 @@
-import qs from 'query-string';
-
 import { configEnv } from '../@config';
 import { HttpClient } from '../@helper/network/HttpClient';
 import { configHttpRequest, configHttpResponse } from '../@helper/network/interceptors';

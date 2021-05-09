@@ -8,7 +8,7 @@ const modalStyles: {[key: string]: CSSProperties} = {
     left: `50%`,
     transform: `translate(-50%, -50%)`,
     position: 'absolute',
-    minWidth: 400,
+    // minWidth: 400,
     backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.grey.A700}`,
     padding: theme.spacing(1, 2)
@@ -20,8 +20,8 @@ const modalStyles: {[key: string]: CSSProperties} = {
     marginLeft: theme.spacing(2)
   },
   buttonGroup: {
-    margin: theme.spacing(2),
-    marginBottom: theme.spacing(1)
+    padding: theme.spacing(2),
+    paddingBottom: theme.spacing(1)
   }
 }
 

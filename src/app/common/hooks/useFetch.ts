@@ -1,5 +1,6 @@
 import { useReducer, useEffect, useRef, useMemo } from 'react';
-import { ResBody, Util } from '../interfaces';
+import HttpQueue from '../@helper/network/HttpQuere';
+import { Util } from '../interfaces';
 import { cleanObject } from '../utils/ObjectHelper';
 
 enum FetchState {
@@ -15,13 +16,13 @@ interface FetchDataState {
   error?: string;
   loading: boolean;
   reset: number; // 0: default 1: true -1: false
-  data: ResBody.PagingModel<any>;
+  data: Util.PagingModel<any>;
 }
 
 interface ReturnType {
   error?: string;
   loading: boolean;
-  data: ResBody.PagingModel<any>;
+  data: Util.PagingModel<any>;
   resetCache: () => void;
 }
 
@@ -53,15 +54,20 @@ export default function (fetchFunction: Function, input: Util.IObject): ReturnTy
       case FetchState.Fetching: 
         return { ...initialState, status: FetchState.Fetching, loading: true };
       case FetchState.Fetched:
-        return { ...initialState, status: FetchState.Fetched, data: action.payload, loading: false };
+        return { ...initialState, status: FetchState.Fetched, data: action.payload };
       case FetchState.Error:
-        return { ...initialState, status: FetchState.Error, error: action.payload, loading: false };
+        return { ...initialState, status: FetchState.Error, error: action.payload };
       case FetchState.Reset:
-        return { ...initialState, status: FetchState.Reset, reset: action.payload, loading: false }
+        return { ...initialState, status: FetchState.Reset, reset: action.payload };
+      case FetchState.Idle:
+        return { ...initialState, status: FetchState.Idle };
       default:
         return state;
     }
   }, initialState);
+
+  //TODO: improve Data grid performance when requesting API continually
+  const queue = useMemo(() => new HttpQueue(fetchFunction), [fetchFunction]);
 
   useEffect(() => {
     //TODO: fix error request 2 continual time
@@ -72,7 +78,7 @@ export default function (fetchFunction: Function, input: Util.IObject): ReturnTy
         dispatch({ type: FetchState.Fetched, payload: data });
       } else {
         try {
-          const response = await fetchFunction(input);
+          const response = await queue.handle({input});
           cache.current[cacheKey] = response;
           if (cancelRequest) return;
           dispatch({ type: FetchState.Fetched, payload: response });
@@ -85,10 +91,7 @@ export default function (fetchFunction: Function, input: Util.IObject): ReturnTy
       }
     };
 
-    console.log({cacheKey, reset: state.reset});
     let cancelRequest = false;
-    
-    console.log({state});
     
     if (!cacheKey) return;
     

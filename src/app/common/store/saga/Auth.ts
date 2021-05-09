@@ -1,12 +1,12 @@
 import { all, call, put, take, takeLatest } from '@redux-saga/core/effects';
 import { AuthService } from '../../api';
-import { Model, Util } from '../../interfaces';
+import { User, Util } from '../../interfaces';
 import { AuthActions } from '../actions';
 
 function* login({ payload }: Util.IObject) {
   try {
     // call API
-    const data: Model.LoginResponse = yield call(AuthService.login, payload);
+    const data: User.LoginResponse = yield call(AuthService.login, payload);
 
     // create and dispatch SET LOGIN action
     yield put(AuthActions.setLogin(data));
