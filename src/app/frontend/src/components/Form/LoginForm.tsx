@@ -3,18 +3,18 @@ import { TextField, Button, Typography, Container } from '@material-ui/core';
 import useLoginFormStyles from '@assets/jss/components/Form/useLoginFormStyles';
 import { withRedux } from '@common/utils/ReduxConnect';
 import { AuthActions } from '@common/store/actions';
-import { Model } from '@common/interfaces';
+import { User } from '@common/interfaces';
 
 interface Props {
   children?: React.ReactNode;
   history: any;
   auth: any;
-  postLogin: (params: Model.LoginReqBody) => void;
+  postLogin: (params: User.LoginReqBody) => void;
 }
 
 const LoginForm: React.FC<Props> = ({ history, auth, postLogin }) => {
 
-  const styles = useLoginFormStyles()();
+  const styles = useLoginFormStyles();
   
   const [ email, setEmail ] = React.useState<string>('');
   const [ password, setPassword ] = React.useState<string>('');

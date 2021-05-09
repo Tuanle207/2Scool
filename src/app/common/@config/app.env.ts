@@ -2,9 +2,9 @@ import { IEnvConfig } from './common';
 
 const appEnv: {[key: string]: IEnvConfig} = {
   development: {
-    host: 'https://localhost:5000',
+    host: 'http://localhost:5000',
     oAuthConfig: {
-      issuer: 'https://localhost:5000',
+      issuer: 'http://localhost:5000',
       clientId: 'Scool_App',
       clientSecret: '1q2w3e*',
       scope: 'offline_access Scool',
@@ -12,9 +12,9 @@ const appEnv: {[key: string]: IEnvConfig} = {
     enableLogger: true
   },
   production: {
-    host: 'https://localhost:5000',
+    host: 'http://localhost:5000',
     oAuthConfig: {
-      issuer: 'https://localhost:5000',
+      issuer: 'http://localhost:5000',
       clientId: 'Scool_App',
       clientSecret: '1q2w3e*',
       scope: 'offline_access Scool',

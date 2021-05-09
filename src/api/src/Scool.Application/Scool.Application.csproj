@@ -10,6 +10,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Scool.Domain\Scool.Domain.csproj" />
     <ProjectReference Include="..\Scool.Application.Contracts\Scool.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Scool.Infrastructure\Scool.Infrastructure.csproj" />
+    <ProjectReference Include="..\Scool.Infrastructure.Standard\Scool.Infrastructure.Standard.csproj" />
   </ItemGroup>
 
   <ItemGroup>

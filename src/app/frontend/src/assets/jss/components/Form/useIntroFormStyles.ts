@@ -1,7 +1,6 @@
-import appColor from '@assets/themes/appColor';
 import { makeStyles } from '@material-ui/core';
 
-const useIntroFormStyles = () => makeStyles(theme => ({
+const useIntroFormStyles = makeStyles(theme => ({
   formContainer: {
     height: '100%',
     width: '50rem',

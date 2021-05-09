@@ -3,12 +3,13 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <RootNamespace>Scool</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Scool.Domain.Shared\Scool.Domain.Shared.csproj" />
+    <ProjectReference Include="..\Scool.Infrastructure.Standard\Scool.Infrastructure.Standard.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Scool.Domain.Courses.Model;
 using Scool.Users;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
@@ -21,6 +22,7 @@ namespace Scool.EntityFrameworkCore
     public class ScoolDbContext : AbpDbContext<ScoolDbContext>
     {
         public DbSet<AppUser> Users { get; set; }
+        public DbSet<Course> Courses { get; set; }
 
         /* Add DbSet properties for your Aggregate Roots / Entities here.
          * Also map them inside ScoolDbContextModelCreatingExtensions.ConfigureScool

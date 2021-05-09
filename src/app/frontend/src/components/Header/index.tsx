@@ -5,24 +5,17 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import useHeaderStyles from '@assets/jss/components/Header/headerStyles';
-import { configEnv } from '@common/@config';
-import { IdentityService, AppConfigService } from '@common/api';
 import { withRedux } from '@common/utils/ReduxConnect';
 import { AuthActions } from '@common/store/actions';
 
 interface Props {
+  hiddenSearchBar?: boolean;
+  onTextChange?: (text: string) => void;
   postlogoutAsync: () => void;
+  
 }
 
-const Header: React.FC<Props> = ({ postlogoutAsync }) => {
-
-  React.useEffect(() => {
-    configEnv();
-    // exampler dispatch action to call api
-    IdentityService.getUserProfile().then(data => console.log({data})).catch(err => console.log({err}));
-    IdentityService.getAllRoles().then(data => console.log({data})).catch(err => console.log({err}));
-    AppConfigService.getAppConfig().then(data => console.log({data})).catch(err => console.log({err}));
-  });
+const Header: React.FC<Props> = ({ postlogoutAsync, onTextChange, hiddenSearchBar = false }) => {
 
   const classes = useHeaderStyles();
 
@@ -48,6 +41,12 @@ const Header: React.FC<Props> = ({ postlogoutAsync }) => {
 
   const handleMobileMenuOpen = (event: any) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const textChange = (e: any) => {
+    const value = e.target!.value || '';
+    // setSearchText(value);
+    onTextChange && onTextChange(value);
   };
 
   const menuId = 'primary-search-account-menu';
@@ -104,18 +103,20 @@ const Header: React.FC<Props> = ({ postlogoutAsync }) => {
     <div className={classes.grow}>
       <AppBar color='transparent' position="static">
         <Toolbar className={classes.toolbar}>
-          <div className={classes.search}>
+          <div className={classes.search} style={hiddenSearchBar ? { visibility: 'hidden' } : {}} >
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              disabled={hiddenSearchBar ? true : false}
+              placeholder="Tìm kiếm…"
               fullWidth
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={textChange}
             />
           </div>
           <div className={classes.sectionDesktop}>
@@ -154,8 +155,8 @@ const Header: React.FC<Props> = ({ postlogoutAsync }) => {
   )
 };
 
-export default withRedux({
-  component: Header,
+export default withRedux<Props>({
+  component: React.memo(Header),
   dispatchProps: ({
     postlogoutAsync: AuthActions.postLogoutAsync
   })

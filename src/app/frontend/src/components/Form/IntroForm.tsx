@@ -8,7 +8,7 @@ interface Props {
 
 const IntroForm: React.FC<Props> = ({ history }) => {
 
-  const styles = useIntroFormStyles()();
+  const styles = useIntroFormStyles();
 
   return (
     <Container className={styles.formContainer}>

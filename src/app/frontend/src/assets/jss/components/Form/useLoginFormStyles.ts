@@ -1,7 +1,7 @@
 import appColor from '@assets/themes/appColor';
 import { makeStyles } from '@material-ui/core';
 
-const useLoginFormStyles = () => makeStyles(theme => ({
+const useLoginFormStyles = makeStyles(theme => ({
   formContainer: {
     height: '100%',
     background: appColor.white,

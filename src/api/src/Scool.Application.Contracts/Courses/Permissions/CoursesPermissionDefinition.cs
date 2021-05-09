@@ -2,7 +2,7 @@ using Scool.Localization;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Localization;
 
-namespace Scool.Application.Contracts.Permissions
+namespace Scool.Application.Contracts.Courses.Permissions
 {
     public class CoursesAppService : PermissionDefinitionProvider
     {

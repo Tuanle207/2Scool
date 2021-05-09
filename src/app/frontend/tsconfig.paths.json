@@ -2,6 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@src/*": ["./"],
       "@common/*": ["./../common/*"],
       "@views/*": ["./src/views/*"],
       "@components/*": ["./src/components/*"],
