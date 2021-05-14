@@ -8,6 +8,8 @@ import React from 'react';
 import { AuthSelector, LoadingSelector } from '@common/store/selectors';
 import { isTokenValid } from '@common/@helper/network/util';
 import ActionModal from '@components/Modal';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Props {
   token: string;
@@ -29,8 +31,14 @@ const AppContainer: React.FC<Props> = ({ token, getAppConfig, fetchingAppConfig 
       <StylesProvider jss={jss} >
         <CssBaseline>
           {
-            isValid && !fetchingAppConfig ? <DashboardRouter isAuth={isValid} /> : <AuthRouter />
+            fetchingAppConfig ? <div>loading...</div> :
+            isValid ? <DashboardRouter isAuth={isValid} /> : <AuthRouter />
           }
+          <ToastContainer 
+            position={toast.POSITION.BOTTOM_RIGHT}
+            hideProgressBar
+            limit={6}
+          />
           <ActionModal />
         </CssBaseline>
       </StylesProvider>

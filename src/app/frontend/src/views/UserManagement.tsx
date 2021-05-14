@@ -17,7 +17,6 @@ import CreateOrUpdateCourseRequest from '@components/Modal/CreateOrUpdateCourseR
 import { comparers } from '@common/appConsts';
 import { toast } from 'react-toastify';
 
-
 const cols: GridColDef[] =  [
   {
     field: 'id',
@@ -63,7 +62,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CoursesPage = () => {
+const UserManagement = () => {
+
+  React.useEffect(() => {
+    toast("ez vcl!");
+  }, []);
 
   const classes = useStyles();
 
@@ -80,25 +83,19 @@ const CoursesPage = () => {
 
   const onRequestDelete = async (courseId: string) => {
     await CoursesService.removeCourse({courseId});
-    toast(`Xóa khóa học ${courseId} thành công`, {
-      type: toast.TYPE.SUCCESS
-    });
+    console.log(`Xóa khóa học ${courseId} thành công`);
     resetCache();
   };
 
   const onRequestCreate = async (data: Course.CreateOrUpdateCourseDto) => {
     await CoursesService.createCourse(data);
-    toast('Thêm khóa học thành công', {
-      type: toast.TYPE.SUCCESS
-    });
+    console.log(`Thêm khóa học thành công`);
     resetCache();
   };
 
   const onRequestUpdate = async (data: Course.CreateOrUpdateCourseDto) => {
     await CoursesService.updateCourse({id: getSelectedItem()!.id, data});
-    toast('Cập nhật thông tin khóa học thành công', {
-      type: toast.TYPE.SUCCESS
-    });
+    console.log(`Sửa khóa học thành công`);
     resetCache();
   };
 
@@ -129,9 +126,7 @@ const CoursesPage = () => {
                   component: <CreateOrUpdateCourseRequest />,
                   onAccept: onRequestCreate
                 })}
-                onOptionsButtonClick={() => toast('ez vcl', {
-                  type: toast.TYPE.INFO,
-                })}
+                
               />
               <Grid container justify='space-between' style={{padding: 10, paddingLeft: 64}}>
                 <Grid item>
@@ -190,8 +185,7 @@ const CoursesPage = () => {
         </Grid>
       </Grid>
     </div>
-    
   );
 };
 
-export default CoursesPage;
+export default UserManagement;
