@@ -20,8 +20,8 @@ const sidebarItems = [
   {
     key: 2,
     Icon: Dashboard,
-    title: 'View 2',
-    route: '/view2'
+    title: 'Tài khoản',
+    route: '/accounts'
   }
 ];
 

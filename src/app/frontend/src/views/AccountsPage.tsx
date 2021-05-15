@@ -62,11 +62,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UserManagement = () => {
-
-  React.useEffect(() => {
-    toast("ez vcl!");
-  }, []);
+const AccountsPage = () => {
 
   const classes = useStyles();
 
@@ -109,7 +105,7 @@ const UserManagement = () => {
     <div style={{ flexGrow: 1 }}>
       <Grid container style={{ flex: 1 }}>
         <Grid item xs={4} sm={3} md={2}>
-          <Sidebar activeIndex={1} />
+          <Sidebar activeIndex={2} />
         </Grid>
         <Grid style={{ background: '#fff', flexGrow: 1 }} item container xs={8} sm={9} md={10} direction='column'>
           <Grid item >
@@ -118,14 +114,8 @@ const UserManagement = () => {
           <Grid item container direction='column' style={{ backgroundColor: '#DFE0EB', flexGrow: 1 }}>
             <Grid item>
               <PageTitleBar 
-                title={`Khóa học`} 
-                onMainButtonClick={() => ActionModal.show({
-                  title: 'Thêm khóa học mới',
-                  acceptText: 'Lưu',
-                  cancelText: 'Hủy',
-                  component: <CreateOrUpdateCourseRequest />,
-                  onAccept: onRequestCreate
-                })}
+                title={`Tài khoản`} 
+                onMainButtonClick={() => toast('Not implemented yet!', {type: toast.TYPE.ERROR})}
                 
               />
               <Grid container justify='space-between' style={{padding: 10, paddingLeft: 64}}>
@@ -135,22 +125,13 @@ const UserManagement = () => {
                 <Grid item>
                   <IconButton
                     disabled={selectedItems.length === 0} 
-                    onClick={() => ActionModal.show({
-                      title: `Xác nhận xóa khóa học: ${getSelectedItem()!.name}?`,
-                      onAccept: () => onRequestDelete(getSelectedItem()!.id)
-                    })}
+                    onClick={() => toast('Not implemented yet!', {type: toast.TYPE.ERROR})}
                   >
                     <DeleteIcon/>
                   </IconButton>
                   <IconButton  
                     disabled={selectedItems.length === 0} 
-                    onClick={() => ActionModal.show({
-                      title: 'Cập nhật thông tin khóa học',
-                      acceptText: 'Lưu',
-                      cancelText: 'Hủy',
-                      component: <CreateOrUpdateCourseRequest id={getSelectedItem()!.id}/>,
-                      onAccept: onRequestUpdate
-                    })} 
+                    onClick={() => toast('Not implemented yet!', {type: toast.TYPE.ERROR})} 
                   >
                     <EditIcon />
                   </IconButton>
@@ -164,21 +145,10 @@ const UserManagement = () => {
               </Grid>
             </Grid>
             <Grid item style={{ flexGrow: 1 }}>
-              <Container className={classes.root}>
-                <DataGrid
-                  columns={cols}
-                  rows={data.items}
-                  pageSize={data.pageSize} 
-                  rowCount={data.totalCount}
-                  onPageChange={onPageChange}
-                  loading={loading}
-                  page={pagingInfo.pageIndex}
-                  error={error}
-                  checkboxSelection
-                  paginationMode='server'
-                  onRowSelected={changeSelection}
-                  selectionModel={selectedItems.map(el => el.id)}
-                />
+              <Container className={classes.root} style={{display: 'flex', justifyContent: 'center', justifyItems: 'center'}}>
+                <Typography>
+                  Not implemented yet!
+                </Typography>
               </Container>
             </Grid>
           </Grid>
@@ -188,4 +158,4 @@ const UserManagement = () => {
   );
 };
 
-export default UserManagement;
+export default AccountsPage;

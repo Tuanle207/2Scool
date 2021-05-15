@@ -1,7 +1,8 @@
 using System;
+using System.Collections.Generic;
 using Volo.Abp.Domain.Entities;
 
-namespace Scool.Domain.Courses.Model
+namespace Scool.Domain.Common
 {
     public class Course : Entity<Guid>
     {
@@ -9,5 +10,8 @@ namespace Scool.Domain.Courses.Model
         public string Description { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime FinishTime { get; set; }
+        public ICollection<Class> Classes { get; set; }
+        public ICollection<Regulation> Regulations { get; set; }
     }
+
 }

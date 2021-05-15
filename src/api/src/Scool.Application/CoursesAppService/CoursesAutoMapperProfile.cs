@@ -1,5 +1,5 @@
 using AutoMapper;
-using Scool.Domain.Courses.Model;
+using Scool.Domain.Common;
 using Scool.Application.Contracts.Courses.Dtos;
 
 namespace Scool.Application.CoursesAppService

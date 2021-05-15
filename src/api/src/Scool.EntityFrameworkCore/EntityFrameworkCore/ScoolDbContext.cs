@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Scool.Domain.Courses.Model;
+using Scool.Domain.Common;
 using Scool.Users;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;

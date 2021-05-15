@@ -129,7 +129,7 @@ const CoursesPage = () => {
                   component: <CreateOrUpdateCourseRequest />,
                   onAccept: onRequestCreate
                 })}
-                onOptionsButtonClick={() => toast('ez vcl', {
+                onOptionsButtonClick={() => toast('default toast', {
                   type: toast.TYPE.INFO,
                 })}
               />

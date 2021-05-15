@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import { Container, Grid, Typography } from '@material-ui/core';
 import Sidebar from '@components/Sidebar';
 import Header from '@components/Header';
 
@@ -18,8 +18,14 @@ const Dashboard = () => {
         <Grid style={{ background: '#fff' }} item container xs={8} sm={9} md={10} direction='column'>
           <Grid item style={{ flex: 1 }}>
             <Header />
+            <Grid item style={{ flex: 1 }}>
+              <Container style={{display: 'flex', justifyContent: 'center', justifyItems: 'center'}}>
+                <Typography>
+                  Not implemented yet!
+                </Typography>
+              </Container>
+            </Grid>
           </Grid>
-          
         </Grid>
       </Grid>
     </div>

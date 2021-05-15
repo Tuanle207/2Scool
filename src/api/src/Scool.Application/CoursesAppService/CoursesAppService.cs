@@ -1,7 +1,7 @@
 using System;
 using Scool.Application.Contracts.Courses.Dtos;
 using Scool.Application.Contracts.CoursesAppService;
-using Scool.Domain.Courses.Model;
+using Scool.Domain.Common;
 using Scool.Infrastructure.AppService;
 using Volo.Abp.Domain.Repositories;
 
