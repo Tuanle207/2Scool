@@ -22,6 +22,12 @@ const sidebarItems = [
     Icon: Dashboard,
     title: 'Tài khoản',
     route: '/accounts'
+  },
+  {
+    key: 3,
+    Icon: Dashboard,
+    title: 'Upload Excel Sample',
+    route: '/excel'
   }
 ];
 

@@ -5,6 +5,7 @@ import SchoolManagementDashboard from '@views/SchoolManagementDashboard';
 import ProtectedRoute from '@components/Router/ProtectedRoute';
 import CoursesPage from '@views/CoursesPage';
 import AccountsPage from '@views/AccountsPage';
+import SampleExcel from '@views/SampleExcel';
 
 interface Props {
   isAuth?: boolean;
@@ -28,12 +29,17 @@ const DashboardRouter: React.FC<Props> = ({ isAuth = false }) => {
           path='/accounts'
           component={AccountsPage}
         />
+        <Route 
+          path='/excel'
+          component={SampleExcel}
+        />
         <ProtectedRoute
           path='/admin'
           exact
           component={SchoolManagementDashboard}
           isAuth={isAuth}
         />
+        
         <Redirect to='/dashboard' />
       </Switch>
     </Router>
