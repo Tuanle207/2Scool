@@ -7,6 +7,7 @@ namespace Scool.Domain.Common
     {
         public Guid ClassId { get; set; }
         public Guid ActivityId { get; set; }
+        public Activity Activity { get; set; }
         public int? Place { get; set; }
     }
 }

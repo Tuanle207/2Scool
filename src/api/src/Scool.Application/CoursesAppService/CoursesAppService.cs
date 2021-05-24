@@ -1,5 +1,5 @@
 using System;
-using Scool.Application.Contracts.Courses.Dtos;
+using Scool.Common;
 using Scool.Application.Contracts.CoursesAppService;
 using Scool.Domain.Common;
 using Scool.Infrastructure.AppService;

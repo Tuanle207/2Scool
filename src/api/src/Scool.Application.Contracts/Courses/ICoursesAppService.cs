@@ -1,5 +1,5 @@
 using System;
-using Scool.Application.Contracts.Courses.Dtos;
+using Scool.Common;
 using Scool.Infrastructure.Standard.AppService;
 
 namespace Scool.Application.Contracts.CoursesAppService
@@ -10,7 +10,7 @@ namespace Scool.Application.Contracts.CoursesAppService
         CourseListDto,
         CreateUpdateCourseDto,
         CreateUpdateCourseDto
-      >
+     >
     {
     }
 }

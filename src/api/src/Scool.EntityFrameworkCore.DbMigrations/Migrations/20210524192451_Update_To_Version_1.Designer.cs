@@ -11,8 +11,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Scool.Migrations
 {
     [DbContext(typeof(ScoolMigrationsDbContext))]
-    [Migration("20210515140816_Add_Some_Entites")]
-    partial class Add_Some_Entites
+    [Migration("20210524192451_Update_To_Version_1")]
+    partial class Update_To_Version_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,6 +22,75 @@ namespace Scool.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Scool.Domain.Common.Activity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("AppActivity");
+                });
+
+            modelBuilder.Entity("Scool.Domain.Common.ActivityParticipant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ActivityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ClassId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("Place")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.ToTable("AppActivityParticipant");
+                });
 
             modelBuilder.Entity("Scool.Domain.Common.Class", b =>
                 {
@@ -35,9 +104,6 @@ namespace Scool.Migrations
                     b.Property<Guid>("FormTeacherId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("FormTeacherId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("GradeId")
                         .HasColumnType("uniqueidentifier");
 
@@ -49,10 +115,12 @@ namespace Scool.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FormTeacherId");
+                    b.HasIndex("CourseId");
 
-                    b.HasIndex("FormTeacherId1")
+                    b.HasIndex("FormTeacherId")
                         .IsUnique();
+
+                    b.HasIndex("GradeId");
 
                     b.ToTable("AppClass");
                 });
@@ -80,6 +148,71 @@ namespace Scool.Migrations
                     b.ToTable("AppCourse");
                 });
 
+            modelBuilder.Entity("Scool.Domain.Common.Criteria", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppCriteria");
+                });
+
+            modelBuilder.Entity("Scool.Domain.Common.Grade", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppGrade");
+                });
+
+            modelBuilder.Entity("Scool.Domain.Common.LessonsRegister", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AbsenceNo")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<float>("TotalPoint")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppLessonsRegister");
+                });
+
             modelBuilder.Entity("Scool.Domain.Common.Regulation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -91,6 +224,9 @@ namespace Scool.Migrations
 
                     b.Property<Guid>("CriteriaId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -105,7 +241,86 @@ namespace Scool.Migrations
 
                     b.HasIndex("CourseId");
 
+                    b.HasIndex("CriteriaId");
+
+                    b.HasIndex("RegulationTypeId");
+
                     b.ToTable("AppRegulation");
+                });
+
+            modelBuilder.Entity("Scool.Domain.Common.RegulationType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppRegulationType");
+                });
+
+            modelBuilder.Entity("Scool.Domain.Common.Student", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ClassId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Dob")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ParentPhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassId");
+
+                    b.ToTable("AppStudent");
+                });
+
+            modelBuilder.Entity("Scool.Domain.Common.TaskAssignment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ClassId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassId");
+
+                    b.ToTable("AppTaskAssignment");
                 });
 
             modelBuilder.Entity("Scool.Domain.Common.Teacher", b =>
@@ -2047,23 +2262,53 @@ namespace Scool.Migrations
                     b.ToTable("AbpTenantConnectionStrings");
                 });
 
+            modelBuilder.Entity("Scool.Domain.Common.Activity", b =>
+                {
+                    b.HasOne("Scool.Domain.Common.Course", "Course")
+                        .WithMany("Activities")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("Scool.Domain.Common.ActivityParticipant", b =>
+                {
+                    b.HasOne("Scool.Domain.Common.Activity", "Activity")
+                        .WithMany("Participants")
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Activity");
+                });
+
             modelBuilder.Entity("Scool.Domain.Common.Class", b =>
                 {
                     b.HasOne("Scool.Domain.Common.Course", "Course")
                         .WithMany("Classes")
-                        .HasForeignKey("FormTeacherId")
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Scool.Domain.Common.Teacher", "FormTeacher")
-                        .WithOne("Class")
-                        .HasForeignKey("Scool.Domain.Common.Class", "FormTeacherId1")
+                        .WithOne("FormClass")
+                        .HasForeignKey("Scool.Domain.Common.Class", "FormTeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Scool.Domain.Common.Grade", "Grade")
+                        .WithMany()
+                        .HasForeignKey("GradeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Course");
 
                     b.Navigation("FormTeacher");
+
+                    b.Navigation("Grade");
                 });
 
             modelBuilder.Entity("Scool.Domain.Common.Regulation", b =>
@@ -2074,7 +2319,45 @@ namespace Scool.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Scool.Domain.Common.Criteria", "Criteria")
+                        .WithMany("Regulations")
+                        .HasForeignKey("CriteriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Scool.Domain.Common.RegulationType", "RegulationType")
+                        .WithMany()
+                        .HasForeignKey("RegulationTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Course");
+
+                    b.Navigation("Criteria");
+
+                    b.Navigation("RegulationType");
+                });
+
+            modelBuilder.Entity("Scool.Domain.Common.Student", b =>
+                {
+                    b.HasOne("Scool.Domain.Common.Class", "Class")
+                        .WithMany("Students")
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Class");
+                });
+
+            modelBuilder.Entity("Scool.Domain.Common.TaskAssignment", b =>
+                {
+                    b.HasOne("Scool.Domain.Common.Class", "Class")
+                        .WithMany()
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Class");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
@@ -2354,16 +2637,33 @@ namespace Scool.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Scool.Domain.Common.Activity", b =>
+                {
+                    b.Navigation("Participants");
+                });
+
+            modelBuilder.Entity("Scool.Domain.Common.Class", b =>
+                {
+                    b.Navigation("Students");
+                });
+
             modelBuilder.Entity("Scool.Domain.Common.Course", b =>
                 {
+                    b.Navigation("Activities");
+
                     b.Navigation("Classes");
 
                     b.Navigation("Regulations");
                 });
 
+            modelBuilder.Entity("Scool.Domain.Common.Criteria", b =>
+                {
+                    b.Navigation("Regulations");
+                });
+
             modelBuilder.Entity("Scool.Domain.Common.Teacher", b =>
                 {
-                    b.Navigation("Class");
+                    b.Navigation("FormClass");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

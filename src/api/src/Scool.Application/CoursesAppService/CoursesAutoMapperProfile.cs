@@ -1,6 +1,6 @@
 using AutoMapper;
 using Scool.Domain.Common;
-using Scool.Application.Contracts.Courses.Dtos;
+using Scool.Common;
 
 namespace Scool.Application.CoursesAppService
 {

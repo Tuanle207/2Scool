@@ -23,6 +23,19 @@ namespace Scool.EntityFrameworkCore
     {
         public DbSet<AppUser> Users { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<Grade> Grades { get; set; }
+        public DbSet<Class> Classes { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Activity> Activitys { get; set; }
+        public DbSet<ActivityParticipant> ActivityParticipants { get; set; }
+        public DbSet<Criteria> Criterias { get; set; }
+        public DbSet<Regulation> Regulations { get; set; }
+        public DbSet<RegulationType> RegulationTypes { get; set; }
+        public DbSet<LessonsRegister> LessonsRegisters { get; set; }
+        public DbSet<TaskAssignment> TaskAssignments { get; set; }
+
+
 
         /* Add DbSet properties for your Aggregate Roots / Entities here.
          * Also map them inside ScoolDbContextModelCreatingExtensions.ConfigureScool

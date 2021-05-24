@@ -1,7 +1,7 @@
 using System;
 using Volo.Abp.Application.Dtos;
 
-namespace Scool.Application.Contracts.Courses.Dtos
+namespace Scool.Common
 {
     public class CourseDto : EntityDto<Guid>
     {

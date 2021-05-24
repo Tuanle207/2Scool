@@ -1,10 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Volo.Abp.Domain.Entities;
+using System.Text;
+using Volo.Abp.Application.Dtos;
 
-namespace Scool.Domain.Common
+namespace Scool.Common
 {
-    public class Grade : Entity<Guid>
+    public class GradeDto : EntityDto<Guid>
     {
         public string Name { get; set; }
         public string DisplayName { get; set; }

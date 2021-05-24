@@ -1,14 +1,14 @@
-using System;
-using Volo.Abp.Domain.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Scool.Domain.Common
+namespace Scool.Common
 {
-    public class Teacher : Entity<Guid>
+    public class CreateUpdateTeacherDto
     {
         public string Name { get; set; }
         public DateTime Dob { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public Class FormClass { get; set; }
     }
 }
