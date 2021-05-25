@@ -72,7 +72,7 @@ const CoursesPage = () => {
     CoursesService.getAllCourses, 
     { ...pagingInfo, pageIndex: pagingInfo.pageIndex! + 1 } // DataGrid's start page count from 0, but API count from 1.
   );
-  const {selectedItems, changeSelection} = useSelectedItems<Course.Course>();
+  const {selectedItems, changeSelection} = useSelectedItems<Course.CourseDto>();
   
   const onPageChange = (param: GridPageChangeParams) => {
     setPageIndex(param.page);
@@ -102,7 +102,7 @@ const CoursesPage = () => {
     resetCache();
   };
 
-  const getSelectedItem = (): Course.Course | null => {
+  const getSelectedItem = (): Course.CourseDto | null => {
     return selectedItems && selectedItems.length > 0 
       ? selectedItems[selectedItems.length - 1] 
       : null;
