@@ -5,10 +5,22 @@ using System.Text;
 
 namespace Scool.Application.Contracts.Excel.Dtos
 {
-    public class ExcelInputDto
+    public class Response<T>
     {
-        public string Title { get; set; }
-        public string Test { get; set; }
-        public IFormFile File1 { get; set; }
+        public int Code { get; set; }
+
+        public string Msg { get; set; }
+
+        public T Data { get; set; }
+
+        public static Response<T> GetResult(int code, string msg, T data = default(T))
+        {
+            return new Response<T>
+            {
+                Code = code,
+                Msg = msg,
+                Data = data
+            };
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Scool.Application.Contracts.Courses.Dtos;
 using Scool.Application.Contracts.Excel.Dtos;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,9 @@ namespace Scool.Application.Contracts.Excel
 {
     public interface IExcelAppService
     {
-        string GetAllAsync(ExcelInputDto input);
+        public interface Response<CourseDto>
+        {
+
+        };
     }
 }
