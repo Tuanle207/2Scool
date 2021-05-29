@@ -78,7 +78,10 @@ const ClassesPage = () => {
     { ...pagingInfo, pageIndex: pagingInfo.pageIndex! + 1 } // DataGrid's start page count from 0, but API count from 1.
   );
   const {selectedItems, changeSelection} = useSelectedItems<Class.ClassDto>();
-  
+  React.useEffect(() => {
+    console.log({courseItems: data});
+    // setPageIndex(1);
+  }, [data]);
   const onPageChange = (param: GridPageChangeParams) => {
     setPageIndex(param.page);
   };
