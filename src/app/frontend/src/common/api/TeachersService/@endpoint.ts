@@ -3,6 +3,8 @@ const Endpoint = {
     `/api/app/teachers/${id}`,
   GetAllTeachers: () => 
     `/api/app/teachers/paging`,
+  getAllTeachersSimpleList: () => 
+    `/api/app/teachers/simple-list`,
   CreateTeacher: () =>
     `/api/app/teachers`,
   UpdateTeacher: (id: string) =>

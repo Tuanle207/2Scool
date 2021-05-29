@@ -43,6 +43,16 @@ const getAllTeachers =  async (pagingInfo: Util.PagingInfo) => {
   }
 };
 
+const getAllTeachersSimpleList = async () =>  {
+  try {
+    const apiService = await getApiService();
+    const result = await apiService.get<Teacher.TeacherForSimpleListDto[]>(Endpoint.GetAllTeachers());
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const removeTeacher =  async ({id}: {id: string}) => {
   try {
     const apiService = await getApiService();
@@ -56,6 +66,7 @@ const removeTeacher =  async ({id}: {id: string}) => {
 export default {
   createTeacher,
   getAllTeachers,
+  getAllTeachersSimpleList,
   getTeacherById,
   removeTeacher,
   updateTeacher

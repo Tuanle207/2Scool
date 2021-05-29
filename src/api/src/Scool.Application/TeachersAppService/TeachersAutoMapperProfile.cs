@@ -14,6 +14,7 @@ namespace Scool.TeachersAppService
         public TeachersAutoMapperProfile()
         {
             CreateMap<Teacher, TeacherDto>();
+            CreateMap<Teacher, TeacherForSimpleListDto>();
             CreateMap<CreateUpdateTeacherDto, Teacher>();
         }
     }

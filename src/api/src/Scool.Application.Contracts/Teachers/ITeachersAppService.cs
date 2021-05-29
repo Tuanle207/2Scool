@@ -3,6 +3,7 @@ using Scool.Infrastructure.Standard.AppService;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Scool.Teachers
 {
@@ -14,5 +15,6 @@ namespace Scool.Teachers
         CreateUpdateTeacherDto
     >
     {
+        Task<IEnumerable<TeacherForSimpleListDto>> GetSimpleListAsync();
     }
 }

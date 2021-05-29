@@ -8,6 +8,11 @@ export namespace Teacher {
     phoneNumber: string;
   }
 
+  export interface TeacherForSimpleListDto {
+    id: string;
+    name: string;
+  }
+
   export interface CreateUpdateTeacherDto {
     name: string ;
     dob: Date ;

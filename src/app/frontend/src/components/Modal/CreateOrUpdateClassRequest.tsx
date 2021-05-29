@@ -16,7 +16,7 @@ const CreateOrUpdateClassRequest = ({id}: {id?: string}) => {
   });
   const [courses, setCourses] = React.useState<Course.CourseDto[]>([]);
   const [grades, setGrades] = React.useState<Grade.GradeDto[]>([]);
-  const [teachers, setTeachers] = React.useState<Teacher.TeacherDto[]>([]);
+  const [teachers, setTeachers] = React.useState<Teacher.TeacherForSimpleListDto[]>([]);
   const {errors, validate, getError} = useDataValidator();
 
   React.useEffect(() => {
@@ -26,8 +26,8 @@ const CreateOrUpdateClassRequest = ({id}: {id?: string}) => {
       setCourses(coursesRes.items);
       const gradesRes = await GradesService.getAllGrades({});
       setGrades(gradesRes.items);
-      const teachersRes = await TeachersService.getAllTeachers({});
-      setTeachers(teachersRes.items);
+      const teachersRes = await TeachersService.getAllTeachersSimpleList();
+      setTeachers(teachersRes);
       if (id) {
         const classRes = await ClassesService.getClassById(id);
         setData({
@@ -73,39 +73,6 @@ const CreateOrUpdateClassRequest = ({id}: {id?: string}) => {
 
           />
         </Box>
-        {/* <Box style={{marginBottom: '10px'}}>
-          <TextField 
-            // {...getError('mô tả')}
-            id='create-class-course' 
-            label='Khóa học'
-            autoComplete='off'
-            style={{width: '40ch'}}
-            value={data.courseId}
-            onChange={e => setData(prev => ({...prev, courseId: e.target.value}))}
-          />
-        </Box>
-        <Box style={{marginBottom: '10px'}}>
-          <TextField 
-            // {...getError('mô tả')}
-            id='create-class-grade' 
-            label='Khối'
-            autoComplete='off'
-            style={{width: '40ch'}}
-            value={data.gradeId}
-            onChange={e => setData(prev => ({...prev, gradeId: e.target.value}))}
-          />
-        </Box>
-        <Box style={{marginBottom: '10px'}}>
-          <TextField 
-            // {...getError('mô tả')}
-            id='create-class-teacher' 
-            label='Giáo viên'
-            autoComplete='off'
-            style={{width: '40ch'}}
-            value={data.formTeacherId}
-            onChange={e => setData(prev => ({...prev, formTeacherId: e.target.value}))}
-          />
-        </Box> */}
         <Box style={{marginBottom: '10px'}}>
           <FormControl fullWidth>
             <InputLabel htmlFor="create-class-course">Khóa học</InputLabel>

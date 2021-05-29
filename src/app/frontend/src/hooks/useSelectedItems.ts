@@ -4,6 +4,7 @@ import { useState } from 'react';
 export default function useSelectedItems<T extends { id: string }>(predicate: (model: T) => any = (model => model.id)) 
   : {
     selectedItems: Array<T>;
+    reset: () => void;
     changeSelection: (param: GridRowSelectedParams) => void;
 } {
   const [selectedItems, setSelectedItems] = useState<Array<T>>([]);
@@ -25,8 +26,13 @@ export default function useSelectedItems<T extends { id: string }>(predicate: (m
     }
   };
 
+  const reset = () => {
+    setSelectedItems([]);
+  }
+
   return {
     selectedItems,
+    reset,
     changeSelection
   }
 };

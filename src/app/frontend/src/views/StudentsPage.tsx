@@ -77,7 +77,7 @@ const StudentsPage = () => {
     StudentsService.getAllStudents, 
     { ...pagingInfo, pageIndex: pagingInfo.pageIndex! + 1 } // DataGrid's start page count from 0, but API count from 1.
   );
-  const {selectedItems, changeSelection} = useSelectedItems<Student.StudentDto>();
+  const {selectedItems, reset, changeSelection} = useSelectedItems<Student.StudentDto>();
   
   const onPageChange = (param: GridPageChangeParams) => {
     setPageIndex(param.page);
@@ -89,6 +89,7 @@ const StudentsPage = () => {
       type: toast.TYPE.SUCCESS
     });
     resetCache();
+    reset();
   };
 
   const onRequestCreate = async (data: Student.CreateUpdateStudentDto) => {
