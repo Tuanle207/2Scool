@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Button, Grid, IconButton, Modal, Typography, WithStyles, withStyles } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import modalStyles from '@assets/jss/components/Modal';
+import modalStyles from '../../assets/jss/components/Modal';
 
 /**
  * used as paramater passes into SHOW modal method

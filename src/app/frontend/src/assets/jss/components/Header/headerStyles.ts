@@ -2,10 +2,11 @@ import { fade, makeStyles, Theme } from '@material-ui/core';
 
 const useHeaderStyles = makeStyles((theme: Theme) => ({
   grow: {
-    flexGrow: 1, 
+    flexGrow: 1
   },
   toolbar: {
     // padding: theme.spacing(2, 1)
+    boxShadow: '0px 1px 4px #888888',
     [theme.breakpoints.up('md')]: {
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),

@@ -1,7 +1,7 @@
 import React from 'react';
-import LoginForm from '@components/Form/LoginForm';
-import IntroForm from '@components/Form/IntroForm';
-import { withRedux } from '@common/utils/ReduxConnect';
+import LoginForm from '../components/Form/LoginForm';
+import IntroForm from '../components/Form/IntroForm';
+import { withRedux } from '../common/utils/ReduxConnect';
 import { RouteComponentProps } from 'react-router';
 import { Grid } from '@material-ui/core';
 

@@ -1,6 +1,6 @@
 import { Button, Container, MobileStepper, Typography } from '@material-ui/core';
 import React from 'react';
-import useIntroFormStyles from '@assets/jss/components/Form/useIntroFormStyles';
+import useIntroFormStyles from '../../assets/jss/components/Form/useIntroFormStyles';
 
 interface Props {
   history: any;

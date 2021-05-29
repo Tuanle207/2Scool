@@ -2,48 +2,66 @@ import React from 'react';
 import { Box, Container, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import { Dashboard } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
-import useSidebarStyles from '@assets/jss/components/Sidebar/sidebarStyles';
+import useSidebarStyles from '../../assets/jss/components/Sidebar/sidebarStyles';
 
 const sidebarItems = [
   {
-    key: 0,
+    key: 'dashboard',
     title: 'Trang chủ',
     Icon: Dashboard,
     route: '/dashboard'
   },
   {
-    key: 1,
+    key: 'courses',
     title: 'Khóa học',
     Icon: Dashboard,
     route: '/courses'
   },
   {
-    key: 2,
+    key: 'teachers',
     Icon: Dashboard,
-    title: 'Tài khoản',
-    route: '/accounts'
+    title: 'Giáo viên',
+    route: '/teachers'
+  },
+  {
+    key: 'classes',
+    Icon: Dashboard,
+    title: 'Lớp học',
+    route: '/classes'
+  },
+  {
+    key: 'students',
+    Icon: Dashboard,
+    title: 'Học sinh',
+    route: '/students'
+  },
+  {
+    key: 'grades',
+    Icon: Dashboard,
+    title: 'Khối',
+    route: '/grades'
   }
 ];
 
 interface Props {
-  activeIndex: number;
+  activeKey: string;
 }
 
-const Sidebar: React.FC<Props> = ({ activeIndex = 0 }) => {
+const Sidebar: React.FC<Props> = ({ activeKey }) => {
 
   const styles = useSidebarStyles();
 
   return (
     <Container className={styles.container}>
       <Box className={styles.titleWrapper}>
-        <Typography variant='h4' >Scool</Typography>
+        <Typography variant='h4' >2Scool</Typography>
       </Box>
       <List component='nav'>
         {
           sidebarItems.map(item => (
             <ListItem
               button 
-              className={`${styles.listItem} ${item.key === activeIndex ? styles.listItemActive : ''}`}
+              className={`${styles.listItem} ${item.key === activeKey ? styles.listItemActive : ''}`}
               component={Link}
               to={item.route}
               key={item.key}

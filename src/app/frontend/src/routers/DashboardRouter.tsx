@@ -1,9 +1,12 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
-import Dashboard from '@views/Dashboard';
-import ProtectedRoute from '@components/Router/ProtectedRoute';
-import CoursesPage from '@views/CoursesPage';
-import AccountsPage from '@views/AccountsPage';
+import Dashboard from '../views/Dashboard';
+import ProtectedRoute from '../components/Router/ProtectedRoute';
+import CoursesPage from '../views/CoursesPage';
+import TeachersPage from '../views/TeachersPage';
+import GradesPage from '../views/GradesPage';
+import ClassesPage from '../views/ClassesPage';
+import StudentsPage from '../views/StudentsPage';
 
 interface Props {
   isAuth?: boolean;
@@ -25,19 +28,19 @@ const DashboardRouter: React.FC<Props> = ({ isAuth = false }) => {
         />
         <Route 
           path='/classes'
-          component={AccountsPage}
+          component={ClassesPage}
         />
         <Route 
           path='/students'
-          component={AccountsPage}
+          component={StudentsPage}
         />
         <Route 
-          path='/teacher'
-          component={AccountsPage}
+          path='/teachers'
+          component={TeachersPage}
         />
         <Route 
           path='/grades'
-          component={AccountsPage}
+          component={GradesPage}
         />
         <Redirect to='/dashboard' />
       </Switch>

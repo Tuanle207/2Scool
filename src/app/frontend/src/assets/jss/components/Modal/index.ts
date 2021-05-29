@@ -1,4 +1,4 @@
-import { theme } from '@assets/themes/theme';
+import { theme } from '../../../themes/theme';
 import { CSSProperties } from 'react';
 
 

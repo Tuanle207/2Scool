@@ -1,21 +1,21 @@
 import React from 'react';
 import { Container, Grid, makeStyles, IconButton, Typography } from '@material-ui/core';
-import Sidebar from '@components/Sidebar';
-import Header from '@components/Header';
-import PageTitleBar from '@components/PageTitleBar';
 import { DataGrid, GridColDef, GridPageChangeParams, GridValueFormatterParams } from '@material-ui/data-grid';
-import { Course } from '@common/interfaces';
-import { CoursesService } from '@common/api';
-import { useFetch, usePagingInfo } from '@common/hooks';
+import { toast } from 'react-toastify';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import Sidebar from '../components/Sidebar';
+import Header from '../components/Header';
+import PageTitleBar from '../components/PageTitleBar';
+import { Course } from '../common/interfaces';
+import { CoursesService } from '../common/api';
+import { useFetch, usePagingInfo } from '../hooks';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import { formatDate } from '@common/utils/TimeHelper';
+import { formatDate } from '../common/utils/TimeHelper';
 import { useSelectedItems } from '../hooks';
-import ActionModal from '@components/Modal';
-import CreateOrUpdateCourseRequest from '@components/Modal/CreateOrUpdateCourseRequest';
-import { comparers } from '@common/appConsts';
-import { toast } from 'react-toastify';
+import CreateOrUpdateCourseRequest from '../components/Modal/CreateOrUpdateCourseRequest';
+import ActionModal from '../components/Modal';
+import { comparers } from '../common/appConsts';
 
 
 const cols: GridColDef[] =  [
@@ -86,7 +86,7 @@ const CoursesPage = () => {
     resetCache();
   };
 
-  const onRequestCreate = async (data: Course.CreateOrUpdateCourseDto) => {
+  const onRequestCreate = async (data: Course.CreateUpdateCourseDto) => {
     await CoursesService.createCourse(data);
     toast('Thêm khóa học thành công', {
       type: toast.TYPE.SUCCESS
@@ -94,7 +94,7 @@ const CoursesPage = () => {
     resetCache();
   };
 
-  const onRequestUpdate = async (data: Course.CreateOrUpdateCourseDto) => {
+  const onRequestUpdate = async (data: Course.CreateUpdateCourseDto) => {
     await CoursesService.updateCourse({id: getSelectedItem()!.id, data});
     toast('Cập nhật thông tin khóa học thành công', {
       type: toast.TYPE.SUCCESS
@@ -112,13 +112,13 @@ const CoursesPage = () => {
     <div style={{ flexGrow: 1 }}>
       <Grid container style={{ flex: 1 }}>
         <Grid item xs={4} sm={3} md={2}>
-          <Sidebar activeIndex={1} />
+          <Sidebar activeKey={'courses'} />
         </Grid>
         <Grid style={{ background: '#fff', flexGrow: 1 }} item container xs={8} sm={9} md={10} direction='column'>
           <Grid item >
             <Header onTextChange={(value) => setFilter({key: 'Name', comparison: comparers.Contains, value: value })} />
           </Grid>
-          <Grid item container direction='column' style={{ backgroundColor: '#DFE0EB', flexGrow: 1 }}>
+          <Grid item container direction='column' style={{ flexGrow: 1 }}>
             <Grid item>
               <PageTitleBar 
                 title={`Khóa học`} 

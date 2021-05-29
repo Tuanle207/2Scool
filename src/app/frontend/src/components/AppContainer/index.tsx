@@ -1,13 +1,13 @@
 import { StylesProvider, CssBaseline, ThemeProvider } from '@material-ui/core'
 import DashboardRouter from '../../routers/DashboardRouter';
 import AuthRouter from '../../routers/AuthRouter';
-import { theme, jss } from '@assets/themes/theme';
-import { withRedux } from '@common/utils/ReduxConnect';
-import { AppConfigActions } from '@common/store/actions';
+import { theme, jss } from '../../assets/themes/theme';
+import { withRedux } from '../../common/utils/ReduxConnect';
+import { AppConfigActions } from '../../common/store/actions';
 import React from 'react';
-import { AuthSelector, LoadingSelector } from '@common/store/selectors';
-import { isTokenValid } from '@common/@helper/network/util';
-import ActionModal from '@components/Modal';
+import { AuthSelector, LoadingSelector } from '../../common/store/selectors';
+import { isTokenValid } from '../../common/@helper/network/util';
+import ActionModal from '../Modal';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

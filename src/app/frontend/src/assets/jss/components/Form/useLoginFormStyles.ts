@@ -1,4 +1,4 @@
-import appColor from '@assets/themes/appColor';
+import appColor from '../../../themes/appColor';
 import { makeStyles } from '@material-ui/core';
 
 const useLoginFormStyles = makeStyles(theme => ({

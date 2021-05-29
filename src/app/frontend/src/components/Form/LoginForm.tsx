@@ -1,9 +1,9 @@
 import React from 'react';
 import { TextField, Button, Typography, Container } from '@material-ui/core';
-import useLoginFormStyles from '@assets/jss/components/Form/useLoginFormStyles';
-import { withRedux } from '@common/utils/ReduxConnect';
-import { AuthActions } from '@common/store/actions';
-import { User } from '@common/interfaces';
+import useLoginFormStyles from '../../assets/jss/components/Form/useLoginFormStyles';
+import { withRedux } from '../../common/utils/ReduxConnect';
+import { AuthActions } from '../../common/store/actions';
+import { User } from '../../common/interfaces';
 
 interface Props {
   children?: React.ReactNode;
