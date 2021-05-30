@@ -1,5 +1,4 @@
 {
-  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "target": "es5",
     "lib": [
@@ -7,6 +6,7 @@
       "dom.iterable",
       "esnext"
     ],
+    "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -18,21 +18,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "noImplicitAny": true,
-    "jsx": "react-jsx",
-    "allowJs": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/@types"
-    ]
+    "jsx": "react-jsx"
   },
-  "exclude": [
-    "./node_modules",
-    "./../common/node_modules"
-  ],
   "include": [
-    "./src/*",
-    "./../common/*",
-    "./src/@types/*"
+    "src"
   ]
 }

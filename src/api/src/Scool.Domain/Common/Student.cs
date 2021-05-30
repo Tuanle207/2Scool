@@ -7,6 +7,7 @@ namespace Scool.Domain.Common
     {
         public string Name { get; set; }
         public Guid ClassId { get; set; }
+        public Class Class { get; set; }
         public DateTime Dob { get; set; }
         public string ParentPhoneNumber { get; set; }
     }

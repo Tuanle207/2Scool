@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
-import Login from '@views/Login';
+import Login from '../views/Login';
 
 interface Props {
   isAuth?: boolean;

@@ -12,6 +12,14 @@ namespace Scool.Domain.Common
         public DateTime FinishTime { get; set; }
         public ICollection<Class> Classes { get; set; }
         public ICollection<Regulation> Regulations { get; set; }
+        public ICollection<Activity> Activities { get; set; }
+
+        public Course()
+        {
+            Classes = new List<Class>();
+            Regulations = new List<Regulation>();
+            Activities = new List<Activity>();
+        }
     }
 
 }

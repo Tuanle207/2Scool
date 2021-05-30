@@ -2,15 +2,15 @@ import React from 'react';
 import { Box, Container, TextField } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import { Course, Util } from '@common/interfaces';
+import { Course, Util } from '../../common/interfaces';
 import ActionModal, { ModalDataError } from '.';
-import { Validator } from '@common/utils/DataValidation';
+import { Validator } from '../../common/utils/DataValidation';
 import { useDataValidator } from '../../hooks';
-import { CoursesService } from '@common/api';
+import { CoursesService } from '../../common/api';
 
 const CreateOrUpdateCourseRequest = ({id}: {id?: string}) => {
 
-  const [data, setData] = React.useState<Course.CreateOrUpdateCourseDto>({
+  const [data, setData] = React.useState<Course.CreateUpdateCourseDto>({
     name: '',
     description: '',
     startTime: new Date(),

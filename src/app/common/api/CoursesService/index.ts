@@ -26,7 +26,7 @@ const updateCourse = async ({id, data}: {id: string, data: Course.CreateOrUpdate
 const getCourseById = async (id: string) => {
   try {
     const apiService = await getApiService();
-    const result = await apiService.get<Course.Course>(Endpoint.GetCourseById(id));
+    const result = await apiService.get<Course.CourseDto>(Endpoint.GetCourseById(id));
     return result;
   } catch (error) {
     throw error;
@@ -36,7 +36,7 @@ const getCourseById = async (id: string) => {
 const getAllCourses =  async (pagingInfo: Util.PagingInfo) => {
   try {
     const apiService = await getApiService();
-    const result = await apiService.post<Util.PagingModel<Course.Course>>(Endpoint.GetAllCourses(), pagingInfo);
+    const result = await apiService.post<Util.PagingModel<Course.CourseDto>>(Endpoint.GetAllCourses(), pagingInfo);
     return result;
   } catch (error) {
     throw error;

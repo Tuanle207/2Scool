@@ -1,6 +1,6 @@
 using AutoMapper;
 using Scool.Domain.Common;
-using Scool.Application.Contracts.Courses.Dtos;
+using Scool.Common;
 
 namespace Scool.Application.CoursesAppService
 {
@@ -12,6 +12,7 @@ namespace Scool.Application.CoursesAppService
             CreateMap<Course, CourseDto>();
             CreateMap<Course, CourseListDto>();
             CreateMap<CreateUpdateCourseDto, Course>();
+            CreateMap<Course, CourseForSimpleListDto>();
         }
     }
 }

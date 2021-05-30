@@ -1,5 +1,5 @@
-import { ReduxWebProvider as ReduxProvider} from '@common/providers';
-import AppContainer from '@components/AppContainer';
+import { ReduxWebProvider as ReduxProvider} from './common/providers';
+import AppContainer from './components/AppContainer';
 
 const App = () => {
 
