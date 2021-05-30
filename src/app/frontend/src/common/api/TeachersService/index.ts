@@ -46,7 +46,7 @@ const getAllTeachers =  async (pagingInfo: Util.PagingInfo) => {
 const getAllTeachersSimpleList = async () =>  {
   try {
     const apiService = await getApiService();
-    const result = await apiService.get<Teacher.TeacherForSimpleListDto[]>(Endpoint.GetAllTeachers());
+    const result = await apiService.get<Teacher.TeacherForSimpleListDto[]>(Endpoint.getAllTeachersSimpleList());
     return result;
   } catch (error) {
     throw error;
