@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
-using Scool.Infrastructure.Standard.Common;
+using Scool.Infrastructure.Standard.Common.X;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
-namespace Scool.Infrastructure.Standard.AppService
+namespace Scool.Infrastructure.Standard.AppService.X
 {
 
     /**
@@ -27,7 +27,6 @@ namespace Scool.Infrastructure.Standard.AppService
         where TGetDto : IEntityDto<TKey>
         where TGetListDto : IEntityDto<TKey>
     {
-
         Task<PagingModel<TGetListDto>> PostPagingAsync(PageInfoRequestDto input);
     }
 }

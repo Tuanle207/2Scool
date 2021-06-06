@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Scool.Infrastructure.Standard.Common
+namespace Scool.Infrastructure.Standard.Common.X
 {
     public class PagingModel<T>
     {

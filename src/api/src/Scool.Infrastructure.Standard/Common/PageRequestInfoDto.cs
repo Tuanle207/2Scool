@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Scool.Infrastructure.Standard.Constants;
+using Scool.Infrastructure.Standard.Constants.X;
 
-namespace Scool.Infrastructure.Standard.Common
+namespace Scool.Infrastructure.Standard.Common.X
 {
     public class PageInfoRequestDto
     {

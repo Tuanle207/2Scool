@@ -6,7 +6,7 @@ interface Props {
   isAuth?: boolean;
 }
 
-const AuthRouter: React.FC<Props> = ({ isAuth = false }) => {
+const AuthRouter: React.FC<Props> = () => {
   return (
     <Router>
       <Switch>

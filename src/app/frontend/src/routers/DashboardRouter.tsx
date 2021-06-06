@@ -7,6 +7,9 @@ import TeachersPage from '../views/TeachersPage';
 import GradesPage from '../views/GradesPage';
 import ClassesPage from '../views/ClassesPage';
 import StudentsPage from '../views/StudentsPage';
+import DCPReportsApprovalPage from '../views/DCPReportsApprovalPage';
+import DCPReportPage from '../views/DCPReportPage';
+import MyDCPReportPage from '../views/MyDCPReportPage';
 
 interface Props {
   isAuth?: boolean;
@@ -17,32 +20,52 @@ const DashboardRouter: React.FC<Props> = ({ isAuth = false }) => {
     <Router>
       <Switch>
         <Route 
-          path='/dashboard' 
+          path='/dcp-report-approval'
+          exact
+          component={DCPReportsApprovalPage}
+        />
+        <Route 
+          path='/dcp-report-approval/:dcpReportId'
+          exact
+          component={DCPReportPage}
+        />
+        <Route 
+          path='/my-dcp-report'
+          exact
+          component={MyDCPReportPage}
+        />
+        <Route 
+          path='/my-dcp-report/:dcpReportId'
+          exact
+          component={MyDCPReportPage}
+        />
+        <Route 
+          path='/admin/dashboard' 
           exact
           component={Dashboard}
         />
         <Route 
-          path='/courses' 
+          path='/admin/courses' 
           exact
           component={CoursesPage}
         />
         <Route 
-          path='/classes'
+          path='/admin/classes'
           component={ClassesPage}
         />
         <Route 
-          path='/students'
+          path='/admin/students'
           component={StudentsPage}
         />
         <Route 
-          path='/teachers'
+          path='/admin/teachers'
           component={TeachersPage}
         />
         <Route 
-          path='/grades'
+          path='/admin/grades'
           component={GradesPage}
         />
-        <Redirect to='/dashboard' />
+        <Redirect to='/dcp-report-approval' />
       </Switch>
     </Router>
   );

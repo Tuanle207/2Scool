@@ -1,12 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Scool.Domain.Shared\Scool.Domain.Shared.csproj" />
-    <ProjectReference Include="..\Scool.Infrastructure.Standard\Scool.Infrastructure.Standard.csproj" />
     
   </ItemGroup>
 

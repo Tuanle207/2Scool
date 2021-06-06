@@ -1,4 +1,4 @@
-namespace Scool.Infrastructure.Standard.Constants
+namespace Scool.Infrastructure.Standard.Constants.X
 {
     public static class PageInfo
     {
