@@ -32,7 +32,7 @@ const AppContainer: React.FC<Props> = ({ token, getAppConfig, fetchingAppConfig 
         <CssBaseline>
           {
             fetchingAppConfig ? <div>loading...</div> :
-            isValid ? <DashboardRouter isAuth={isValid} /> : <AuthRouter />
+            isValid ? <DashboardRouter /> : <AuthRouter />
           }
           <ToastContainer 
             position={toast.POSITION.BOTTOM_RIGHT}

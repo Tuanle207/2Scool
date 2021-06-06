@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using Scool.Infrastructure.Standard.Common;
-using Scool.Infrastructure.Standard.Helpers;
+using Scool.Infrastructure.Common;
+using Scool.Infrastructure.Helpers;
 
 namespace Scool.Infrastructure.Linq
 {

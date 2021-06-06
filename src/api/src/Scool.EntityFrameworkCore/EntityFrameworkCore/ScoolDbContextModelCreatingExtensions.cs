@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Scool.Domain.Common;
+using Scool.Users;
 using Volo.Abp;
 using Volo.Abp.EntityFrameworkCore.Modeling;
 
@@ -13,17 +14,18 @@ namespace Scool.EntityFrameworkCore
 
             /* Configure your own tables/entities inside here */
 
+            builder.Entity<UserProfile>(b =>
+            {
+                b.ToTable(ScoolConsts.DbTablePrefix + nameof(UserProfile), ScoolConsts.DbSchema);
+                b.ConfigureByConvention();
+            });
+
             builder.Entity<Course>(b => 
             {
                 b.ToTable(ScoolConsts.DbTablePrefix + nameof(Course), ScoolConsts.DbSchema);
 
                 // one Course has many Classes
                 b.HasMany(b => b.Classes)
-                    .WithOne(e => e.Course)
-                    .HasForeignKey(f => f.CourseId);
-
-                // one Course has many Regulations
-                b.HasMany(b => b.Regulations)
                     .WithOne(e => e.Course)
                     .HasForeignKey(f => f.CourseId);
 
@@ -73,19 +75,9 @@ namespace Scool.EntityFrameworkCore
                 b.ConfigureByConvention();
             });
 
-            builder.Entity<RegulationType>(b =>
-            {
-                b.ToTable(ScoolConsts.DbTablePrefix + nameof(RegulationType), ScoolConsts.DbSchema);
-                b.ConfigureByConvention();
-            });
-
             builder.Entity<Regulation>(b =>
             {
                 b.ToTable(ScoolConsts.DbTablePrefix + nameof(Regulation), ScoolConsts.DbSchema);
-                b.HasOne(b => b.RegulationType)
-                    .WithMany()
-                    .HasForeignKey(f => f.RegulationTypeId)
-                    .IsRequired();
                 b.HasOne(b => b.Criteria)
                     .WithMany(b => b.Regulations)
                     .HasForeignKey(f => f.CriteriaId)
@@ -123,14 +115,50 @@ namespace Scool.EntityFrameworkCore
             builder.Entity<TaskAssignment>( b =>
             {
                 b.ToTable(ScoolConsts.DbTablePrefix + nameof(TaskAssignment), ScoolConsts.DbSchema);
-                // TODO: configure one-to-many relationship between TaskAssignment - User
-                //b.HasOne(b => b.User)
-                //    .WithMany()
-                //    .HasForeignKey(f => f.UserId);
-                //b.Ignore(b => b.User);
                 b.ConfigureByConvention();
             });
-            
+
+            builder.Entity<DcpReport>(b =>
+            {
+                b.ToTable(ScoolConsts.DbTablePrefix + nameof(DcpReport), ScoolConsts.DbSchema);
+                b.HasMany(b => b.DcpclassReports)
+                    .WithOne()
+                    .HasForeignKey(f => f.DcpReportId);
+                b.ConfigureByConvention();
+            });
+
+            builder.Entity<DcpClassReport>(b =>
+            {
+                b.ToTable(ScoolConsts.DbTablePrefix + nameof(DcpClassReport), ScoolConsts.DbSchema);
+                b.HasMany(b => b.Faults)
+                    .WithOne()
+                    .HasForeignKey(f => f.DcpClassReportId);
+                b.ConfigureByConvention();
+            });
+
+            builder.Entity<DcpClassReportItem>(b =>
+            {
+                b.ToTable(ScoolConsts.DbTablePrefix + nameof(DcpClassReportItem), ScoolConsts.DbSchema);
+                b.HasOne(b => b.Regulation)
+                    .WithMany()
+                    .HasForeignKey(f => f.RegulationId)
+                    .OnDelete(DeleteBehavior.NoAction);
+                b.HasMany(b => b.RelatedStudents)
+                    .WithOne()
+                    .HasForeignKey(f => f.DcpClassReportItemId);
+                b.ConfigureByConvention();
+            });
+
+            builder.Entity<DcpStudentReport>(b =>
+            {
+                b.ToTable(ScoolConsts.DbTablePrefix + nameof(DcpStudentReport), ScoolConsts.DbSchema);
+                b.HasOne(b => b.Student)
+                    .WithMany()
+                    .HasForeignKey(f => f.StudentId)
+                    .OnDelete(DeleteBehavior.NoAction);
+                b.ConfigureByConvention();
+            });
+
 
             // builder.Entity<YourEntityHere>( b =>
             // {

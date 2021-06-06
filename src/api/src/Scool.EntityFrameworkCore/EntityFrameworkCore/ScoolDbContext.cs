@@ -22,6 +22,7 @@ namespace Scool.EntityFrameworkCore
     public class ScoolDbContext : AbpDbContext<ScoolDbContext>
     {
         public DbSet<AppUser> Users { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Class> Classes { get; set; }
@@ -31,9 +32,12 @@ namespace Scool.EntityFrameworkCore
         public DbSet<ActivityParticipant> ActivityParticipants { get; set; }
         public DbSet<Criteria> Criterias { get; set; }
         public DbSet<Regulation> Regulations { get; set; }
-        public DbSet<RegulationType> RegulationTypes { get; set; }
         public DbSet<LessonsRegister> LessonsRegisters { get; set; }
         public DbSet<TaskAssignment> TaskAssignments { get; set; }
+        public DbSet<DcpReport> DcpReports { get; set; }
+        public DbSet<DcpClassReport> DcpClassReports { get; set; }
+        public DbSet<DcpClassReportItem> DcpClassReportItems { get; set; }
+        public DbSet<DcpStudentReport> DcpStudentReports { get; set; }
 
 
 
@@ -63,6 +67,7 @@ namespace Scool.EntityFrameworkCore
                 /* Configure mappings for your additional properties
                  * Also see the ScoolEfCoreEntityExtensionMappings class
                  */
+
             });
 
             /* Configure your own tables/entities inside the ConfigureScool method */

@@ -6,10 +6,10 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Scool.Infrastructure.Standard.Common;
 using Scool.Infrastructure.Linq;
+using Scool.Infrastructure.Common;
 
-namespace Scool.Infrastructure.AppService
+namespace Scool.Infrastructure.ApplicationServices
 {
       public abstract class BasicCrudAppService
       <

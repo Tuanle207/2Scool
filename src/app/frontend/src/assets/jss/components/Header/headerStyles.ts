@@ -2,7 +2,8 @@ import { fade, makeStyles, Theme } from '@material-ui/core';
 
 const useHeaderStyles = makeStyles((theme: Theme) => ({
   grow: {
-    flexGrow: 1
+    // flexGrow: 1
+    width: '100%'
   },
   toolbar: {
     // padding: theme.spacing(2, 1)
