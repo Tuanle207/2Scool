@@ -5,7 +5,7 @@
 
 export type RootStackParamList = {
   Root: undefined;
-  NotFound: undefined;
+  Login: undefined;
 };
 
 export type BottomTabParamList = {
@@ -30,4 +30,5 @@ export type SendReportParamList = {
 
 export type UserParamList = {
   User: undefined;
+  Login: undefined;
 };

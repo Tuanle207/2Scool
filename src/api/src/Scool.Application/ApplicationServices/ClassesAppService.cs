@@ -56,5 +56,17 @@ namespace Scool.Application.ApplicationServices
                     .FirstOrDefaultAsync();
             return ObjectMapper.Map<Class, ClassDto>(entity);
         }
+        public async Task<PagingModel<ClassForSimpleDto>> GetSimpleListAsync()
+        {
+            var classes = await _classRepo
+                .Select(x => ObjectMapper.Map<Class, ClassForSimpleDto>(x))
+                .ToListAsync();
+            var result = new PagingModel<ClassForSimpleDto>
+            (
+                items: classes,
+                totalCount: classes.Count
+            );
+            return result;
+        }
     }
 }

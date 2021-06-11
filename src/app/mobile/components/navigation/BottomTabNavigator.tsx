@@ -19,16 +19,21 @@ import History from '../../screens/History';
 import User from '../../screens/User';
 import AddDisciplineReport from '../../screens/Home/AddDisciplineReport';
 import DetailReport from '../../screens/SendReport/DetailReport';
+import Login from '../../screens/Login';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
+  
   const colorScheme = useColorScheme();
+  
+  
 
   return (
-    <BottomTab.Navigator
+    <BottomTab.Navigator 
+    
       initialRouteName="Home"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint}}>
       <BottomTab.Screen
         name="Home"
         component={HomeNavigator}
@@ -77,7 +82,7 @@ function HomeNavigator() {
       <HomeStack.Screen
         name="Home"
         component={Home}
-        options={{ headerTitle: 'Danh sách lớp chấm điểm thi đua' }}
+        options={{ headerTitle: 'Danh sách lớp chấm điểm thi đua'}}
       />
       <HomeStack.Screen
         name="AddDisciplineReport"
@@ -125,12 +130,17 @@ const UserStack = createStackNavigator<UserParamList>();
 
 function UserNavigator() {
   return (
-    <UserStack.Navigator>
+    <UserStack.Navigator >
       <UserStack.Screen
         name="User"
         component={User}
         options={{ headerTitle: 'User' }}
       />
+      {/* <UserStack.Screen
+        name="Login"
+        component={Login}
+        options={{ headerTitle: 'Login' }}
+      /> */}
     </UserStack.Navigator>
   );
 }

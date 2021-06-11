@@ -3,6 +3,9 @@ import { Alert, ScrollView, StyleSheet, TouchableOpacity, FlatList } from 'react
 import { Text, View } from '../../components/Themed';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
+import { CoursesService } from '../../common/api';
+import { useNavigation } from '@react-navigation/native';
+import OptionsMenu from "react-native-options-menu";
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53ab28ba',
@@ -60,7 +63,9 @@ const DATA = [
   },
 ];
 export function CardClass(props:any) {
+
   const { list, onPress } = props;
+  const myIcon = ( <Feather  name="more-horizontal" size={24} color="black" />)
 return (
   <TouchableOpacity onPress={onPress}>
       <View style={styles.cardDiscipline}>
@@ -75,17 +80,26 @@ return (
             <Text >Số lỗi vi phạm: {list.countDiscipline}</Text>
             
         </View>
+        
+        
         <View style={styles.more}>
-          <Feather  name="more-horizontal" size={24} color="black" />
+        <OptionsMenu
+          customButton={myIcon}
+          destructiveIndex={1}
+          options={["Delete", "Cancel"]}
+          actions={[]}/>
         </View>        
       </View>
   </TouchableOpacity>
 );
 }
+interface Props {
+  children?: React.ReactNode;
+  navigation: any;
+  route: any;
+}
+const SendReport: React.FC<Props> = ({ navigation, route}) => {
 
-export default class extends React.Component {
-  render() {
-      const {navigation} = this.props;
       return (
         <View style={styles.container}>
           <View style={{flex: 8}}>
@@ -110,7 +124,6 @@ export default class extends React.Component {
           
         </View>
       );
-    }
 }
 
 const styles = StyleSheet.create({
@@ -192,3 +205,4 @@ const styles = StyleSheet.create({
   },
 });
 
+export default SendReport;

@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
 import { Alert, Button, Picker, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Dropdown, GroupDropdown, MultiselectDropdown } from 'sharingan-rn-modal-dropdown';
+import { CriteriasService, RegulationsService } from '../../common/api';
 import { Text, View } from '../../components/Themed';
 export const dtNameTypeDiscipline = [
   {
@@ -58,12 +59,43 @@ export const dtNamePupil = [
     label: 'Lưu Văn Bình'
   },
 ];
+interface Props {
+  children?: React.ReactNode;
+  navigation: any;
+  route: any;
+}
 
-
-export default function AddDisciplineReport() {
+const AddDisciplineReport: React.FC<Props> = ({ navigation, route}) => {
   const [listPupil, setListPupil] = React.useState<string[]>([]);
   const [nameTypeDiscipline, setNameTypeDiscipline] = React.useState('');
   const [nameDiscipline, setNameDiscipline] = React.useState('');
+  const [criteria, setCriteria] = React.useState<any[]>([]);
+  const [regulation, setRegulation] = React.useState<any[]>([]);
+  //const route = useRoute();
+  const { classId } = route.params;
+
+  React.useEffect(() => {
+    CriteriasService.getCriterias().then((data: any) => {
+      const items = data.items as [];
+      const result = items.map((el: any) => ({
+        value: el.name,
+        label: el.name
+      }));
+      setCriteria(result);
+    });
+  }, [])
+
+  React.useEffect(() => {
+    RegulationsService.getRegulations().then((data: any) => {
+      const items = data.items as [];
+      const result = items.map((el: any) => ({
+        value: el.name,
+        label: el.name
+      }));
+      setRegulation(result);
+    });
+  }, [])
+
   const onChangeListPupil = (value: string[]) => {
     setListPupil(value);
   };
@@ -90,7 +122,8 @@ export default function AddDisciplineReport() {
                 Alert.alert("Hoàn thành chấm lớp 10A1");
               }}
             >
-              <Text style={{color:'#fff', textAlign:'center'}}> XONG </Text>
+              <Text style={{color:'#fff', textAlign:'center'}}> {classId} </Text>
+              {/* <Text style={{color:'#fff', textAlign:'center'}}> XONG </Text> */}
               <Ionicons name="checkmark" size={24} color="white" align="center"/>
           </TouchableOpacity>
         </View>
@@ -101,7 +134,7 @@ export default function AddDisciplineReport() {
               underlineColor = "white"
               floating
               borderRadius = {16}
-              data={dtNameTypeDiscipline}
+              data={criteria}
               value={nameTypeDiscipline}
               onChange={onChangeNameTypeDiscipline}
             />
@@ -110,9 +143,8 @@ export default function AddDisciplineReport() {
             <Dropdown
               label="Tên vi phạm"
               underlineColor = "white"
-              floating
               borderRadius = {16}
-              data={dtNameDiscipline}
+              data={regulation}
               enableSearch
               value={nameDiscipline}
               onChange={onChangeNameDiscipline}
@@ -207,3 +239,5 @@ export default function AddDisciplineReport() {
         paddingRight: 16,
     },
   });
+
+  export default AddDisciplineReport;

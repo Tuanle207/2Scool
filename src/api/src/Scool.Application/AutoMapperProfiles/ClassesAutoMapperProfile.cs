@@ -12,6 +12,7 @@ namespace Scool.Application.AutoMapperProfiles
             CreateMap<Class, ClassForListDto>();
             CreateMap<Class, ClassForStudentDto>();
             CreateMap<CreateUpdateClassDto, Class>();
+            CreateMap<Class, ClassForSimpleDto>();
 
         }
     }

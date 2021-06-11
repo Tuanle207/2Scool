@@ -6,7 +6,7 @@ import { Text, View } from '../../components/Themed';
 export default function ListClass(props:any) {
     const { item, onPress } = props;
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={.7}>
+    <TouchableOpacity onPress={onPress} activeOpacity={.3}>
       <View style={styles.container}>
         <Text style={styles.title}>{item}</Text>
         <Ionicons name="create" size={24} align="center"/>
