@@ -1,14 +1,12 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { getStore } from '../../store';
+import Cookies from 'js-cookie';
+import { webStore as store } from '../../store';
 
 export const configHttpRequest = (axios: AxiosInstance) => {
-  const token = getStore().getState().auth.token;
+  const token = store.store.getState().auth.token;
   axios.interceptors.request.use(function (config: AxiosRequestConfig) {
     config.headers['Authorization'] = `Bearer ${token}`;
-    // TODO: Confiure header options for Auto Anti-Forgery
-    // config.headers['XSRF-TOKEN'] = '';
-    // config.xsrfCookieName = 'XSRF-TOKEN';
-    config.headers['RequestVerificationToken'] = token;
+    config.headers['RequestVerificationToken'] = Cookies.get('XSRF-TOKEN');
     return config;
   });
 };

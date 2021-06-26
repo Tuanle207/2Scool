@@ -1,12 +1,16 @@
 import React from 'react';
-import { AppBar, IconButton, Badge, Toolbar, InputBase, Menu, MenuItem } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
+import { AppBar, IconButton, Badge, Toolbar, InputBase, Menu, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import useHeaderStyles from '../../assets/jss/components/Header/headerStyles';
 import { withRedux } from '../../common/utils/ReduxConnect';
 import { AuthActions } from '../../common/store/actions';
+import { StyledMenu, StyledMenuItem } from './HeaderMenu';
+
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import SettingsIcon from '@material-ui/icons/Settings';
+import SearchIcon from '@material-ui/icons/Search';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import MoreIcon from '@material-ui/icons/MoreVert';
 
 interface Props {
   hiddenSearchBar?: boolean;
@@ -51,19 +55,32 @@ const Header: React.FC<Props> = ({ postlogoutAsync, onTextChange, hiddenSearchBa
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
-    <Menu
-      className={classes.userMenu}
+    <StyledMenu
+      id="customized-menu"
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem className={classes.userMenuItem} onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem className={classes.userMenuItem} onClick={handleMenuClose}>Log out</MenuItem>
-    </Menu>
+      onBackdropClick={() => setAnchorEl(null)}
+      >
+      <StyledMenuItem>
+        <ListItemIcon className={classes.resetMenuIconWidth}>
+          <AccountCircle fontSize="small" />
+        </ListItemIcon>
+        <ListItemText primary="Tài khoản của tôi" />
+      </StyledMenuItem>
+      <StyledMenuItem>
+        <ListItemIcon className={classes.resetMenuIconWidth}>
+          <SettingsIcon fontSize="small" />
+        </ListItemIcon>
+        <ListItemText primary="Tới trang quản trị" />
+      </StyledMenuItem>
+      <StyledMenuItem onClick={handleMenuClose}>
+        <ListItemIcon className={classes.resetMenuIconWidth}>
+          <ExitToAppIcon fontSize="small" />
+        </ListItemIcon>
+        <ListItemText primary="Đăng xuất" />
+      </StyledMenuItem>
+    </StyledMenu>
   );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';

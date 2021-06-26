@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Container, TextField, Select, InputLabel, FormControl, MenuItem } from '@material-ui/core';
-import { Class, Course, Grade, Teacher, Util } from '../../common/interfaces';
-import { Validator } from '../../common/utils/DataValidation';
+import { Class, Course, Grade, Teacher } from '../../common/interfaces';
 import { useDataValidator } from '../../hooks';
 import { ClassesService, CoursesService, GradesService, TeachersService } from '../../common/api';
 import ActionModal from '.';
@@ -41,7 +40,7 @@ const CreateOrUpdateClassRequest = ({id}: {id?: string}) => {
     };
    
     initData();
-  }, []);
+  }, [id]);
 
   React.useEffect(() => {
     console.log({courses})

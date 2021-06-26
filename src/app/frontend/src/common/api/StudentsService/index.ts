@@ -33,10 +33,20 @@ const getStudentById = async (id: string) => {
   }
 };
 
-const getAllStudents =  async (pagingInfo: Util.PagingInfo) => {
+const getAllStudents = async (pagingInfo: Util.PagingInfo) => {
   try {
     const apiService = await getApiService();
     const result = await apiService.post<Util.PagingModel<Student.StudentDto>>(Endpoint.GetAllStudents(), pagingInfo);
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getStudentForSimpleList = async (classId?: string) => {
+  try {
+    const apiService = await getApiService();
+    const result = await apiService.get<Util.PagingModel<Student.StudentForSimpleListDto>>(Endpoint.GetStudentForSimpleList() + (classId ? `?classId=${classId}` : ''));
     return result;
   } catch (error) {
     throw error;
@@ -53,10 +63,13 @@ const removeStudent =  async ({id}: {id: string}) => {
   }
 };
 
-export default {
+const StudentsService = {
   createStudent,
   getAllStudents,
+  getStudentForSimpleList,
   getStudentById,
   removeStudent,
   updateStudent
 };
+
+export default StudentsService;

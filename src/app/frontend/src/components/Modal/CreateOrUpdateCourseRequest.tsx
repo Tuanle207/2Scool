@@ -2,8 +2,8 @@ import React from 'react';
 import { Box, Container, TextField } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import { Course, Util } from '../../common/interfaces';
-import ActionModal, { ModalDataError } from '.';
+import { Course } from '../../common/interfaces';
+import ActionModal from '.';
 import { Validator } from '../../common/utils/DataValidation';
 import { useDataValidator } from '../../hooks';
 import { CoursesService } from '../../common/api';
@@ -27,7 +27,7 @@ const CreateOrUpdateCourseRequest = ({id}: {id?: string}) => {
         finishTime: res.finishTime || new Date()
       }))
     }
-  }, []);
+  }, [id]);
 
   React.useEffect(() => {
     ActionModal.setData({

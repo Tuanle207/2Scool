@@ -1,4 +1,4 @@
-export default {
+const comparers = {
   Eq: '==',
   Neq: '!=',
   Gt: '>',
@@ -9,4 +9,6 @@ export default {
   Contains: 'Contains',
   StartsWith: 'StartsWith',
   EndsWith: 'EndsWith'
-}
+};
+
+export default comparers;

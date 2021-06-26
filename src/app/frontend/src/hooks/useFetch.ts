@@ -19,10 +19,10 @@ interface FetchDataState {
   data: Util.PagingModel<any>;
 }
 
-interface ReturnType {
+interface ReturnType<T> {
   error?: string;
   loading: boolean;
-  data: Util.PagingModel<any>;
+  data: Util.PagingModel<T>;
   resetCache: () => void;
 }
 
@@ -44,7 +44,7 @@ const initialState: FetchDataState = {
  * @param fetchFunction a function used for calling API
  * @param input an object used as request input: params, body, ...
  */
-export default function useFetch(fetchFunction: Function, input: Util.IObject): ReturnType {
+export default function useFetch<T = any>(fetchFunction: Function, input: Util.IObject): ReturnType<T> {
   // TODO: Sort input key-value following alphabet order for fully utilize cache
   const cacheKey = JSON.stringify(input);
   const cache = useRef<Util.IObject>({});
@@ -105,6 +105,7 @@ export default function useFetch(fetchFunction: Function, input: Util.IObject): 
     return () => {
       cancelRequest = true;
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ cacheKey, state.reset ]);
 
   const resetCache = () => {

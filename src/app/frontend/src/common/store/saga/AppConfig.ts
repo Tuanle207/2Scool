@@ -5,7 +5,7 @@ import { AppConfigActions, LoadingActions } from '../actions';
 
 function* getAppConfig() {
   try {
-    yield put(LoadingActions.fetchingAppConfig({fetching: true}));
+    yield put(LoadingActions.fetchingAppConfig(true));
     const data: Util.IObject = yield call(AppConfigService.getAppConfig);
     
     yield put(AppConfigActions.setAppConfigStorage(data));
@@ -13,7 +13,7 @@ function* getAppConfig() {
   } catch (err) {
     console.log('ERROR', err)
   } finally {
-    yield put(LoadingActions.fetchingAppConfig({fetching: false}));
+    yield put(LoadingActions.fetchingAppConfig(false));
   }
 } 
 

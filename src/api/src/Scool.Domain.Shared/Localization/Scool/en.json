@@ -4,10 +4,21 @@
     "Menu:Home": "Home",
     "Welcome": "Welcome",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
-    "Permission:Courses.Create": "Create new course",
-    "Permission:Courses.Update": "Update a course",
-    "Permission:Courses.Delete": "Delete a course",
-    "Permission:Courses.Get": "Get a course",
-    "Permission:Courses.GetAll": "Get all courses"
+    "Permission:Courses": "Courses Management",
+    "Permission:Courses:Courses": "Courses",
+    "Permission:Courses:Courses.Create": "Create courses",
+    "Permission:Courses:Courses.Update": "Update courses",
+    "Permission:Courses:Courses.Delete": "Delete courses",
+    "Permission:Courses:Courses.Get": "Get course detail",
+    "Permission:Courses:Courses.GetAll": "Get courses",
+
+    "Permission:Dcp": "Discipline Managgement",
+    "Permission:Dcp:DcpReports": "Discipline Reports",
+    "Permission:Dcp:DcpReports.Create": "Create reports",
+    "Permission:Dcp:DcpReports.Update": "Update reports",
+    "Permission:Dcp:DcpReports.Delete": "Delete reports",
+    "Permission:Dcp:DcpReports.Get": "Get report detail",
+    "Permission:Dcp:DcpReports.GetAll": "Get reports",
+    "Permission:Dcp:DcpReports.AcceptReject": "Accept/Reject Report"
   }
 }

@@ -1,32 +1,45 @@
 import React from 'react';
-import { Route, Redirect, RouteComponentProps } from 'react-router-dom';
+import { Route, Redirect, RouteComponentProps, useHistory } from 'react-router-dom';
+import { Util } from '../../common/interfaces';
+import { withRedux } from '../../common/utils/ReduxConnect';
 
-interface Props {
-  component: React.FC<RouteComponentProps>; 
-  isAuth?: boolean; 
+interface OwnProps {
+  component: React.FC<RouteComponentProps>;
+  policyName?: string;
   path: string; 
   exact?: boolean;
 }
 
+type Props = OwnProps & {
+  policies: Util.IObject<boolean>
+};
+
 const ProtectedRoute: React.FC<Props> = ({
   component: Component,
-  isAuth = false,
+  policyName = '',
   path,
+  policies,
   exact = false, 
   ...rest
 }) => {
 
+  console.log({policies});
   return (
     <Route 
       {...{ path, exact, ...rest }}
       render={props => 
-        isAuth ? 
+        ((policies && policies[policyName] === true) || policyName === '') ? 
         (<Component {...props} />)
         :
-        (<Redirect to={{ pathname: '/login', state: { from: props.location } }} />)
+        (<Redirect to={{ pathname: '/errors', state: { from: props.location } }} />)
       }
     />
   );
 };
 
-export default ProtectedRoute;
+export default withRedux<OwnProps>({
+  component: ProtectedRoute,
+  stateProps: (state: any) => ({
+    policies: state.appConfig?.appConfig?.auth?.grantedPolicies
+  })
+});

@@ -1,10 +1,12 @@
 export interface IEnvConfig {
   host: string;
+  appUrl: string;
   platform?: string, // 'mobile' | 'web';
   oAuthConfig: {
     issuer: string;
     clientId: string;
     clientSecret: string;
+    responseType: string;
     scope: string;
   };
   enableLogger: boolean;

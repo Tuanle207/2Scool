@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Scool.Application.Dtos;
 using Scool.Application.IApplicationServices;
 using Scool.Domain.Common;
@@ -55,6 +56,21 @@ namespace Scool.Application.ApplicationServices
                     .Include(e => e.Students)
                     .FirstOrDefaultAsync();
             return ObjectMapper.Map<Class, ClassDto>(entity);
+        }
+
+        public async Task<PagingModel<ClassForSimpleListDto>> GetSimpleListAsync()
+        {
+            var items = await _classRepo
+                .Select(x => ObjectMapper.Map<Class, ClassForSimpleListDto>(x))
+                .ToListAsync();
+
+            var result = new PagingModel<ClassForSimpleListDto>
+            (
+                items: items,
+                totalCount: items.Count
+            );
+
+            return result;
         }
     }
 }

@@ -6,6 +6,10 @@ import TeachersService from './TeachersService';
 import ClassesService from './ClassesService';
 import GradesService from './GradesService';
 import StudentsService from './StudentsService';
+import RegulationsService from './RegulationsService';
+import DcpReportsService from './DcpReportsService';
+import StatisticsService from './StatisticsService';
+
 
 
 export {
@@ -17,4 +21,7 @@ export {
   ClassesService,
   GradesService,
   StudentsService,
+  RegulationsService,
+  DcpReportsService,
+  StatisticsService
 };

@@ -3,6 +3,8 @@ const Endpoint = {
     `/api/app/students/${id}`,
   GetAllStudents: () => 
     `/api/app/students/paging`,
+  GetStudentForSimpleList: () => 
+    `/api/app/students/simple-list`,
   CreateStudent: () =>
     `/api/app/students`,
   UpdateStudent: (id: string) =>

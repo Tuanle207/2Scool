@@ -2,19 +2,17 @@ import { makeStyles } from '@material-ui/core';
 
 const useIntroFormStyles = makeStyles(theme => ({
   formContainer: {
-    height: '100%',
+    height: '50rem',
     width: '50rem',
     background: '#267dff',
-    padding: '10rem',
-    borderRadius: '30px 0 0 30px',
+    padding: theme.spacing(2, 4),
     color: '#fff',
     borderColor: theme.palette.grey.A200
   },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+  wrapper: {
+    height: '100%',
+    widht: '100%',
+    padding: theme.spacing(0, 2)
   },
   button: {
     color: '#fff',
@@ -25,6 +23,13 @@ const useIntroFormStyles = makeStyles(theme => ({
       borderColor: '#fff',
     }
   },
+  welcomeText: {
+    borderBottom: '3px solid #fff'
+  },
+  descriptionText: {
+    fontWeight: 300,
+    margin: theme.spacing(3, 0)
+  }
 }));
 
 export default useIntroFormStyles

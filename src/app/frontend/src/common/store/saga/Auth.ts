@@ -1,4 +1,4 @@
-import { all, call, put, take, takeLatest } from '@redux-saga/core/effects';
+import { all, call, put, takeLatest } from '@redux-saga/core/effects';
 import { AuthService } from '../../api';
 import { User, Util } from '../../interfaces';
 import { AuthActions } from '../actions';

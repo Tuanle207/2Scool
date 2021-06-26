@@ -14,6 +14,6 @@ namespace Scool.Application.IApplicationServices
         CreateUpdateCourseDto
      >
     {
-        Task<PagingModel<CourseForSimpleListDto>> GetCoursesForSimpleList(PageInfoRequestDto input);
+        Task<PagingModel<CourseForSimpleListDto>> GetSimpleListAsync(PageInfoRequestDto input);
     }
 }

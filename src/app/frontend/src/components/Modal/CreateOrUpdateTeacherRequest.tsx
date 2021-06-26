@@ -2,8 +2,8 @@ import React from 'react';
 import { Box, Container, TextField } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import { Teacher, Util } from '../../common/interfaces';
-import ActionModal, { ModalDataError } from '.';
+import { Teacher } from '../../common/interfaces';
+import ActionModal from '.';
 import { Validator } from '../../common/utils/DataValidation';
 import { useDataValidator } from '../../hooks';
 import { TeachersService } from '../../common/api';
@@ -27,7 +27,7 @@ const CreateOrUpdateTeacherRequest = ({id}: {id?: string}) => {
         phoneNumber: res.phoneNumber || ''
       }))
     }
-  }, []);
+  }, [id]);
 
   React.useEffect(() => {
     ActionModal.setData({

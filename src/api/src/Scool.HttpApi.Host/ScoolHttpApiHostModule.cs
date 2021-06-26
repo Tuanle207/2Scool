@@ -175,7 +175,7 @@ namespace Scool
         {
             context.Services.AddCors(options =>
             {
-                options.AddPolicy(DefaultCorsPolicyName, builder =>
+                options.AddPolicy("AllowAll", builder =>
                 {
                     builder
                         .WithOrigins(
@@ -184,8 +184,8 @@ namespace Scool
                                 .Select(o => o.RemovePostFix("/"))
                                 .ToArray()
                         )
-                        .WithAbpExposedHeaders()
-                        .SetIsOriginAllowedToAllowWildcardSubdomains()
+                        //.WithAbpExposedHeaders()
+                        //.SetIsOriginAllowedToAllowWildcardSubdomains()
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials();
@@ -198,10 +198,11 @@ namespace Scool
             //TODO: Configuring Auto-AnttiForgery properly - Current: Ignore all endpoints.
             Configure<AbpAntiForgeryOptions>(options =>
             {
-                options.TokenCookie.Expiration = TimeSpan.FromDays(365);
+                options.AutoValidate = false;
+                //options.TokenCookie.Expiration = TimeSpan.FromDays(365);
                 // options.AutoValidateIgnoredHttpMethods.Remove("GET");
-                options.AutoValidateFilter =
-                    type => !type.Namespace.StartsWith("Scool");
+                //options.AutoValidateFilter =
+                    //type => !type.Namespace.StartsWith("Scool");
             });
         }
 
@@ -225,7 +226,7 @@ namespace Scool
             app.UseCorrelationId();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseCors(DefaultCorsPolicyName);
+            app.UseCors("AllowAll");
             app.UseAuthentication();
             app.UseJwtTokenMiddleware();
 

@@ -1,9 +1,11 @@
 import React from 'react';
-import { TextField, Button, Typography, Container } from '@material-ui/core';
+import { TextField, Button, Container, FormControlLabel, Checkbox } from '@material-ui/core';
 import useLoginFormStyles from '../../assets/jss/components/Form/useLoginFormStyles';
 import { withRedux } from '../../common/utils/ReduxConnect';
 import { AuthActions } from '../../common/store/actions';
 import { User } from '../../common/interfaces';
+// import { AuthService } from '../../common/api/AuthService';
+// import { IdentityService } from '../../common/api';
 
 interface Props {
   children?: React.ReactNode;
@@ -18,16 +20,24 @@ const LoginForm: React.FC<Props> = ({ history, auth, postLogin }) => {
   
   const [ email, setEmail ] = React.useState<string>('');
   const [ password, setPassword ] = React.useState<string>('');
+  // const [ authService, setAuthService ] = React.useState<AuthService>(new AuthService());
+
+  React.useEffect(() => {
+    // authService.getUser().then(user => console.log({user}));
+    // authService.userManager.signinCallback().then(user => console.log({user}));
+    // IdentityService.createRole({name: 'test'});
+  });
 
   const onFormSumbit = (e: any) => {
     e.preventDefault();
     postLogin({username: email, password: password});
+    // authService.login();
   };
 
   return (
     <Container className={styles.formContainer}>
       <form className={styles.form} onSubmit={onFormSumbit}>
-        <Typography variant='h4'>ĐĂNG NHẬP</Typography>
+        <p className={styles.title}>Hệ thống quản lí nề nếp - 2COOL</p>
         <TextField
           className={styles.textField}
           id='login-email'
@@ -44,6 +54,18 @@ const LoginForm: React.FC<Props> = ({ history, auth, postLogin }) => {
           value={password}
           type='password'
           onChange={e => setPassword(e.target.value)}
+        />
+        <FormControlLabel
+        className={styles.checkBox}
+          control={
+            <Checkbox
+              // checked={state.checkedB}
+              // onChange={handleChange}
+              name="checkedB"
+              color="primary"
+            />
+          }
+          label="Remember me"
         />
         <Button 
           className={styles.button}

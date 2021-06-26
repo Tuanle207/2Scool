@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Scool.Domain.Common;
+using Scool.Domain.Views;
 using Scool.Users;
 using Volo.Abp;
 using Volo.Abp.EntityFrameworkCore.Modeling;
@@ -12,11 +13,35 @@ namespace Scool.EntityFrameworkCore
         {
             Check.NotNull(builder, nameof(builder));
 
+
+            /* Config "VIEW" DbSet just for carry querying data */
+            builder.Entity<DcpClassRanking>(b =>
+            {
+                b.HasNoKey();
+                b.ToView(nameof(DcpClassRanking), ScoolConsts.DbSchema);
+            });
+            builder.Entity<DcpClassFault>(b =>
+            {
+                b.HasNoKey();
+                b.ToView(nameof(DcpClassFault), ScoolConsts.DbSchema);
+            });
+            builder.Entity<CommonDcpFault>(b =>
+            {
+                b.HasNoKey();
+                b.ToView(nameof(CommonDcpFault), ScoolConsts.DbSchema);
+            });
+            builder.Entity<StudentWithMostFaults>(b =>
+            {
+                b.HasNoKey();
+                b.ToView(nameof(StudentWithMostFaults), ScoolConsts.DbSchema);
+            });
+
             /* Configure your own tables/entities inside here */
 
             builder.Entity<UserProfile>(b =>
             {
                 b.ToTable(ScoolConsts.DbTablePrefix + nameof(UserProfile), ScoolConsts.DbSchema);
+                b.HasOne(b => b.Class).WithOne().HasForeignKey<UserProfile>(f => f.ClassId);
                 b.ConfigureByConvention();
             });
 
@@ -56,9 +81,11 @@ namespace Scool.EntityFrameworkCore
                     .WithMany()
                     .HasForeignKey(f => f.GradeId);
 
+                // one Class has many students
                 b.HasMany(b => b.Students)
                     .WithOne(e => e.Class)
                     .HasForeignKey(f => f.ClassId);
+
                 b.ConfigureByConvention();
             });
 
@@ -109,6 +136,15 @@ namespace Scool.EntityFrameworkCore
             builder.Entity<LessonsRegister>( b =>
             {
                 b.ToTable(ScoolConsts.DbTablePrefix + nameof(LessonsRegister), ScoolConsts.DbSchema);
+                b.HasMany(b => b.AttachedPhotos)
+                    .WithOne()
+                    .HasForeignKey(f => f.LessonRegisterId);
+                b.ConfigureByConvention();
+            });
+
+            builder.Entity<LessonRegisterPhotos>(b =>
+            {
+                b.ToTable(ScoolConsts.DbTablePrefix + nameof(LessonRegisterPhotos), ScoolConsts.DbSchema);
                 b.ConfigureByConvention();
             });
 
@@ -121,7 +157,7 @@ namespace Scool.EntityFrameworkCore
             builder.Entity<DcpReport>(b =>
             {
                 b.ToTable(ScoolConsts.DbTablePrefix + nameof(DcpReport), ScoolConsts.DbSchema);
-                b.HasMany(b => b.DcpclassReports)
+                b.HasMany(b => b.DcpClassReports)
                     .WithOne()
                     .HasForeignKey(f => f.DcpReportId);
                 b.ConfigureByConvention();

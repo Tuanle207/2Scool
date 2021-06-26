@@ -18,17 +18,17 @@ namespace Scool.Infrastructure.Linq
         /// <param name="condition"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public static IQueryable<TSource> WhereIf<TSource>(this IQueryable<TSource> source, bool condition, Expression<Func<TSource, bool>> predicate)
-        {
-            if (condition)
-            {
-                return source.Where(predicate);
-            }
-            else
-            {
-                return source;
-            }
-        }
+        //public static IQueryable<TSource> WhereIf<TSource>(this IQueryable<TSource> source, bool condition, Expression<Func<TSource, bool>> predicate)
+        //{
+        //    if (condition)
+        //    {
+        //        return source.Where(predicate);
+        //    }
+        //    else
+        //    {
+        //        return source;
+        //    }
+        //}
 
         /// <summary>
         /// Get query paged

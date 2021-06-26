@@ -8,6 +8,6 @@ namespace Scool.Application.Dtos
         public string Name { get; set; }
         public int Point { get; set; }
         public Guid CriteriaId { get; set; }
-        public CriteriaDto Criteria { get; set; }
+        public CriteriaForSimpleListDto Criteria { get; set; }
     }
 }

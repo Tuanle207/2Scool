@@ -5,7 +5,10 @@ import { Class } from './Class';
 import { Grade } from './Grade';
 import { Student } from './Student';
 import { Teacher } from './Teacher';
-
+import { Identity } from './Identity';
+import { Regulation } from './Regulation';
+import { DcpReport } from './DcpReport';
+import { Stats } from './Stats';
 
 export type {
   Util,
@@ -14,5 +17,9 @@ export type {
   Class,
   Grade,
   Student,
-  Teacher
+  Teacher,
+  Identity,
+  Regulation,
+  DcpReport,
+  Stats
 };

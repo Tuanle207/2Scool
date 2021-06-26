@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Scool.Domain.Common;
+using Scool.Domain.Views;
 using Scool.Users;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
@@ -33,11 +34,18 @@ namespace Scool.EntityFrameworkCore
         public DbSet<Criteria> Criterias { get; set; }
         public DbSet<Regulation> Regulations { get; set; }
         public DbSet<LessonsRegister> LessonsRegisters { get; set; }
+        public DbSet<LessonRegisterPhotos> LessonRegisterPhotos { get; set; }
         public DbSet<TaskAssignment> TaskAssignments { get; set; }
         public DbSet<DcpReport> DcpReports { get; set; }
         public DbSet<DcpClassReport> DcpClassReports { get; set; }
         public DbSet<DcpClassReportItem> DcpClassReportItems { get; set; }
         public DbSet<DcpStudentReport> DcpStudentReports { get; set; }
+
+        // not actually stored in DB
+        public DbSet<DcpClassRanking> DcpClassRankings { get; set; }
+        public DbSet<DcpClassFault> DcpClassFaults { get; set; }
+        public DbSet<CommonDcpFault> CommonDcpFaults { get; set; }
+        public DbSet<StudentWithMostFaults> StudentWithMostFaults { get; set; }
 
 
 

@@ -7,12 +7,17 @@ interface ReturnType {
   setFilter: (filter: Util.PagingFilter) => void;
 }
 
-export default function usePagingInfo(props?: { pageSize?: number } ): ReturnType {
+interface Props {
+  pageSize?: number;
+  filter: Util.PagingFilter[]
+}
+
+export default function usePagingInfo(props?: Props): ReturnType {
   
   const [pagingInfo, setPagingInfo] = React.useState<Util.PagingInfo>({ 
     pageIndex: 0, 
     pageSize: props?.pageSize || 5,
-    filter: []
+    filter: props?.filter || []
   });
 
   const setFilter = (filter: Util.PagingFilter) => {

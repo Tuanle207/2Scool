@@ -2,8 +2,8 @@ import React from 'react';
 import { Box, Container, TextField, Select, InputLabel, FormControl, MenuItem } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import { Student, Class, Util } from '../../common/interfaces';
-import ActionModal, { ModalDataError } from '.';
+import { Student, Class } from '../../common/interfaces';
+import ActionModal from '.';
 import { Validator } from '../../common/utils/DataValidation';
 import { useDataValidator } from '../../hooks';
 import { StudentsService, ClassesService } from '../../common/api';
@@ -35,7 +35,7 @@ const CreateOrUpdateStudentRequest = ({id}: {id?: string}) => {
     }
 
     initData();
-  }, []);
+  }, [id]);
 
   React.useEffect(() => {
     ActionModal.setData({

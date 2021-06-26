@@ -14,7 +14,9 @@ namespace Scool.Domain.Common
         public string LastName { get; set; }
         public string DisplayName { get; set; }
         public string PhoneNo { get; set; }
-        public DateTime Dob { get; set; }
+        public DateTime? Dob { get; set; }
         public string Photo { get; set; }
+        public Guid? ClassId { get; set; }
+        public Class Class { get; set; }
     }
 }

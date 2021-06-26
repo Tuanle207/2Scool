@@ -8,8 +8,9 @@ namespace Scool.Domain.Common
     public class TaskAssignment : Entity<Guid>, ICreationAuditedObject
     {
         public Guid AssigneeId { get; set; }
-        public Guid ClassId { get; set; }
-        public Class Class { get; set; }
+        public Guid ClassAssignedId { get; set; }
+        public Class ClassAssigned { get; set; }
+        public string TaskType { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime  { get; set; }
         public DateTime CreationTime { get; set; }

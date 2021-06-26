@@ -10,6 +10,8 @@ using Scool.Infrastructure.ApplicationServices;
 using Scool.Application.IApplicationServices;
 using Scool.Application.Dtos;
 using Scool.Infrastructure.Common;
+using Scool.Application.Permissions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Scool.Application.ApplicationServices
 {
@@ -28,9 +30,16 @@ namespace Scool.Application.ApplicationServices
         public CoursesAppService(IRepository<Course, Guid> courseRepo) : base(courseRepo)
         {
             _courseRepo = courseRepo;
+            GetPolicyName = CoursesPermissions.Get;
+            GetListPolicyName = CoursesPermissions.GetAll;
+            CreatePolicyName = CoursesPermissions.Create;
+            UpdatePolicyName = CoursesPermissions.Update;
+            DeletePolicyName = CoursesPermissions.Delete;
+
         }
 
-        public async Task<PagingModel<CourseForSimpleListDto>> GetCoursesForSimpleList(PageInfoRequestDto input)
+        [Authorize(CoursesPermissions.GetAll)]
+        public async Task<PagingModel<CourseForSimpleListDto>> GetSimpleListAsync(PageInfoRequestDto input)
         {
             var pageSize = input.PageSize > 0 ? input.PageSize : 10;
             var pageIndex = input.PageIndex > 0 ? input.PageIndex : 1;

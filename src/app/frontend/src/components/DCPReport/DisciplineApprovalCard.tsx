@@ -1,8 +1,15 @@
 import React from 'react';
-import { Button, Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
+import { Button, Grid, IconButton, makeStyles, Tooltip, Typography } from '@material-ui/core';
 import { Alarm as AlarmIcon, CheckSharp, Clear, PermContactCalendar as PermContactCalendarIcon,  } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 import BxBxsBookReaderIcon from '../../assets/img/bx_bxs-book-reader.svg';
+import RestoreIcon from '@material-ui/icons/Restore';
+import { DcpReport } from '../../common/interfaces';
+import { formatTime, getDayOfWeek } from '../../common/utils/TimeHelper';
+import ActionModal from '../Modal';
+import { DcpReportsService } from '../../common/api';
+import { toast } from 'react-toastify';
+import { dcpReportStatus } from '../../common/appConsts';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -26,20 +33,44 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const DisciplineApprovalCard = () => {
+const DisciplineApprovalCard = ({data}: {data: DcpReport.DcpReportDto}) => {
 
   const classes = useStyles();
   const history = useHistory();
 
+  const handleAccept = (id: string) => {
+    ActionModal.show({
+      title: 'Xác nhận duyệt phiếu chấm này?',
+      onAccept: async () => {
+        await DcpReportsService.acceptDcpReport([id]);
+        toast('Duyệt thành công!', {
+          type: 'success'
+        });
+      } 
+    })
+  };
+
+  const handleReject = (id: string) => {
+    ActionModal.show({
+      title: 'Xác nhận từ chối phiếu chấm này?',
+      onAccept: async () => {
+        await DcpReportsService.rejectDcpReport(id);
+        toast('Từ chối thành công!', {
+          type: 'success'
+        });
+      } 
+    })
+  };
+
   return (
-    <Grid container direction={'row'} className={classes.container} >
+    <Grid key={data.id} container direction={'row'} className={classes.container} >
       <Grid item container direction={'row'} justify={'flex-start'} style={{flex: 4}}>
         <Grid item container alignItems={'center'} style={{flex: 1}}>
           <Grid item>
             <AlarmIcon />
           </Grid>
           <Grid item style={{marginLeft: 8}}>
-            <Typography variant={'body1'} >10/03/2000 7:20</Typography>
+            <Typography variant={'body1'} > {`${getDayOfWeek(data.creationTime.toLocaleString())} - ${formatTime(data.creationTime.toLocaleString())}`} </Typography>
           </Grid>
         </Grid>
         <Grid item container alignItems={'center'} style={{flex: 1}}>
@@ -47,29 +78,65 @@ const DisciplineApprovalCard = () => {
             <PermContactCalendarIcon />
           </Grid>
           <Grid item style={{marginLeft: 8}}>
-            <Typography variant={'body1'} >Nguyễn Xuân Tú</Typography>
+            <Typography variant={'body1'} >{data.creator ? data.creator.name : ''}</Typography>
           </Grid>
         </Grid>
-        <Grid item container alignItems={'center'}>
+        <Grid item container alignItems={'center'} style={{marginTop: 16}}>
           <Grid item>
             <img src={BxBxsBookReaderIcon} alt='icon' />
           </Grid>
           <Grid item style={{marginLeft: 8}}>
-            <Typography variant={'body1'} >Lớp 10A1, Lớp 10A2, Lớp 10A3, ...</Typography>
+            <Typography variant={'body1'} > {data.dcpClassReports.map(el => el.class.name).join(', ')} </Typography>
           </Grid>
         </Grid>
       </Grid>
-      <Grid item container direction={'column'} style={{flex: 1}}>
-        <Grid item>
-          <IconButton className={classes.rejectBtn}>
-            <Clear />
-          </IconButton>
-          <IconButton color={'primary'} className={classes.acceptBtn}>
-            <CheckSharp />
-          </IconButton>
+      <Grid item container 
+        direction='column'
+        justify='space-between' 
+        style={{flex: 1}}
+      > 
+        <Grid item container justify={data.status === dcpReportStatus.Created ? 'flex-start' : 'center'}>
+          {
+            data.status === dcpReportStatus.Created && (
+              <Tooltip title='Hủy duyệt'>
+                <IconButton 
+                  className={classes.rejectBtn} 
+                  onClick={() => handleReject(data.id)}
+                >
+                  <Clear />
+                </IconButton>
+              </Tooltip>
+            )                    
+          }
+          {
+            data.status === dcpReportStatus.Created && (
+            <Tooltip title='Duyệt'>
+              <IconButton 
+                color={'primary'} 
+                className={classes.acceptBtn}
+                onClick={() => handleAccept(data.id)}
+              >
+                <CheckSharp />
+              </IconButton>
+            </Tooltip>
+            )                    
+          }
+          {
+              [dcpReportStatus.Approved, dcpReportStatus.Rejected].includes(data.status) && (
+              <Tooltip title='Bỏ duyệt'>
+                <IconButton
+                  className={classes.rejectBtn} 
+                >
+                  <RestoreIcon />
+                </IconButton>
+              </Tooltip>
+              
+            )
+          }
+          
         </Grid>
         <Grid item>
-          <Button onClick={() => history.push('/dcp-report-approval/xyz')} 
+          <Button onClick={() => history.push(`/dcp-report-approval/${data.id}`)} 
             color={'primary'}>Xem chi tiết...</Button>
         </Grid>
       </Grid>

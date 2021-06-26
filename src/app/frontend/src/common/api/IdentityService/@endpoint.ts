@@ -14,18 +14,30 @@ const Endpoint = {
     `/api/identity/roles`,
   GetRoleById: () =>
     `/api/identity/roles`,
+  CreateRole: () =>
+    `/api/identity/roles`,
   UpdateRole: (id: string) =>
     `/api/identity/roles/${id}`,
   RemoveRole: (id: string) =>
     `/api/identity/roles/${id}`,
   GetUserRoles: (id: string) =>
     `/api/identity/users/${id}/roles`,
+  GetPermissions: () =>
+  `/api/permission-management/permissions`,
+  UpdatePermissions: () =>
+  `/api/permission-management/permissions`,
   
   // user managerment
   GetUsers: () =>
     `/api/identity/users`,
   GetUserById: (id: string) =>
     `/api/identity/users/${id}`,
+  GetUserRoleById: (id: string) =>
+  `/api/identity/users/${id}/roles`,
+  UpdateUserRoleById: (id: string) =>
+  `/api/identity/users/${id}/roles`,
+  GetAssignableRoles: () =>
+  `/api/identity/users/assignable-roles`,
   CreateUser: () =>
     `/api/identity/users`,
   UpdateUser: (id: string) =>

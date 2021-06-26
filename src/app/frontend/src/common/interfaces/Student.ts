@@ -1,4 +1,4 @@
-import { Class } from '.';
+import { Class } from './Class';
 
 export namespace Student {
   
@@ -9,6 +9,11 @@ export namespace Student {
     class: Class.ClassForStudentDto;
     dob: Date;
     parentPhoneNumber: string;
+  }
+
+  export interface StudentForSimpleListDto {
+    id: string;
+    name: string;
   }
 
   export interface CreateUpdateStudentDto {

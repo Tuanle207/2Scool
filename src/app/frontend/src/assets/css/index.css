@@ -23,3 +23,20 @@ body {
   height: 100vh;
   position: relative;
 }
+
+::-webkit-scrollbar-track
+{
+	border-radius: 12px;
+	background-color: #dddddd;
+}
+
+::-webkit-scrollbar
+{
+	width: 8px;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 12px;
+	background-color: #555;
+}

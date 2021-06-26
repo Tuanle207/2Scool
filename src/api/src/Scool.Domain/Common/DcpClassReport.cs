@@ -12,16 +12,19 @@ namespace Scool.Domain.Common
         public Guid DcpReportId { get; set; }
         public Guid ClassId { get; set; }
         public Class Class { get; set; }
+        public int PenaltyTotal { get; set; }
         public ICollection<DcpClassReportItem> Faults { get; set; }
 
         public DcpClassReport()
         {
             Faults = new List<DcpClassReportItem>();
+            PenaltyTotal = 0;
         }
         public DcpClassReport(Guid id)
         {
             Id = id;
             Faults = new List<DcpClassReportItem>();
+            PenaltyTotal = 0;
         }
     }
 }

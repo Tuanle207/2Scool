@@ -36,4 +36,12 @@ export namespace Util {
     pageSize: number; 
   }
 
+  export interface IHaveExtraProperties {
+    extraProperties: IObject;
+  }
+
+  export interface DateFilterDto {
+    startTime: Date;
+    endTime: Date;
+  }
 }

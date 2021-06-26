@@ -20,6 +20,12 @@ const formatTime = (date: string, format?: string) => {
   return moment(date).format(format);
 };
 
+const getDayOfWeek = (date: string) => {
+  const dayOfWeek = new Date(date).getDay();
+  return dayOfWeek === 0 ? 'CN' : `T${dayOfWeek + 1}`;
+};
+
+
 /**
  * 
  * @param duration length of duration in minutes
@@ -51,9 +57,32 @@ const formatDuration = (duration: number): string => {
   return result.length > 0 ? `${result} ${minutes} ${minuteLocal}` : `${minutes} ${minuteLocal}`;
 };
 
+const addDays = (date: Date, dayToAdd: number = 1) => {
+  const temp = new Date(date);
+  const currentDay = temp.getDate();
+  return new Date(temp.setDate(currentDay + dayToAdd));
+};
+
+const getPreviousMonday = (input: Date) => {
+    var date = new Date(input);
+    var day = date.getDay();
+    var prevMonday = new Date(input);
+    if(date.getDay() === 0) {
+        prevMonday.setDate(date.getDate() - 6);
+    }
+    else{
+        prevMonday.setDate(date.getDate() - (day-1));
+    }
+
+    return prevMonday;
+};
+
 export {
   formatDate, 
   formatTime, 
   formatDuration, 
-  toLocalISOString
+  toLocalISOString,
+  getDayOfWeek,
+  addDays,
+  getPreviousMonday
 };

@@ -1,12 +1,13 @@
 import React from 'react';
-import { Container, Grid, makeStyles, IconButton, Typography } from '@material-ui/core';
+import { Container, Grid, makeStyles, IconButton, Typography, Tooltip } from '@material-ui/core';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import PageTitleBar from '../components/PageTitleBar';
 import { DataGrid, GridColDef, GridPageChangeParams, GridValueFormatterParams } from '@material-ui/data-grid';
-import { Student, Class } from '../common/interfaces';
-import { StudentsService } from '../common/api';
+import { Student, Class, Identity } from '../common/interfaces';
+import { IdentityService, StudentsService } from '../common/api';
 import { useFetch, usePagingInfo } from '../hooks';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
@@ -16,6 +17,7 @@ import ActionModal from '../components/Modal';
 import CreateOrUpdateStudentRequest from '../components/Modal/CreateOrUpdateStudentRequest';
 import { comparers } from '../common/appConsts';
 import { toast } from 'react-toastify';
+import CreateStudentAccountRequest from '../components/Modal/CreateStudentAccountRequest';
 
 
 const cols: GridColDef[] =  [
@@ -108,6 +110,13 @@ const StudentsPage = () => {
     resetCache();
   };
 
+  const onRequestAccountCreate = async (data: Identity.CreateUpdateUserDto) => {
+    await IdentityService.createUser(data);
+    toast('Cấp tài khoản thành công', {
+      type: toast.TYPE.SUCCESS
+    });
+  };
+
   const getSelectedItem = (): Student.StudentDto | null => {
     return selectedItems && selectedItems.length > 0 
       ? selectedItems[selectedItems.length - 1] 
@@ -144,33 +153,42 @@ const StudentsPage = () => {
                   <Typography variant='h6'>Danh sách học sinh</Typography>
                 </Grid>
                 <Grid item>
-                  <IconButton
-                    disabled={selectedItems.length === 0} 
-                    onClick={() => ActionModal.show({
-                      title: `Xác nhận xóa học sinh: ${getSelectedItem()!.name}?`,
-                      onAccept: () => onRequestDelete(getSelectedItem()!.id)
-                    })}
-                  >
-                    <DeleteIcon/>
-                  </IconButton>
-                  <IconButton  
-                    disabled={selectedItems.length === 0} 
-                    onClick={() => ActionModal.show({
-                      title: 'Cập nhật thông tin học sinh',
-                      acceptText: 'Lưu',
-                      cancelText: 'Hủy',
-                      component: <CreateOrUpdateStudentRequest id={getSelectedItem()!.id}/>,
-                      onAccept: onRequestUpdate
-                    })} 
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    disabled={selectedItems.length === 0} 
-                    // onClick={} 
-                  >
-                    <ErrorOutlineIcon />
-                  </IconButton>
+                  <Tooltip title='Xóa học sinh này'>
+                    <IconButton
+                      disabled={selectedItems.length === 0} 
+                      onClick={() => ActionModal.show({
+                        title: `Xác nhận xóa học sinh: ${getSelectedItem()!.name}?`,
+                        onAccept: () => onRequestDelete(getSelectedItem()!.id)
+                      })}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title='Cập nhật thông tin'>
+                    <IconButton  
+                      disabled={selectedItems.length === 0} 
+                      onClick={() => ActionModal.show({
+                        title: 'Cập nhật thông tin học sinh',
+                        acceptText: 'Lưu',
+                        cancelText: 'Hủy',
+                        component: <CreateOrUpdateStudentRequest id={getSelectedItem()!.id}/>,
+                        onAccept: onRequestUpdate
+                      })} 
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title='Cấp tài khoản'>
+                    <IconButton
+                      disabled={selectedItems.length === 0} 
+                      onClick={() => ActionModal.show({
+                        component: <CreateStudentAccountRequest id={getSelectedItem()!.id} />,
+                        onAccept: onRequestAccountCreate
+                      })}
+                    >
+                      <PersonAddIcon />
+                    </IconButton>
+                  </Tooltip>
                 </Grid>
               </Grid>
             </Grid>

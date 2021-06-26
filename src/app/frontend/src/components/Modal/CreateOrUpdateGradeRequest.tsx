@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Container, TextField } from '@material-ui/core';
-import { Grade, Util } from '../../common/interfaces';
-import { Validator } from '../../common/utils/DataValidation';
+import { Grade } from '../../common/interfaces';
 import { useDataValidator } from '../../hooks';
 import { GradesService } from '../../common/api';
 import ActionModal from '.';
@@ -31,7 +30,7 @@ const CreateOrUpdateGradeRequest = ({id}: {id?: string}) => {
         msg: errors[0].msg
       } : undefined
     });
-  }, [data]);
+  }, [data, errors]);
 
 
   return (

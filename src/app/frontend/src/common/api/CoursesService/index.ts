@@ -53,10 +53,12 @@ const removeCourse =  async ({courseId}: {courseId: string}) => {
   }
 };
 
-export default {
+const CoursesService = {
   createCourse,
   getAllCourses,
   getCourseById,
   removeCourse,
   updateCourse
 };
+
+export default CoursesService;

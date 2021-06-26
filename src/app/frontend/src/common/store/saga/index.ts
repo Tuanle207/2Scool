@@ -1,6 +1,7 @@
 import { all, fork } from 'redux-saga/effects';
 import AppConfig from './AppConfig';
 import Auth from './Auth';
+import DcpReport from './DcpReport';
 
 export function* mobileRootSaga() {
   yield all([
@@ -12,6 +13,7 @@ export function* mobileRootSaga() {
 export function* webRootSaga() {
   yield all([
     fork(Auth),
-    fork(AppConfig)
+    fork(AppConfig),
+    fork(DcpReport)
   ]);
 };

@@ -1,7 +1,4 @@
-import { AxiosInstance } from 'axios';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
-import qs from 'query-string';
-
 import { Util } from '../../interfaces';
 
 export const parseQueryString = (params: Util.IObject = {}) => {

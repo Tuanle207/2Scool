@@ -77,6 +77,10 @@ const useHeaderStyles = makeStyles((theme: Theme) => ({
       display: 'none',
     },
   },
+  resetMenuIconWidth: {
+    minWidth: 0, 
+    marginRight: 16
+  }
 }));
 
 export default useHeaderStyles;

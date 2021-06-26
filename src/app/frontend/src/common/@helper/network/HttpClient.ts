@@ -11,7 +11,9 @@ export interface IHttpRequestOptions extends AxiosRequestConfig {
   headers?: { [key: string]: any }
 }
 
-export interface IHttpResponse<T> extends AxiosResponse { }
+export interface IHttpResponse<T> extends AxiosResponse { 
+  reponseType: T
+}
 
 export class HttpClient {
   private baseUrl: string;

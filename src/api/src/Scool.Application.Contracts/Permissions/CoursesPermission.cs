@@ -2,28 +2,39 @@ using Scool.Localization;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Localization;
 
-namespace Scool.Application.Contracts.Courses.Permissions
+namespace Scool.Application.Permissions
 {
-    public class CoursesAppService : PermissionDefinitionProvider
+    internal class CoursesAppService : PermissionDefinitionProvider
     {
         public override void Define(IPermissionDefinitionContext context)
         {
-            var group = context.AddGroup(CoursesPermissions.GroupName);
+            PermissionGroupDefinition group = context.GetGroupOrNull(PermissionGroupsConst.Courses);
+            string prefix = $"Permission:{PermissionGroupsConst.Courses}";
 
-            group.AddPermission(CoursesPermissions.Get, 
-                L("Permission:" + CoursesPermissions.Get));
+            if (group == null)
+            {
+                group = context.AddGroup(PermissionGroupsConst.Courses, L(prefix));
+            }
 
-            group.AddPermission(CoursesPermissions.GetAll, 
-                L("Permission:" + CoursesPermissions.GetAll));
+            prefix += ":";
 
-            group.AddPermission(CoursesPermissions.Create, 
-                L("Permission:" + CoursesPermissions.Create));
+            var coursePermission = group.AddPermission(CoursesPermissions.Permission,
+                L(prefix + CoursesPermissions.Permission));
 
-            group.AddPermission(CoursesPermissions.Update,
-                L("Permission:" + CoursesPermissions.Update));
+            coursePermission.AddChild(CoursesPermissions.Get, 
+                L(prefix + CoursesPermissions.Get));
 
-            group.AddPermission(CoursesPermissions.Delete, 
-                L("Permission:" + CoursesPermissions.Delete));
+            coursePermission.AddChild(CoursesPermissions.GetAll, 
+                L(prefix + CoursesPermissions.GetAll));
+
+            coursePermission.AddChild(CoursesPermissions.Create, 
+                L(prefix + CoursesPermissions.Create));
+
+            coursePermission.AddChild(CoursesPermissions.Update,
+                L(prefix + CoursesPermissions.Update));
+
+            coursePermission.AddChild(CoursesPermissions.Delete, 
+                L(prefix + CoursesPermissions.Delete));
         }
 
         private static LocalizableString L(string name)
@@ -32,13 +43,13 @@ namespace Scool.Application.Contracts.Courses.Permissions
         }
     }
 
-    internal class CoursesPermissions
+    public static class CoursesPermissions
     {
-        public const string GroupName = "Courses";
-        public const string Get = GroupName + ".Get";
-        public const string GetAll = GroupName + ".GetAll";
-        public const string Create = GroupName + ".Create";
-        public const string Update = GroupName + ".Update";
-        public const string Delete = GroupName + ".Delete";
+        public const string Permission = "Courses";
+        public const string Get = Permission + ".Get";
+        public const string GetAll = Permission + ".GetAll";
+        public const string Create = Permission + ".Create";
+        public const string Update = Permission + ".Update";
+        public const string Delete = Permission + ".Delete";
     }
 }

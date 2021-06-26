@@ -3,6 +3,8 @@ const Endpoint = {
     `/api/app/classes/${id}`,
   GetAllClasss: () => 
     `/api/app/classes/paging`,
+  GetClassForSimpleList: () => 
+    `/api/app/classes/simple-list`,
   CreateClass: () =>
     `/api/app/classes`,
   UpdateClass: (id: string) =>

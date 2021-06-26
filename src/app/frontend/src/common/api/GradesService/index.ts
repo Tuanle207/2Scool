@@ -53,10 +53,12 @@ const removeGrade =  async ({id}: {id: string}) => {
   }
 };
 
-export default {
+const GradesService ={
   createGrade,
   getAllGrades,
   getGradeById,
   removeGrade,
   updateGrade
 };
+
+export default GradesService;

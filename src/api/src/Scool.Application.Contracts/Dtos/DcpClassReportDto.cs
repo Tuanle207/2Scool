@@ -10,8 +10,9 @@ namespace Scool.Application.Dtos
     public class DcpClassReportDto : Entity<Guid>
     {
         public Guid DcpReportId { get; set; }
+        public int PenaltyTotal { get; set; }
         public Guid ClassId { get; set; }
-        public ClassForSimpleDto Class { get; set; }
+        public ClassForSimpleListDto Class { get; set; }
         public ICollection<DcpClassReportItemDto> Faults { get; set; }
     }
 }

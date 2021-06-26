@@ -4,7 +4,7 @@ import React from 'react';
 
 const useStyles = makeStyles(theme => ({
   container: {
-    padding: theme.spacing(4),
+    padding: theme.spacing(2, 4),
     border: '1px solid #000',
     cursor: 'pointer',
     borderRadius: 20,

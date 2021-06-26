@@ -1,5 +1,7 @@
-import { Course, Grade } from '.';
 import { Teacher } from './Teacher';
+import { Course } from './Course';
+import { Grade } from './Grade';
+
 
 export namespace Class {
 
@@ -26,6 +28,11 @@ export namespace Class {
     formTeacherId: string;
     formTeacher: Teacher.TeacherDto;
     noStudents: number;
+  }
+
+  export interface ClassForSimpleListDto {
+    id: string;
+    name: string;
   }
 
   export interface ClassForStudentDto {

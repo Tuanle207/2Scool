@@ -1,5 +1,5 @@
 import { configureStore, Store } from '@reduxjs/toolkit';
-import AsyncStorage from '@react-native-community/async-storage'
+import Storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 import { mobileReducer, webReducers } from './reducers';
@@ -19,8 +19,9 @@ export class ReduxStore {
   constructor(reducers: any, sagaRoot: any) {
     const persistConfig = {
       key: 'root',
-      storage: AsyncStorage,
-      whilelist: ['auth']
+      storage: Storage,
+      whilelist: ['auth'],
+      blacklist: ['dcpReport']
     };
     this.sagaMiddleware = createSagaMiddleware();
     this.sagaRoot = sagaRoot;

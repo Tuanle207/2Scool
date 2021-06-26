@@ -8,6 +8,6 @@ namespace Scool.Application.Dtos
 {
     public class CreateUpdateDcpReportDto
     {
-        public ICollection<CreateUpdateDcpClassReportDto> DcpclassReports { get; set; }
+        public ICollection<CreateUpdateDcpClassReportDto> DcpClassReports { get; set; }
     }
 }

@@ -9,7 +9,9 @@ namespace Scool.Application.AutoMapperProfiles
         public StudentsAutoMapperProfile()
         {
             CreateMap<Student, StudentDto>();
+            CreateMap<Student, StudentForSimpleListDto>();
             CreateMap<CreateUpdateStudentDto, Student>();
+            
         }
     }
 }

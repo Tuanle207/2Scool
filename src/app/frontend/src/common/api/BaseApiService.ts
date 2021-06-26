@@ -9,7 +9,7 @@ export const getApiService = async () => {
 
   // get token from store
   const { 
-    auth: { token, refreshToken }
+    auth: { token }
   } = getStore().getState();
 
   // check token's valility
@@ -22,7 +22,7 @@ export const getApiService = async () => {
     baseUrl: baseurl,
     options: {
       headers: { 'Content-Type': 'application/json' },
-      withCredentials: true
+      withCredentials: true,
     }
   });
   // config axios interceptor;
@@ -37,7 +37,7 @@ export const getAuthService = () => {
 
   const httpClient = new HttpClient({baseUrl: baseurl, options: {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    withCredentials: true
+    // withCredentials: true
   }});
 
   return httpClient;
@@ -46,9 +46,9 @@ export const getAuthService = () => {
 export const getDefaultOAuthOptions = () => {
   const { oAuthConfig } = configEnv();
   return {
-    ['grant_type']: 'password',
-    ['scope']: oAuthConfig.scope,
-    ['client_id']: oAuthConfig.clientId,
-    ['client_secret']: oAuthConfig.clientSecret
+    'grant_type': 'password',
+    'scope': oAuthConfig.scope,
+    'client_id': oAuthConfig.clientId,
+    'client_secret': oAuthConfig.clientSecret,
   };
 };

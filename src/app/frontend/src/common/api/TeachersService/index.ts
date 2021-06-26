@@ -63,7 +63,7 @@ const removeTeacher =  async ({id}: {id: string}) => {
   }
 };
 
-export default {
+const TeachersService = {
   createTeacher,
   getAllTeachers,
   getAllTeachersSimpleList,
@@ -71,3 +71,5 @@ export default {
   removeTeacher,
   updateTeacher
 };
+
+export default TeachersService;

@@ -1,7 +1,7 @@
 import { getApiService } from '../BaseApiService';
 import Endpoint from './@endpoint';
 
-export default async () => {
+const getAppConfig = async () => {
   try {
     const apiService = await getApiService();
     const result = await apiService.get(Endpoint.GetAppConfig());
@@ -10,3 +10,5 @@ export default async () => {
     throw err;
   }
 };
+
+export default getAppConfig;
