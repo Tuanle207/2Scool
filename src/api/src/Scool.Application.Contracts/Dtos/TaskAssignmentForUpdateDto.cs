@@ -8,15 +8,12 @@ using Volo.Abp.Application.Dtos;
 
 namespace Scool.Application.Dtos
 {
-    public class TaskAssignmentDto : EntityDto<Guid>
+    public class TaskAssignmentForUpdateDto : EntityDto<Guid>
     {
-        public UserProfleForTaskAssignmentDto Assignee { get; set; }
-        public ClassForSimpleListDto ClassAssigned { get; set; }
+        public Guid AssigneeId { get; set; }
+        public Guid ClassAssignedId { get; set; }
         public string TaskType { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime  { get; set; }
-        public DateTime CreationTime { get; set; }
-        public Guid? CreatorId{ get; set; }
-        public UserForSimpleListDto Creator{ get; set; }
     }
 }

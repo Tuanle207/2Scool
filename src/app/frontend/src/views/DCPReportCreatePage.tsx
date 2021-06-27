@@ -14,7 +14,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import GroupIcon from '@material-ui/icons/Group';
 import CreateIcon from '@material-ui/icons/Create';
 import { Class, Student, Regulation, DcpReport, Util } from '../common/interfaces';
-import { ClassesService, RegulationsService, StudentsService } from '../common/api';
+import { ClassesService, RegulationsService, StudentsService, TaskAssignmentService } from '../common/api';
 import { withRedux } from '../common/utils/ReduxConnect';
 import { DcpReportActions } from '../common/store/actions';
 import { formatTime } from '../common/utils/TimeHelper';
@@ -240,7 +240,7 @@ const DCPReportCreatePage: React.FC<Props> = ({
   React.useEffect(() => {
     const initData = async () =>  {
       const requestApi: Promise<any>[] = [
-        ClassesService.getClassForSimpleList(),
+        TaskAssignmentService.getAssignedClassesForDcpReport(),
         RegulationsService.getCriteriaForSimpleList(),
         RegulationsService.getRegulationForSimpleList(),
       ];

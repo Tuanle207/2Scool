@@ -36,6 +36,7 @@ const AppContainer: React.FC<Props> = ({ token, getAppConfig, fetchingAppConfig 
           }
           <ToastContainer 
             position={toast.POSITION.BOTTOM_RIGHT}
+            autoClose={2000}
             hideProgressBar
             limit={6}
           />

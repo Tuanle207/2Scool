@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Scool.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -10,9 +11,10 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Scool.Migrations
 {
     [DbContext(typeof(ScoolMigrationsDbContext))]
-    partial class ScoolMigrationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210626094555_Config_Relationship_Between_UserProfile_Class")]
+    partial class Config_Relationship_Between_UserProfile_Class
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -403,8 +405,6 @@ namespace Scool.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AssigneeId");
 
                     b.HasIndex("ClassAssignedId");
 
@@ -2604,19 +2604,11 @@ namespace Scool.Migrations
 
             modelBuilder.Entity("Scool.Domain.Common.TaskAssignment", b =>
                 {
-                    b.HasOne("Scool.Domain.Common.UserProfile", "AssigneeProfile")
-                        .WithMany()
-                        .HasForeignKey("AssigneeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Scool.Domain.Common.Class", "ClassAssigned")
                         .WithMany()
                         .HasForeignKey("ClassAssignedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AssigneeProfile");
 
                     b.Navigation("ClassAssigned");
                 });

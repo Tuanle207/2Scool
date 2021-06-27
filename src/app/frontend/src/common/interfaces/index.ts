@@ -9,6 +9,7 @@ import { Identity } from './Identity';
 import { Regulation } from './Regulation';
 import { DcpReport } from './DcpReport';
 import { Stats } from './Stats';
+import { TaskAssignment } from './TaskAssignment';
 
 export type {
   Util,
@@ -21,5 +22,6 @@ export type {
   Identity,
   Regulation,
   DcpReport,
-  Stats
+  Stats,
+  TaskAssignment
 };

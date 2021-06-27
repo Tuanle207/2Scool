@@ -53,7 +53,7 @@ const removeGrade =  async ({id}: {id: string}) => {
   }
 };
 
-const GradesService ={
+const GradesService = {
   createGrade,
   getAllGrades,
   getGradeById,

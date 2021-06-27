@@ -139,7 +139,6 @@ type ViewType = 'ByWeek' | 'ByMonth' | 'BySemester';
 const DCPRankingPage = () => {
 
   const classes = useStyles();
-  const history = useHistory();
 
   const [dateFilter, setDateFilter] = React.useState<{
     startTime: Date | null,

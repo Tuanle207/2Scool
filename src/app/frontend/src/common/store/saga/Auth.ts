@@ -1,4 +1,5 @@
 import { all, call, put, takeLatest } from '@redux-saga/core/effects';
+import { toast } from 'react-toastify';
 import { AuthService } from '../../api';
 import { User, Util } from '../../interfaces';
 import { AuthActions } from '../actions';
@@ -13,6 +14,15 @@ function* login({ payload }: Util.IObject) {
 
   } catch (err) {
     console.log('ERROR', err);
+    if (err.data?.error_description) {
+      toast.error(err.data.error_description, {
+        autoClose: 5000
+      });
+    } else if (err.message) {
+      toast.error(err.message, {
+        autoClose: 5000
+      });
+    } 
   }
 }
 

@@ -41,7 +41,6 @@ namespace Scool.EntityFrameworkCore
             builder.Entity<UserProfile>(b =>
             {
                 b.ToTable(ScoolConsts.DbTablePrefix + nameof(UserProfile), ScoolConsts.DbSchema);
-                b.HasOne(b => b.Class).WithOne().HasForeignKey<UserProfile>(f => f.ClassId);
                 b.ConfigureByConvention();
             });
 
@@ -83,6 +82,10 @@ namespace Scool.EntityFrameworkCore
 
                 // one Class has many students
                 b.HasMany(b => b.Students)
+                    .WithOne(e => e.Class)
+                    .HasForeignKey(f => f.ClassId);
+
+                b.HasMany<UserProfile>()
                     .WithOne(e => e.Class)
                     .HasForeignKey(f => f.ClassId);
 
@@ -151,6 +154,7 @@ namespace Scool.EntityFrameworkCore
             builder.Entity<TaskAssignment>( b =>
             {
                 b.ToTable(ScoolConsts.DbTablePrefix + nameof(TaskAssignment), ScoolConsts.DbSchema);
+                b.HasOne(b => b.AssigneeProfile).WithMany().HasForeignKey(f => f.AssigneeId);
                 b.ConfigureByConvention();
             });
 
@@ -194,7 +198,6 @@ namespace Scool.EntityFrameworkCore
                     .OnDelete(DeleteBehavior.NoAction);
                 b.ConfigureByConvention();
             });
-
 
             // builder.Entity<YourEntityHere>( b =>
             // {

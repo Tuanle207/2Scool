@@ -61,6 +61,17 @@ const deleteUserById = async (id: string) =>  {
   }
 };
 
+const getUsersForTaskAssignment = async () =>  {
+  try {
+    const apiService = await getApiService();
+    const result = await apiService.get<Util.PagingModel<Identity.UserForTaskAssignmentDto>>
+      (Endpoint.GetUsersForTaskAssignment());
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const getAssignableRoles = async () => {
   try {
     const apiService = await getApiService();
@@ -136,6 +147,7 @@ const IdentityService = {
   updateRole,
   getPermissions,
   updateRolePermissions,
+  getUsersForTaskAssignment,
 };
 
 export default IdentityService;

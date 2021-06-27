@@ -1,4 +1,5 @@
 import { Util } from './Util';
+import { Class } from './Class';
 
 export namespace Identity {
   
@@ -70,4 +71,11 @@ export namespace Identity {
     }[]
   }
 
+  export interface UserForTaskAssignmentDto {
+    id: string;
+    name: string;
+    userProfileId: string;
+    class: Class.ClassForSimpleListDto;
+    phoneNumber: string;
+  }
 }

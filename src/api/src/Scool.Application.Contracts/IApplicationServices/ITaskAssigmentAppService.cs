@@ -13,15 +13,13 @@ namespace Scool.Application.IApplicationServices
             Guid,
             TaskAssignmentDto,
             TaskAssignmentDto,
-            CreateUpdateTaskAssignmentByClassDto,
-            CreateUpdateTaskAssignmentByClassDto
+            CreateUpdateTaskAssignmentDto,
+            CreateUpdateTaskAssignmentDto
         >
     {
-        Task CreateByStudentAsync(CreateUpdateTaskAssignmentByStudentDto input);
-        Task CreateByClassAsync(CreateUpdateTaskAssignmentByClassDto input);
-        Task UpdateByStudentAsync(CreateUpdateTaskAssignmentByStudentDto input);
-        Task UpdateByClassAsync(CreateUpdateTaskAssignmentByClassDto input);
-        Task<PagingModel<TaskAssignmentDto>> GetByStudentAsync(PageInfoRequestDto input);
-        Task<PagingModel<TaskAssignmentDto>> GetByClassAsync(PageInfoRequestDto input);
+        Task CreateUpdateAsync(CreateUpdateTaskAssignmentDto input);
+        Task<PagingModel<TaskAssignmentDto>> GetAllAsync(TaskAssignmentFilterDto input);
+        Task<PagingModel<TaskAssignmentForUpdateDto>> GetForUpdateAsync(TaskAssignmentFilterDto input);
+        Task<PagingModel<ClassForSimpleListDto>> GetAssignedClassesForDcpReportAsync();
     }
 }

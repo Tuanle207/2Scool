@@ -1,22 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Container, Grid, Box, Button, makeStyles, List, ListItem, Typography, Tabs, Tab, IconButton, Menu, MenuItem, Chip, Tooltip } from '@material-ui/core';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
+import { Container, Grid, Button, makeStyles, List, ListItem, Typography, IconButton, Menu, MenuItem, Tooltip } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
-import { DcpReport, Regulation } from '../common/interfaces';
+import { Class, TaskAssignment, Util } from '../common/interfaces';
 import { DataGrid, GridColDef, GridValueFormatterParams } from '@material-ui/data-grid';
-import { DcpReportsService } from '../common/api';
-import { usePagingInfo, useFetch } from '../hooks';
-import { formatDate, getDayOfWeek, formatTime } from '../common/utils/TimeHelper';
-import SettingsIcon from '@material-ui/icons/Settings';
-import ActionModal from '../components/Modal';
-import { toast } from 'react-toastify';
-import { comparers } from '../common/appConsts';
+import { TaskAssignmentService } from '../common/api';
+import { getDayOfWeek, formatTime, formatDate } from '../common/utils/TimeHelper';
+import { taskType } from '../common/appConsts';
 import { FindInPage } from '@material-ui/icons';
+import AlarmIcon from '@material-ui/icons/Alarm';
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
+
 import StudentList from '../components/Modal/StudentList';
+import { sleep } from '../common/utils/SetTimeOut';
 
 
 const useStyles = makeStyles(theme => ({
@@ -72,127 +70,102 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const byClassCols: GridColDef[] = [
+const cols: GridColDef[] = [
   {
     field: 'id',
     headerName: 'Mã',
     hide: true
   },
   {
-    field: 'assignedClass',
+    field: 'classAssigned',
     headerName: 'Lớp trực',
-    width: 120
+    width: 120,
+    valueFormatter: (params: GridValueFormatterParams) => {
+      const value = params.value as Class.ClassForSimpleListDto;
+      return value.name;
+    }
   },
   {
     field: 'assignee',
     headerName: 'Cờ đỏ chấm ',
     flex: 1,
+    valueFormatter: (params: GridValueFormatterParams) => {
+      const value = params.value as TaskAssignment.UserProfleForTaskAssignmentDto;
+      return value.name;
+    }
   },
   {
-    field: 'assigneeClass',
+    field: 'belongsToClass',
     headerName: 'Thuộc lớp ',
-    width: 120
+    width: 120,
+    valueFormatter: (params: GridValueFormatterParams) => {
+      const value = params.getValue('assignee') as TaskAssignment.UserProfleForTaskAssignmentDto;
+      return value.class.name;
+    }
   },
   {
     field: 'startTime',
     headerName: 'Bắt đầu từ',
     width: 150,
+    valueFormatter: (params: GridValueFormatterParams) => {
+      const value = params.value as Date;
+      return formatDate(value.toLocaleString());
+    }
   },
   {
     field: 'endTime',
     headerName: 'Đến',
     width: 150,
-  },
-  {
-    field: '',
-    disableClickEventBubbling: true,
-    hideSortIcons: true,
-    align: 'center',
-    renderCell: (params) => {
-      return (
-        <Tooltip title='Xem chi tiết'>
-          <IconButton color='primary'>
-            <FindInPage />
-          </IconButton>
-        </Tooltip>
-      )
+    valueFormatter: (params: GridValueFormatterParams) => {
+      const value = params.value as Date;
+      return formatDate(value.toLocaleString());
     }
   }
 ];
 
-const byStudentCols: GridColDef[] = [
-  {
-    field: 'id',
-    headerName: 'Mã',
-    hide: true
-  },
-  {
-    field: 'assignee',
-    headerName: 'Cờ đỏ chấm ',
-    flex: 1,
-  },
-  {
-    field: 'assigneeClass',
-    headerName: 'Thuộc lớp ',
-    width: 120
-  },
-  {
-    field: 'assignedClass',
-    headerName: 'Lớp trực',
-    width: 240
-  },
-  {
-    field: 'startTime',
-    headerName: 'Bắt đầu từ',
-    width: 150,
-  },
-  {
-    field: 'endTime',
-    headerName: 'Đến',
-    width: 150,
-  },
-  {
-    field: '',
-    disableClickEventBubbling: true,
-    hideSortIcons: true,
-    align: 'center',
-    renderCell: (params) => {
-      return (
-        <Tooltip title='Xem chi tiết'>
-          <IconButton color='primary'>
-            <FindInPage />
-          </IconButton>
-        </Tooltip>
-      )
-    }
-  }
-];
 
 const DCPReportSchedule = () => {
 
   const classes = useStyles();
   const history = useHistory();
 
-  const {pagingInfo, setPageIndex, setFilter} = usePagingInfo();
-  const {loading, data, error, resetCache} = useFetch<DcpReport.DcpReportDto>(
-    DcpReportsService.getMyDcpReports, 
-    { ...pagingInfo, pageIndex: pagingInfo.pageIndex! + 1 }
-  );
-  const [selectedReport, setSelectedReport] = React.useState<DcpReport.DcpReportDto | null>(null);
-  const [viewType, setViewType] = React.useState<string>('class');
+  const [data, setData] = React.useState<TaskAssignment.TaskAssignmentDto[]>([]);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
+  const [updatedTime, setUpdatedTime] = React.useState(new Date());
+  const [creatorInfo, setCreatorInfo] = React.useState<Util.IObject>({});
 
   React.useEffect(() => {
     
     document.title = '2Cool | Lịch trực cờ đỏ';
-    
-    
+    getData();
+
   }, []);
 
-  const handleViewTypeOptionsClick = (mode: string) => {
-    setViewType(mode);
 
-    //...
-  };
+  const getData = async () => {
+    try {
+      setLoading(true);
+      await sleep(200);
+      const res = await TaskAssignmentService.getAll({taskType: taskType.DcpReport});
+      setData(res.items);
+      if (res.items.length > 0) {
+        const firstItem = res.items[0];
+        if (firstItem.creationTime) {
+          setUpdatedTime(firstItem.creationTime);
+        }
+        if (firstItem.creator) {
+          setCreatorInfo(firstItem.creator);
+        }
+      }
+    } catch (error) {
+      if (error?.message) {
+        setError(error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div style={{ height: '100%' }}>
@@ -203,72 +176,41 @@ const DCPReportSchedule = () => {
         <Grid style={{ height: '100%' }} item container xs={8} sm={9} md={10} direction={'column'}>
           <Header />
           <Grid item container direction='column' style={{ flex: 1, minHeight: 0, flexWrap: 'nowrap' }}>
-            <Grid item container justify='space-between' alignItems='center' className={classes.actionGroup}>
-              <Grid item container direction='row' alignItems='center' style={{paddingTop: 12, paddingBottom: 12}}>
-                <Chip 
-                  clickable label='Lịch phân công theo lớp' 
-                  onClick={() => handleViewTypeOptionsClick('class')}
-                  variant={viewType === 'class' ? 'default' : 'outlined'} 
-                  color={viewType === 'class' ? 'primary' : 'default'} style={{marginLeft: 16}}
-                  />
-                <Chip clickable label='Lịch phân công theo học sinh' 
-                  onClick={() => handleViewTypeOptionsClick('student')}
-                  variant={viewType === 'student' ? 'default' : 'outlined'} 
-                  color={viewType === 'student' ? 'primary' : 'default'}
-                  style={{marginLeft: 8}}
-                />
+            <Grid item container alignItems='center' className={classes.actionGroup}>
+              <Grid item container direction='row' alignItems='center' style={{paddingTop: 12, paddingBottom: 12, flex: 1}}>
+                <Grid item container direction={'row'} alignItems={'center'}>
+                  <AlarmIcon style={{ marginRight: 8 }}/>
+                  <Typography variant={'body2'}>{`Cập nhật lần cuối vào ${getDayOfWeek(updatedTime.toLocaleString())} - ${formatTime(updatedTime.toLocaleString())}`}</Typography>
+                </Grid>
+                <Grid item container direction={'row'} alignItems={'center'}>
+                  <PermContactCalendarIcon style={{ marginRight: 8 }}/>
+                  <Typography variant={'body2'}>{`Phân công bởi Lê Anh Tuấn`}</Typography>
+                </Grid>
               </Grid>
+              <Button 
+                variant={'contained'} 
+                color={'primary'}
+                style={{marginLeft: 'auto'}}
+                onClick={() => history.push('dcp-report-schedules-assignment')}>
+                Phân công lịch trực
+              </Button>
 
-              <Grid item container alignItems='flex-end' justify='flex-end'>
-                <Button 
-                  variant={'contained'} 
-                  color={'primary'}
-                  onClick={() => history.push('dcp-report-schedules-assignment')}>
-                  Phân công lịch trực
-                </Button>
-              </Grid>
+              {/* <Grid item container alignItems='flex-end' justify='flex-end'>
+                
+              </Grid> */}
             </Grid>              
             <Grid item container direction={'row'} style={{ flex: 1, minHeight: 0, flexWrap: 'nowrap', padding: 16, paddingBottom: 0 }}>
-              {
-                viewType === 'class' && (
-                  <Container className={classes.datagridContainer}>
-                    <DataGrid
-                      columns={byClassCols}
-                      rows={data.items}
-                      pageSize={data.pageSize} 
-                      rowCount={data.totalCount}
-                      // onPageChange={onPageChange}
-                      loading={loading}
-                      page={pagingInfo.pageIndex}
-                      error={error}
-                      // checkboxSelection
-                      paginationMode='server'
-                      // onRowSelected={changeSelection}
-                      // selectionModel={selectedItems.map(el => el.id)}
-                    />
-                  </Container>
-                )
-              }
-              {
-                viewType === 'student' && (
-                  <Container className={classes.datagridContainer}>
-                    <DataGrid
-                      columns={byStudentCols}
-                      rows={data.items}
-                      pageSize={data.pageSize} 
-                      rowCount={data.totalCount}
-                      // onPageChange={onPageChange}
-                      loading={loading}
-                      page={pagingInfo.pageIndex}
-                      error={error}
-                      // checkboxSelection
-                      paginationMode='server'
-                      // onRowSelected={changeSelection}
-                      // selectionModel={selectedItems.map(el => el.id)}
-                    />
-                  </Container>
-                )
-              }
+              <Container className={classes.datagridContainer}>
+                <DataGrid
+                  columns={cols}
+                  rows={data}
+                  loading={loading}
+                  // error={error}
+                  paginationMode='server'
+                  hideFooter
+                  hideFooterPagination
+                />
+              </Container>
             </Grid>
           </Grid>
         </Grid>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Scool.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -10,9 +11,10 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Scool.Migrations
 {
     [DbContext(typeof(ScoolMigrationsDbContext))]
-    partial class ScoolMigrationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210626151444_Config_Relationshiop_Between_UserProfile_TaskAssignment")]
+    partial class Config_Relationshiop_Between_UserProfile_TaskAssignment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -404,8 +406,6 @@ namespace Scool.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssigneeId");
-
                     b.HasIndex("ClassAssignedId");
 
                     b.ToTable("AppTaskAssignment");
@@ -469,6 +469,21 @@ namespace Scool.Migrations
                     b.HasIndex("ClassId");
 
                     b.ToTable("AppUserProfile");
+                });
+
+            modelBuilder.Entity("Scool.Domain.Common.UserTaskAsisgnment", b =>
+                {
+                    b.Property<Guid>("UserProfileId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TaskAssignmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserProfileId", "TaskAssignmentId");
+
+                    b.HasIndex("TaskAssignmentId");
+
+                    b.ToTable("AppUserTaskAsisgnment");
                 });
 
             modelBuilder.Entity("Scool.Domain.Views.CommonDcpFault", b =>
@@ -2604,19 +2619,11 @@ namespace Scool.Migrations
 
             modelBuilder.Entity("Scool.Domain.Common.TaskAssignment", b =>
                 {
-                    b.HasOne("Scool.Domain.Common.UserProfile", "AssigneeProfile")
-                        .WithMany()
-                        .HasForeignKey("AssigneeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Scool.Domain.Common.Class", "ClassAssigned")
                         .WithMany()
                         .HasForeignKey("ClassAssignedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AssigneeProfile");
 
                     b.Navigation("ClassAssigned");
                 });
@@ -2628,6 +2635,21 @@ namespace Scool.Migrations
                         .HasForeignKey("ClassId");
 
                     b.Navigation("Class");
+                });
+
+            modelBuilder.Entity("Scool.Domain.Common.UserTaskAsisgnment", b =>
+                {
+                    b.HasOne("Scool.Domain.Common.TaskAssignment", null)
+                        .WithMany("TaskAssignmentUsers")
+                        .HasForeignKey("TaskAssignmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Scool.Domain.Common.UserProfile", null)
+                        .WithMany("UserTaskAsisgnments")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
@@ -2951,9 +2973,19 @@ namespace Scool.Migrations
                     b.Navigation("AttachedPhotos");
                 });
 
+            modelBuilder.Entity("Scool.Domain.Common.TaskAssignment", b =>
+                {
+                    b.Navigation("TaskAssignmentUsers");
+                });
+
             modelBuilder.Entity("Scool.Domain.Common.Teacher", b =>
                 {
                     b.Navigation("FormClass");
+                });
+
+            modelBuilder.Entity("Scool.Domain.Common.UserProfile", b =>
+                {
+                    b.Navigation("UserTaskAsisgnments");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

@@ -41,6 +41,8 @@ namespace Scool.EntityFrameworkCore
         public DbSet<DcpClassReportItem> DcpClassReportItems { get; set; }
         public DbSet<DcpStudentReport> DcpStudentReports { get; set; }
 
+
+        
         // not actually stored in DB
         public DbSet<DcpClassRanking> DcpClassRankings { get; set; }
         public DbSet<DcpClassFault> DcpClassFaults { get; set; }

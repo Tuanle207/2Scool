@@ -41,9 +41,12 @@ const Endpoint = {
   CreateUser: () =>
     `/api/identity/users`,
   UpdateUser: (id: string) =>
-    `/api/identity/users/${id}`,
+    `/api/app/app-identity-user/${id}`,
   RemoveUser: (id: string) =>
     `/api/identity/users/${id}`,
+  GetUsersForTaskAssignment: () => 
+    `/api/app/app-identity-user/user-for-task-assignment`
+  
 }
 
 export default Endpoint;

@@ -9,7 +9,7 @@ import StudentsService from './StudentsService';
 import RegulationsService from './RegulationsService';
 import DcpReportsService from './DcpReportsService';
 import StatisticsService from './StatisticsService';
-
+import TaskAssignmentService from './TaskAssignmentService';
 
 
 export {
@@ -23,5 +23,6 @@ export {
   StudentsService,
   RegulationsService,
   DcpReportsService,
-  StatisticsService
+  StatisticsService,
+  TaskAssignmentService
 };

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace Scool.Application.Dtos
 {
-    public class CreateUpdateTaskAssignmentByClassDto
+    public class CreateUpdateTaskAssignmentDto
     {
-        public List<ClassAssignmentItem> Items { get; set; }
+        public List<ClassAssignedItem> Items { get; set; }
         public string TaskType { get; set; }
     }
 
-    public class ClassAssignmentItem
+    public class ClassAssignedItem
     {
         public Guid AssigneeId { get; set; }
         public Guid ClassId { get; set; }

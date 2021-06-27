@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Scool.AppConsts;
 using Scool.Application.Dtos;
 using Scool.Application.IApplicationServices;
 using Scool.Domain.Common;
 using Scool.Infrastructure.ApplicationServices;
 using Scool.Infrastructure.Common;
+using Scool.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,50 +21,122 @@ namespace Scool.Application.ApplicationServices
             Guid,
             TaskAssignmentDto,
             TaskAssignmentDto,
-            CreateUpdateTaskAssignmentByClassDto,
-            CreateUpdateTaskAssignmentByClassDto
+            CreateUpdateTaskAssignmentDto,
+            CreateUpdateTaskAssignmentDto
         >, ITaskAssigmentAppService
     {
-        public TaskAssigmentAppService(IRepository<TaskAssignment, Guid> _taskAssignmentRepo) 
-            : base(_taskAssignmentRepo)
-        {
+        private readonly IRepository<TaskAssignment, Guid> _taskAssignmentRepo;
+        private readonly IRepository<AppUser, Guid> _usersRepo;
+        private readonly IRepository<UserProfile, Guid> _userProfilesRepo;
 
+        public TaskAssigmentAppService(IRepository<TaskAssignment, Guid> taskAssignmentRepo,
+            IRepository<UserProfile, Guid> userProfilesRepo,
+            IRepository<AppUser, Guid> usersRepo)
+            : base(taskAssignmentRepo)
+        {
+            _taskAssignmentRepo = taskAssignmentRepo;
+            _userProfilesRepo = userProfilesRepo;
+            _usersRepo = usersRepo;
         }
         
-        [HttpPost("app/api/create-by-class")]
-        public Task CreateByClassAsync(CreateUpdateTaskAssignmentByClassDto input)
+        [HttpPost("api/app/task-assigment/create-update-schedule")]
+        public async Task CreateUpdateAsync(CreateUpdateTaskAssignmentDto input)
         {
-            throw new NotImplementedException();
+            // for DCP Report schedules assignment
+            if (input.TaskType == TaskType.DcpReport)
+            {
+                // Clean all previous assigments
+                // TODO: instead of cleaning all stuff, we will change state of that, so that we can have somthing like "changes history"
+                var preItemIds = await _taskAssignmentRepo.Select(x => x.Id).ToListAsync();
+                await _taskAssignmentRepo.DeleteManyAsync(preItemIds);
+
+                var tasksNeedAssign = new List<TaskAssignment>();
+
+                foreach (var item in input.Items)
+                {
+                    tasksNeedAssign.Add(new TaskAssignment
+                    {
+                        AssigneeId = item.AssigneeId,
+                        ClassAssignedId = item.ClassId,
+                        StartTime = item.StartTime,
+                        EndTime = item.EndTime,
+                        TaskType = TaskType.DcpReport
+                    });
+                }
+
+                await _taskAssignmentRepo.InsertManyAsync(tasksNeedAssign);
+            }
+            // for Register-Lession report schedules assignment
+            else if (input.TaskType == TaskType.LessonRegisterReport)
+            {
+
+            }
         }
 
-        [HttpPost("app/api/create-by-student")]
-        public Task CreateByStudentAsync(CreateUpdateTaskAssignmentByStudentDto input)
+        [HttpGet("api/app/task-assigment/get-schedules")]
+        public async Task<PagingModel<TaskAssignmentDto>> GetAllAsync(TaskAssignmentFilterDto input)
         {
-            throw new NotImplementedException();
+            var query = _taskAssignmentRepo
+                     .WhereIf(String.IsNullOrEmpty(input.TaskType), x => x.TaskType == input.TaskType)
+                     .Include(x => x.ClassAssigned)
+                     .Include(x => x.AssigneeProfile)
+                     .ThenInclude(y => y.Class)
+                     .Select(x => ObjectMapper.Map<TaskAssignment, TaskAssignmentDto>(x));
+
+            var items = await query.ToListAsync();
+
+            if (items.Count > 0 && items[0].CreatorId != null)
+            {
+                var creator = await _usersRepo
+                   .Where(x => x.Id == items[0].CreatorId)
+                   .Select(x => ObjectMapper.Map<AppUser, UserForSimpleListDto>(x))
+                   .FirstOrDefaultAsync();
+                foreach (var item in items)
+                {
+                    item.Creator = creator;
+                }
+            }
+
+            return new PagingModel<TaskAssignmentDto>(items, items.Count);
         }
 
-        [HttpPost("app/api/get-by-class")]
-        public Task<PagingModel<TaskAssignmentDto>> GetByClassAsync(PageInfoRequestDto input)
+        [HttpGet("api/app/task-assigment/get-schedules-for-update")]
+        public async Task<PagingModel<TaskAssignmentForUpdateDto>> GetForUpdateAsync(TaskAssignmentFilterDto input)
         {
-            throw new NotImplementedException();
+            var query = _taskAssignmentRepo
+                    .WhereIf(String.IsNullOrEmpty(input.TaskType), x => x.TaskType == input.TaskType)
+                    .Select(x => ObjectMapper.Map<TaskAssignment, TaskAssignmentForUpdateDto>(x));
+
+            var items = await query.ToListAsync();
+
+            return new PagingModel<TaskAssignmentForUpdateDto>(items, items.Count);
         }
 
-        [HttpPost("app/api/get-by-student")]
-        public Task<PagingModel<TaskAssignmentDto>> GetByStudentAsync(PageInfoRequestDto input)
+        [HttpGet("api/app/task-assigment/assigned-class-for-dcp-report")]
+        public async Task<PagingModel<ClassForSimpleListDto>> GetAssignedClassesForDcpReportAsync()
         {
-            throw new NotImplementedException();
-        }
+            var emptyRes = new PagingModel<ClassForSimpleListDto>(new List<ClassForSimpleListDto>(), 0);
+            if (CurrentUser.Id != null)
+            {
+                var profile = await _userProfilesRepo.Where(x => x.UserId == CurrentUser.Id).FirstOrDefaultAsync();
+                if (profile == null)
+                {
+                    return emptyRes;
+                }
 
-        [HttpPut("app/api/update-by-class")]
-        public Task UpdateByClassAsync(CreateUpdateTaskAssignmentByClassDto input)
-        {
-            throw new NotImplementedException();
-        }
+                var items = await _taskAssignmentRepo
+                    .Where(x => x.AssigneeId == profile.Id)
+                    .Where(x => x.TaskType == TaskType.DcpReport)
+                    .Include(x => x.ClassAssigned)
+                    .Select(x => ObjectMapper.Map<Class, ClassForSimpleListDto>(x.ClassAssigned))
+                    .ToListAsync();
 
-        [HttpPut("app/api/update-by-student")]
-        public Task UpdateByStudentAsync(CreateUpdateTaskAssignmentByStudentDto input)
-        {
-            throw new NotImplementedException();
+                return new PagingModel<ClassForSimpleListDto>(items, items.Count);
+            }
+            else
+            {
+                return emptyRes;
+            }
         }
     }
 }
