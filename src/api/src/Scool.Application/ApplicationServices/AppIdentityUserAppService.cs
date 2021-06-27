@@ -35,7 +35,7 @@ namespace Scool.ApplicationServices
 
         public async override Task<IdentityUserDto> CreateAsync(IdentityUserCreateDto input)
         {
-            var classIdRaw = input.ExtraProperties.GetOrDefault(IdentityUserCreateDtoExt.ClassId).ToString();
+            var classIdRaw = input.ExtraProperties.GetOrDefault(IdentityUserCreateDtoExt.ClassId);
 
             if (classIdRaw != null)
             {
@@ -51,7 +51,7 @@ namespace Scool.ApplicationServices
                 UserId = result.Id,
                 DisplayName = input.Name,
                 PhoneNo = input.PhoneNumber,
-                ClassId = new Guid(classIdRaw),
+                ClassId = classIdRaw != null ? new Guid(classIdRaw.ToString()) : null,
                 Dob = input.ExtraProperties.GetOrDefault(IdentityUserCreateDtoExt.Dob) as DateTime?
             };
 
