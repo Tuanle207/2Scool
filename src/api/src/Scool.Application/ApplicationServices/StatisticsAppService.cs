@@ -50,7 +50,7 @@ namespace Scool.ApplicationServices
                 LEFT JOIN [AppDcpReport] C ON B.DcpReportId = C.Id
                 LEFT JOIN [AppDcpClassReportItem] D ON B.Id = D.DcpClassReportId
                 LEFT JOIN [AppRegulation] E ON D.RegulationId = E.Id
-                WHERE ('{input.StartTime}' <= C.CreationTime AND C.CreationTime  <= '{input.EndTime}') OR D.Id IS NULL
+                WHERE (DATEDIFF(DAY, '{input.StartTime}', C.CreationTime) >= 0 AND DATEDIFF(DAY, C.CreationTime, '{input.EndTime}') >= 0) OR D.Id IS NULL
                 GROUP BY A.ID
                 ) X JOIN [AppClass] F ON F.ID = X.ClassId
                 JOIN [AppTeacher] J ON J.Id =  F.FormTeacherId
@@ -73,7 +73,7 @@ namespace Scool.ApplicationServices
                 LEFT JOIN [AppDcpClassReport] C ON B.DcpClassReportId = C.Id
                 LEFT JOIN [AppDcpReport] D ON C.DcpReportId = D.Id
                 LEFT JOIN [AppClass] E ON C.ClassId = E.Id
-                WHERE ('{input.StartTime}' <= D.CreationTime AND D.CreationTime  <= '{input.EndTime}') OR B.Id IS NULL
+                WHERE (DATEDIFF(DAY, '{input.StartTime}', C.CreationTime) >= 0 AND DATEDIFF(DAY, C.CreationTime, '{input.EndTime}') >= 0) OR B.Id IS NULL
                 GROUP BY A.Id
                 ) X JOIN [AppRegulation] Y ON X.Id = Y.Id
                 JOIN [AppCriteria] Z ON Y.CriteriaId = Z.Id
@@ -105,7 +105,7 @@ namespace Scool.ApplicationServices
                     LEFT JOIN [AppDcpReport] C ON B.DcpReportId = C.Id
                     LEFT JOIN [AppDcpClassReportItem] D ON B.Id = D.DcpClassReportId
                     LEFT JOIN [AppRegulation] E ON D.RegulationId = E.Id
-                    WHERE ('{input.StartTime}' <= C.CreationTime AND C.CreationTime  <= '{input.EndTime}') OR D.Id IS NULL
+                    WHERE (DATEDIFF(DAY, '{input.StartTime}', C.CreationTime) >= 0 AND DATEDIFF(DAY, C.CreationTime, '{input.EndTime}') >= 0) OR D.Id IS NULL
                     GROUP BY A.ID
                 ) X JOIN [AppClass] F ON F.ID = X.ClassId
                 JOIN [AppTeacher] J ON J.Id =  F.FormTeacherId
@@ -129,7 +129,7 @@ namespace Scool.ApplicationServices
                 LEFT JOIN [AppDcpClassReportItem] C ON B.DcpClassReportItemId = C.Id
                 LEFT JOIN [AppDcpClassReport] D ON C.DcpClassReportId = D.Id
                 LEFT JOIN [AppDcpReport] E ON D.DcpReportId = E.Id
-                WHERE ('{input.StartTime}' <= E.CreationTime AND E.CreationTime  <= '{input.EndTime}') OR B.Id IS NULL
+                WHERE (DATEDIFF(DAY, '{input.StartTime}', C.CreationTime) >= 0 AND DATEDIFF(DAY, C.CreationTime, '{input.EndTime}') >= 0) OR B.Id IS NULL
                 GROUP BY A.Id
                 ) X JOIN [AppStudent] Y ON X.Id = Y.Id
                 JOIN [AppClass] Z ON Y.ClassId = Z.Id
@@ -183,6 +183,10 @@ namespace Scool.ApplicationServices
                 timeFilter.StartTime.AddDays(7).StartOfWeek() : timeFilter.StartTime;
             var durations = timeFilter.EndTime - startDate;
             var days = (int)Math.Ceiling(durations.TotalDays / 7);
+            if (days == 0)
+            {
+                days = 1;
+            }
 
             return new StatisticsQueryInput
             {
