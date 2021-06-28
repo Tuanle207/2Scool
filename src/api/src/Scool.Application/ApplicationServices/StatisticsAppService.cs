@@ -73,7 +73,7 @@ namespace Scool.ApplicationServices
                 LEFT JOIN [AppDcpClassReport] C ON B.DcpClassReportId = C.Id
                 LEFT JOIN [AppDcpReport] D ON C.DcpReportId = D.Id
                 LEFT JOIN [AppClass] E ON C.ClassId = E.Id
-                WHERE (DATEDIFF(DAY, '{input.StartTime}', C.CreationTime) >= 0 AND DATEDIFF(DAY, C.CreationTime, '{input.EndTime}') >= 0) OR B.Id IS NULL
+                WHERE (DATEDIFF(DAY, '{input.StartTime}', D.CreationTime) >= 0 AND DATEDIFF(DAY, D.CreationTime, '{input.EndTime}') >= 0) OR B.Id IS NULL
                 GROUP BY A.Id
                 ) X JOIN [AppRegulation] Y ON X.Id = Y.Id
                 JOIN [AppCriteria] Z ON Y.CriteriaId = Z.Id
@@ -129,7 +129,7 @@ namespace Scool.ApplicationServices
                 LEFT JOIN [AppDcpClassReportItem] C ON B.DcpClassReportItemId = C.Id
                 LEFT JOIN [AppDcpClassReport] D ON C.DcpClassReportId = D.Id
                 LEFT JOIN [AppDcpReport] E ON D.DcpReportId = E.Id
-                WHERE (DATEDIFF(DAY, '{input.StartTime}', C.CreationTime) >= 0 AND DATEDIFF(DAY, C.CreationTime, '{input.EndTime}') >= 0) OR B.Id IS NULL
+                WHERE (DATEDIFF(DAY, '{input.StartTime}', E.CreationTime) >= 0 AND DATEDIFF(DAY, E.CreationTime, '{input.EndTime}') >= 0) OR B.Id IS NULL
                 GROUP BY A.Id
                 ) X JOIN [AppStudent] Y ON X.Id = Y.Id
                 JOIN [AppClass] Z ON Y.ClassId = Z.Id
