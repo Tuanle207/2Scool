@@ -29,7 +29,7 @@ const Endpoint = {
   
   // user managerment
   GetUsers: () =>
-    `/api/identity/users`,
+    `/api/identity/users?MaxResultCount=100`,
   GetUserById: (id: string) =>
     `/api/identity/users/${id}`,
   GetUserRoleById: (id: string) =>

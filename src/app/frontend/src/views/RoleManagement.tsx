@@ -104,6 +104,14 @@ const RoleManagement = () => {
     });
   };
 
+  const onRequestDelete = async (id: string) => {
+    await IdentityService.deleteRoleById(id);
+    toast('Xóa thành côgn', {
+      type: toast.TYPE.SUCCESS
+    });
+    resetCache();
+  };
+
   const getSelectedItem = (): Identity.RoleDto | null => {
     return selectedItems && selectedItems.length > 0 
       ? selectedItems[selectedItems.length - 1] 
@@ -142,10 +150,10 @@ const RoleManagement = () => {
                 <Grid item>
                   <IconButton
                     disabled={selectedItems.length === 0} 
-                    // onClick={() => ActionModal.show({
-                    //   title: `Xác nhận xóa khóa học: ${getSelectedItem()!.name}?`,
-                    //   onAccept: () => onRequestDelete(getSelectedItem()!.id)
-                    // })}
+                    onClick={() => ActionModal.show({
+                      title: `Xác nhận xóa vai trò: ${getSelectedItem()!.name}?`,
+                      onAccept: () => onRequestDelete(getSelectedItem()!.id)
+                    })}
                   >
                     <DeleteIcon/>
                   </IconButton>

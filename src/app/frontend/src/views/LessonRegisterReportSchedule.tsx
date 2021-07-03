@@ -14,7 +14,6 @@ import AlarmIcon from '@material-ui/icons/Alarm';
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 import CheckIcon from '@material-ui/icons/Check';
 import { sleep } from '../common/utils/SetTimeOut';
-import ReactDataGrid, { Column } from 'react-data-grid';
 import { Autocomplete } from '@material-ui/lab';
 import { toast } from 'react-toastify';
 import ActionModal from '../components/Modal';
@@ -72,12 +71,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-
-const columns: Column<any>[] = [
-  { key: "id", name: "ID" },
-  { key: "title", name: "Title" },
-  { key: "complete", name: "Complete"}
-];
 
 interface IAssignClass {
   classId: string;

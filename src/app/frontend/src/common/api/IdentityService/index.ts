@@ -134,6 +134,15 @@ const updateRolePermissions = async ({provider, data}:
   }
 };
 
+const deleteRoleById = async (id: string) => {
+  try {
+    const apiService = await getApiService();
+    await apiService.delete(Endpoint.RemoveRole(id));
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 const IdentityService = {
   getUsers,
@@ -148,6 +157,7 @@ const IdentityService = {
   getPermissions,
   updateRolePermissions,
   getUsersForTaskAssignment,
+  deleteRoleById
 };
 
 export default IdentityService;
