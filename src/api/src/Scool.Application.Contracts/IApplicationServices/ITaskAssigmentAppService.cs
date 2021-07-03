@@ -20,6 +20,6 @@ namespace Scool.Application.IApplicationServices
         Task CreateUpdateAsync(CreateUpdateTaskAssignmentDto input);
         Task<PagingModel<TaskAssignmentDto>> GetAllAsync(TaskAssignmentFilterDto input);
         Task<PagingModel<TaskAssignmentForUpdateDto>> GetForUpdateAsync(TaskAssignmentFilterDto input);
-        Task<PagingModel<ClassForSimpleListDto>> GetAssignedClassesForDcpReportAsync();
+        Task<PagingModel<ClassForSimpleListDto>> GetAssignedClassesForDcpReportAsync(string taskType);
     }
 }

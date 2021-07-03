@@ -142,6 +142,9 @@ namespace Scool.EntityFrameworkCore
                 b.HasMany(b => b.AttachedPhotos)
                     .WithOne()
                     .HasForeignKey(f => f.LessonRegisterId);
+                b.HasOne(b => b.Class)
+                    .WithMany()
+                    .HasForeignKey(f => f.ClassId);
                 b.ConfigureByConvention();
             });
 

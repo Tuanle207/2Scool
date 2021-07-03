@@ -61,11 +61,11 @@ const deleteUserById = async (id: string) =>  {
   }
 };
 
-const getUsersForTaskAssignment = async () =>  {
+const getUsersForTaskAssignment = async (classId?: string) =>  {
   try {
     const apiService = await getApiService();
     const result = await apiService.get<Util.PagingModel<Identity.UserForTaskAssignmentDto>>
-      (Endpoint.GetUsersForTaskAssignment());
+      (Endpoint.GetUsersForTaskAssignment(classId));
     return result;
   } catch (error) {
     throw error;

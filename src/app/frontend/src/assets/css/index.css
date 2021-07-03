@@ -40,3 +40,7 @@ body {
 	border-radius: 12px;
 	background-color: #555;
 }
+
+.MuiDataGrid-row:hover {
+  background-color:#81c2f7 !important;
+}

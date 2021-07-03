@@ -16,19 +16,16 @@ import DCPReportCreatePage from '../views/DCPReportCreatePage';
 import DCPReportHistoryPage from '../views/DCPReportHistoryPage';
 import DCPRankingPage from '../views/DCPRankingPage';
 import DCPStatisticsPage from '../views/DCPStatisticsPage';
-import TaskAssignmentPage from '../views/TaskAssignmentPage';
 import ErrorPage from '../views/ErrorPage';
 import { policies } from '../common/appConsts';
 import DCPReportUpdatePage from '../views/DCPReportUpdatePage';
 import DCPReportSchedule from '../views/DCPReportSchedule';
 import DCPReportScheduleAssignment from '../views/DCPReportScheduleAssignment';
-import LessonRegisterReportAssignment from '../views/LessonRegisterReportAssignment';
+import LessonRegisterReportSchedule from '../views/LessonRegisterReportSchedule';
+import LessonRegisterReport from '../views/LessonRegisterReport';
+import LessonRegisterReportCreate from '../views/LessonRegisterReportCreate';
 
-interface Props {
-  isAuth?: boolean;
-}
-
-const DashboardRouter: React.FC<Props> = ({ isAuth = false }) => {
+const DashboardRouter = () => {
   return (
     <Router>
       <Switch>
@@ -40,73 +37,85 @@ const DashboardRouter: React.FC<Props> = ({ isAuth = false }) => {
         <ProtectedRoute 
           path='/dcp-report-approval'
           exact
-          policyName={policies.DcpReportsAcceptReject}
+          policyName={policies.DcpReportApproval}
           component={DCPReportsApprovalPage}
         />
         <ProtectedRoute 
           path='/dcp-report-approval/:dcpReportId'
           exact
-          policyName={policies.DcpReportsGet}
+          policyName={policies.GetDcpReportDetail}
           component={DCPReportPage}
         />
          <ProtectedRoute 
           path='/dcp-report-history'
           exact
-          policyName={policies.DcpReportsGetAll}
+          policyName={policies.GetDcpReportApprovalHistory}
           component={DCPReportHistoryPage}
         />
         <ProtectedRoute 
           path='/my-dcp-report'
           exact
-          policyName={policies.DcpReportsGetAll}
+          policyName={policies.GetMyDcpReport}
           component={MyDCPReportPage}
         />
-        <ProtectedRoute 
-          path='/task-assignments'
+         <ProtectedRoute 
+          path='/my-lr-report'
           exact
-          component={TaskAssignmentPage}
+          policyName={policies.GetMyLRReport}
+          component={LessonRegisterReport}
         />
         <ProtectedRoute 
           path='/dcp-report-creation'
           exact
-          policyName={policies.DcpReportsCreate}
+          policyName={policies.CreateNewDcpReport}
           component={DCPReportCreatePage}
+        />
+        <ProtectedRoute 
+          path='/lr-report-creation'
+          exact
+          policyName={policies.CreateNewLRReport}
+          component={LessonRegisterReportCreate}
         />
         <ProtectedRoute 
           path='/dcp-report-update/:dcpReportId'
           exact
-          policyName={policies.DcpReportsUpdate}
+          policyName={policies.UpdateDcpReport}
           component={DCPReportUpdatePage}
         />
         <ProtectedRoute 
           path='/dcp-report-schedules'
           exact
+          policyName={policies.GetScheduleList}
           component={DCPReportSchedule}
         />
         <ProtectedRoute
           path='/dcp-report-schedules-assignment'
           exact
+          policyName={policies.AssignDcpReport}
           component={DCPReportScheduleAssignment}
         />
         <ProtectedRoute 
           path='/lesson-register-report-schedules'
           exact
-          component={LessonRegisterReportAssignment}
+          policyName={policies.AssignLessonRegisterReport}
+          component={LessonRegisterReportSchedule}
         />
         <ProtectedRoute 
           path='/dcp-rankings'
           exact
+          policyName={policies.Rankings}
           component={DCPRankingPage}
         />
         <ProtectedRoute 
           path='/dcp-statistics'
           exact
+          policyName={policies.Statistics}
           component={DCPStatisticsPage}
         />
         <ProtectedRoute 
           path='/my-dcp-report/:dcpReportId'
           exact
-          policyName={policies.DcpReportsGet}
+          policyName={policies.GetDcpReportDetail}
           component={MyDCPReportPage}
         />
         <ProtectedRoute
@@ -115,20 +124,24 @@ const DashboardRouter: React.FC<Props> = ({ isAuth = false }) => {
           policyName={policies.Courses}
           component={CoursesPage}
         />
-        <Route 
+        <ProtectedRoute 
           path='/admin/classes'
+          policyName={policies.Courses}
           component={ClassesPage}
         />
-        <Route 
+        <ProtectedRoute 
           path='/admin/students'
+          policyName={policies.Courses}
           component={StudentsPage}
         />
-        <Route 
+        <ProtectedRoute 
           path='/admin/teachers'
+          policyName={policies.Courses}
           component={TeachersPage}
         />
-        <Route 
+        <ProtectedRoute 
           path='/admin/grades'
+          policyName={policies.Courses}
           component={GradesPage}
         />
         <ProtectedRoute 

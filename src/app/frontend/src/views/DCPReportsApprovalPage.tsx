@@ -10,7 +10,7 @@ import { DcpReportsService } from '../common/api';
 import { useFetch, usePagingInfo } from '../hooks';
 import { DcpReport } from '../common/interfaces';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { formatDate } from '../common/utils/TimeHelper';
+import { addDays, formatDate } from '../common/utils/TimeHelper';
 import { comparers, dcpReportStatus } from '../common/appConsts';
 
 const useStyles = makeStyles(theme => ({
@@ -52,7 +52,7 @@ const DCPReportsApprovalPage = () => {
       {
         key: 'EndDate',
         comparison: comparers.Eq,
-        value: formatDate(new Date(new Date().setDate(new Date().getDate() + 1)).toLocaleString(), 'MM/DD/YYYY')
+        value: formatDate(addDays(new Date()).toLocaleString(), 'MM/DD/YYYY')
       }
     ]
   });
@@ -191,7 +191,7 @@ const DCPReportsApprovalPage = () => {
               </Grid>
               
             </Grid>              
-            <Grid item container direction='column' style={{ flex: '1 1 0', minHeight: 0, overflowX: 'hidden', overflowY: 'scroll' }}>
+            <Grid item container direction='column' style={{ flex: '1 1 0', minHeight: 0, overflowX: 'hidden', overflowY: 'auto' }}>
               <List className={classes.list}>
                 {
                   items.map(el => (
@@ -204,14 +204,6 @@ const DCPReportsApprovalPage = () => {
                     
                     <Grid container justify='center' alignItems='center'>
                       <p className={classes.emptyText}>Đang tải ...</p>
-                    </Grid>
-                  )
-                }
-                {
-                  !loading && items.length === 0 && (
-                    
-                    <Grid container justify='center' alignItems='center'>
-                      <p className={classes.emptyText}>Trống</p>
                     </Grid>
                   )
                 }
@@ -231,6 +223,14 @@ const DCPReportsApprovalPage = () => {
                 }
                 
               </List>
+              {
+                !loading && items.length === 0 && (
+                  
+                  <Grid container justify='center' alignItems='center' style={{flex: 1}}>
+                    <p className={classes.emptyText}>Không có phiếu chấm điểm nào đang chờ duyệt!</p>
+                  </Grid>
+                )
+              }
             </Grid>
           </Grid>
         </Grid>

@@ -302,6 +302,9 @@ namespace Scool.Migrations
                     b.Property<int>("AbsenceNo")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("ClassId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2")
                         .HasColumnName("CreationTime");
@@ -310,10 +313,15 @@ namespace Scool.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatorId");
 
-                    b.Property<float>("TotalPoint")
-                        .HasColumnType("real");
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalPoint")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClassId");
 
                     b.ToTable("AppLessonsRegister");
                 });
@@ -2574,6 +2582,17 @@ namespace Scool.Migrations
                         .HasForeignKey("LessonRegisterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Scool.Domain.Common.LessonsRegister", b =>
+                {
+                    b.HasOne("Scool.Domain.Common.Class", "Class")
+                        .WithMany()
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Class");
                 });
 
             modelBuilder.Entity("Scool.Domain.Common.Regulation", b =>

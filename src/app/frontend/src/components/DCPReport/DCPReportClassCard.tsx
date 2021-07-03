@@ -1,5 +1,6 @@
 import { Grid, makeStyles, Typography } from '@material-ui/core';
-import BxBxsBookReaderIcon from '../../assets/img/bx_bxs-book-reader.svg';
+import BxBxsBookReaderIcon from '@material-ui/icons/LocalLibrary';
+
 import React from 'react';
 
 const useStyles = makeStyles(theme => ({
@@ -25,7 +26,7 @@ const DCPReportClassCard = () => {
   return  (
     <Grid container alignItems={'center'} justify={'center'} className={classes.container}>
       <Grid item>
-        <img src={BxBxsBookReaderIcon} alt='icon' />
+        <BxBxsBookReaderIcon />
       </Grid>
       <Grid item className={classes.textWrapper}>
         <Typography variant={'body2'}>Lớp 10A1</Typography>

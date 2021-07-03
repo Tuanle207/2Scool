@@ -22,9 +22,12 @@ const AppContainer: React.FC<Props> = ({ token, getAppConfig, fetchingAppConfig 
   const isValid = React.useMemo(() => isTokenValid(token), [token]);
 
   React.useEffect(() => {
-    getAppConfig();
+    if (isTokenValid(token))
+    {
+      getAppConfig();
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [token]);
 
   return (
     <ThemeProvider theme={theme} >

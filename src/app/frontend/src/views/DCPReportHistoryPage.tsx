@@ -191,7 +191,7 @@ const DCPReportsApprovalPage = () => {
               </Grid>
               
             </Grid>              
-            <Grid item container direction='column' style={{ flex: '1 1 0', minHeight: 0, overflowX: 'hidden', overflowY: 'scroll' }}>
+            <Grid item container direction='column' style={{ flex: '1 1 0', minHeight: 0, overflowX: 'hidden', overflowY: 'auto' }}>
               <List className={classes.list}>
                 {
                   items.map(el => (
@@ -204,14 +204,6 @@ const DCPReportsApprovalPage = () => {
                     
                     <Grid container justify='center' alignItems='center'>
                       <p className={classes.emptyText}>Đang tải ...</p>
-                    </Grid>
-                  )
-                }
-                {
-                  !loading && items.length === 0 && (
-                    
-                    <Grid container justify='center' alignItems='center'>
-                      <p className={classes.emptyText}>Trống</p>
                     </Grid>
                   )
                 }
@@ -230,6 +222,14 @@ const DCPReportsApprovalPage = () => {
                   )
                 }
               </List>
+              {
+                !loading && items.length === 0 && (
+                  
+                  <Grid container justify='center' alignItems='center' style={{flex: 1}}>
+                    <p className={classes.emptyText}>Không có phiếu chấm điểm nào!</p>
+                  </Grid>
+                )
+              }
             </Grid>
           </Grid>
         </Grid>

@@ -11,6 +11,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { useHistory } from 'react-router';
 
 interface Props {
   hiddenSearchBar?: boolean;
@@ -22,6 +23,7 @@ interface Props {
 const Header: React.FC<Props> = ({ postlogoutAsync, onTextChange, hiddenSearchBar = false }) => {
 
   const classes = useHeaderStyles();
+  const history = useHistory();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -37,11 +39,17 @@ const Header: React.FC<Props> = ({ postlogoutAsync, onTextChange, hiddenSearchBa
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
+  const handleLogoutClick = () => {
     setAnchorEl(null);
     postlogoutAsync();
     handleMobileMenuClose();
   };
+
+  const handleAdminClick = () => {
+    setAnchorEl(null);
+    history.push('/admin/courses');
+    setAnchorEl(null);
+  }
 
   const handleMobileMenuOpen = (event: any) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -68,13 +76,13 @@ const Header: React.FC<Props> = ({ postlogoutAsync, onTextChange, hiddenSearchBa
         </ListItemIcon>
         <ListItemText primary="Tài khoản của tôi" />
       </StyledMenuItem>
-      <StyledMenuItem>
+      <StyledMenuItem onClick={handleAdminClick}>
         <ListItemIcon className={classes.resetMenuIconWidth}>
           <SettingsIcon fontSize="small" />
         </ListItemIcon>
         <ListItemText primary="Tới trang quản trị" />
       </StyledMenuItem>
-      <StyledMenuItem onClick={handleMenuClose}>
+      <StyledMenuItem onClick={handleLogoutClick}>
         <ListItemIcon className={classes.resetMenuIconWidth}>
           <ExitToAppIcon fontSize="small" />
         </ListItemIcon>

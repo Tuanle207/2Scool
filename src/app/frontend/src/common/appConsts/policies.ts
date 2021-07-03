@@ -18,19 +18,41 @@ const policies = {
   AbpTenantManagementTenantsDelete: 'AbpTenantManagement.Tenants.Delete',
   AbpTenantManagementTenantsManageFeatures: 'AbpTenantManagement.Tenants.ManageFeatures',
   AbpTenantManagementTenantsManageConnectionStrings: 'AbpTenantManagement.Tenants.ManageConnectionStrings',
+  
   Courses: 'Courses',
   CoursesGet: 'Courses.Get',
   CoursesGetAll: 'Courses.GetAll',
   CoursesCreate: 'Courses.Create',
   CoursesUpdate: 'Courses.Update',
   CoursesDelete: 'Courses.Delete',
+  
   DcpReports: 'DcpReports',
-  DcpReportsGet: 'DcpReports.Get',
-  DcpReportsGetAll: 'DcpReports.GetAll',
-  DcpReportsCreate: 'DcpReports.Create',
-  DcpReportsUpdate: 'DcpReports.Update',
-  DcpReportsDelete: 'DcpReports.Delete',
-  DcpReportsAcceptReject: 'DcpReports.AcceptReject'
+  CreateNewDcpReport: 'DcpReports.CreateNewDcpReport',
+  GetDcpReportApprovalHistory: 'DcpReports.GetDcpReportApprovalHistory',
+  DcpReportApproval: 'DcpReports.DcpReportApproval',
+  GetMyDcpReport: 'DcpReports.GetMyDcpReport',
+  RemoveDcpReport: 'DcpReports.RemoveDcpReport',
+  GetDcpReportDetail: 'DcpReports.GetDcpReportDetail',
+  GetDcpReportDetailApproval: 'DcpReports.GetDcpReportDetailApproval',
+  UpdateDcpReport: 'DcpReports.UpdateDcpReport',
+  
+  LRReports: 'LRReports',
+  CreateNewLRReport: 'LRReports.CreateNewLRReport',
+  GetLRApprovalHistory: 'LRReports.GetLRApprovalHistory',
+  LRReportApproval: 'LRReports.LRReportApproval',
+  GetMyLRReport: 'LRReports.GetMyLRReport',
+  RemoveLRReport: 'LRReports.RemoveLRReport',
+  GetLRReportDetail: 'LRReports.GetLRReportDetail',
+  GetLRReportDetailApproval: 'LRReports.GetLRReportDetailApproval',
+  UpdateLRReport: 'LRReports.UpdateLRReport',
+
+  Rankings: 'Rankings',
+  Statistics: 'Statistics',
+
+  AssignDcpReport: 'AssignDcpReport',
+  AssignLessonRegisterReport: 'AssignLessonRegisterReport',
+  GetScheduleList: 'GetScheduleList',
+  GetMyAssignedSchedule: 'GetMyAssignedSchedule',
 };
 
 export default policies;

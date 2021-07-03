@@ -41,10 +41,10 @@ const getForUpdate = async (input: TaskAssignment.TaskAssignmentFilterDto ) => {
   }
 };
 
-const getAssignedClassesForDcpReport = async () => {
+const getAssignedClassesForDcpReport = async (taskType: string) => {
   try {
     const apiService = await getApiService();
-    const result = await apiService.get<Util.PagingModel<Class.ClassForSimpleListDto>>(Endpoint.GetAssignedClassesForDcpReport());
+    const result = await apiService.get<Util.PagingModel<Class.ClassForSimpleListDto>>(Endpoint.GetAssignedClassesForDcpReport(taskType));
     return result;
   } catch (error) {
     throw error;

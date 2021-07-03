@@ -19,6 +19,7 @@ import { withRedux } from '../common/utils/ReduxConnect';
 import { DcpReportActions } from '../common/store/actions';
 import { formatTime } from '../common/utils/TimeHelper';
 import ActionModal from '../components/Modal';
+import { taskType } from '../common/appConsts';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -244,7 +245,7 @@ const DCPReportUpdatePage: React.FC<Props> = ({
     const initData = async () =>  {
       const { dcpReportId } = params;
       const requestApi: Promise<any>[] = [
-        TaskAssignmentService.getAssignedClassesForDcpReport(),
+        TaskAssignmentService.getAssignedClassesForDcpReport(taskType.DcpReport),
         RegulationsService.getCriteriaForSimpleList(),
         RegulationsService.getRegulationForSimpleList(),
         DcpReportsService.getDcpRerportForUpdate(dcpReportId)

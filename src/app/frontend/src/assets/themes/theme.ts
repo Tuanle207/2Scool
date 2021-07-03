@@ -14,14 +14,14 @@ export const theme = responsiveFontSizes(createMuiTheme({
       white: '#fff',
       black: `${appColor.black}`,
     },
-    // primary: {
-    //   main: `${appColor.blueStrong}`
-    // },
-    // secondary: {
-    //   main: `${appColor.black}`
-    // }
+    primary: {
+      main: `${appColor.blueStrong}`
+    },
+    secondary: {
+      main: `${appColor.black}`
+    }
   },
   typography: {
     htmlFontSize: 10
-  }
+  },
 }));

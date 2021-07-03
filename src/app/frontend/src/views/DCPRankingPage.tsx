@@ -53,6 +53,15 @@ const useStyles = makeStyles(theme => ({
     },
     '& .MuiDataGrid-root.MuiDataGrid-colCellMoving': {
       backgroundColor: 'unset'
+    },
+    '& .MuiDataGrid-row:first-child': {
+      backgroundColor: '#18a61a'
+    },
+    '& .MuiDataGrid-row:nth-child(2)': {
+      backgroundColor: '#81c2f7'
+    },
+    '& .MuiDataGrid-row:nth-child(3)': {
+      backgroundColor: '#e6e5fe'
     }
   },
 

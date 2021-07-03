@@ -11,9 +11,7 @@ using Scool.Infrastructure.Linq;
 using Scool.Users;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Guids;
@@ -59,12 +57,10 @@ namespace Scool.ApplicationServices
             _usersRepo = usersRepo;
             _guidGenerator = guidGenerator;
 
-            GetListPolicyName = DcpReportsPermissions.GetAll;
-            UpdatePolicyName = DcpReportsPermissions.Update;
-            DeletePolicyName = DcpReportsPermissions.Delete;
+            DeletePolicyName = ReportsPermissions.RemoveDcpReport;
         }
 
-        [Authorize(DcpReportsPermissions.Create)]
+        [Authorize(ReportsPermissions.CreateNewDcpReport)]
         public async override Task<DcpReportDto> CreateAsync(CreateUpdateDcpReportDto input)
         {
             var report = new DcpReport(_guidGenerator.Create());
@@ -128,7 +124,7 @@ namespace Scool.ApplicationServices
             return ObjectMapper.Map<DcpReport, DcpReportDto>(dcpReport);
         }
 
-        [Authorize(DcpReportsPermissions.Update)]
+        [Authorize(ReportsPermissions.UpdateDcpReport)]
         public async override Task<DcpReportDto> UpdateAsync(Guid id, CreateUpdateDcpReportDto input)
         {
             // delete old report
@@ -199,7 +195,7 @@ namespace Scool.ApplicationServices
             return ObjectMapper.Map<DcpReport, DcpReportDto>(dcpReport);
         }
 
-        [Authorize(DcpReportsPermissions.AcceptReject)]
+        [Authorize(ReportsPermissions.DcpReportApproval)]
         public async Task PostAcceptAsync(DcpReportAcceptDto input)
         {
             var reports = await _dcpReportsRepo.Where(x => input.ReportIds.Contains(x.Id)).ToListAsync();
@@ -210,7 +206,7 @@ namespace Scool.ApplicationServices
             await _dcpReportsRepo.UpdateManyAsync(reports);
         }
 
-        [Authorize(DcpReportsPermissions.AcceptReject)]
+        [Authorize(ReportsPermissions.DcpReportApproval)]
         public async Task PostRejectAsync(Guid id)
         {
             var report = await _dcpReportsRepo.Where(x => x.Id == id).FirstOrDefaultAsync();
@@ -222,7 +218,7 @@ namespace Scool.ApplicationServices
             }
         }
 
-        [Authorize(DcpReportsPermissions.AcceptReject)]
+        [Authorize(ReportsPermissions.DcpReportApproval)]
         public async Task PostCancelAssessAsync(Guid id)
         {
             var report = await _dcpReportsRepo.Where(x => x.Id == id).FirstOrDefaultAsync();
@@ -234,7 +230,7 @@ namespace Scool.ApplicationServices
             }
         }
 
-        [Authorize(DcpReportsPermissions.Get)]
+        [Authorize(ReportsPermissions.GetDcpReportDetail)]
         public async override Task<DcpReportDto> GetAsync(Guid id)
         {
             var item = await _dcpReportsRepo
@@ -266,7 +262,7 @@ namespace Scool.ApplicationServices
             return item;
         }
 
-        [Authorize(DcpReportsPermissions.GetAll)]
+        [Authorize(ReportsPermissions.GetDcpReportApprovalHistory)]
         public async override Task<PagingModel<DcpReportDto>> PostPagingAsync(PageInfoRequestDto input)
         {
             var pageSize = input.PageSize > 0 ? input.PageSize : 10;
@@ -327,7 +323,7 @@ namespace Scool.ApplicationServices
             return new PagingModel<DcpReportDto>(items, totalCount, pageIndex, pageSize);
         }
 
-        [Authorize(DcpReportsPermissions.Get)]
+        [Authorize(ReportsPermissions.UpdateDcpReport)]
         public async Task<CreateUpdateDcpReportDto> GetUpdateAsync(Guid id)
         {
             var item = await _dcpReportsRepo
@@ -376,6 +372,7 @@ namespace Scool.ApplicationServices
             await CurrentUnitOfWork.SaveChangesAsync();
         }
 
+        [Authorize(ReportsPermissions.GetMyDcpReport)]
         public async Task<PagingModel<DcpReportDto>> PostGetMyReportsAsync(PageInfoRequestDto input)
         {
             var pageSize = input.PageSize > 0 ? input.PageSize : 10;

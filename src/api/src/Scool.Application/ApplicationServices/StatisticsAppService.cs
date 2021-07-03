@@ -1,7 +1,9 @@
 ﻿using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Scool.Application.Dtos;
 using Scool.Application.IApplicationServices;
+using Scool.Application.Permissions;
 using Scool.Domain.Common;
 using Scool.Domain.Views;
 using Scool.EntityFrameworkCore;
@@ -32,6 +34,7 @@ namespace Scool.ApplicationServices
             _context = context;
         }
 
+        [Authorize(StatsPermissions.Statistics)]
         public async Task<PagingModel<DcpClassFault>> GetClassesFaults(TimeFilterDto timeFilter)
         {
             var input = ParseQueryInput(timeFilter);
@@ -61,6 +64,7 @@ namespace Scool.ApplicationServices
             return new PagingModel<DcpClassFault>(items, items.Count);
         }
 
+        [Authorize(StatsPermissions.Statistics)]
         public async Task<PagingModel<CommonDcpFault>> GetCommonFaults(TimeFilterDto timeFilter)
         {
             var input = ParseQueryInput(timeFilter, false);
@@ -85,6 +89,7 @@ namespace Scool.ApplicationServices
             return new PagingModel<CommonDcpFault>(items, items.Count);
         }
 
+        [Authorize(StatsPermissions.Rankings)]
         public async Task<PagingModel<DcpClassRanking>> GetDcpRanking(TimeFilterDto timeFilter)
         {
             var input = ParseQueryInput(timeFilter);
@@ -116,6 +121,7 @@ namespace Scool.ApplicationServices
             return new PagingModel<DcpClassRanking>(items, items.Count);
         }
 
+        [Authorize(StatsPermissions.Statistics)]
         public async Task<PagingModel<StudentWithMostFaults>> GetStudentsWithMostFaults(TimeFilterDto timeFilter)
         {
             var input = ParseQueryInput(timeFilter, false);
@@ -141,6 +147,7 @@ namespace Scool.ApplicationServices
             return new PagingModel<StudentWithMostFaults>(items, items.Count);
         }
 
+        [Authorize(StatsPermissions.Statistics)]
         public async Task<MemoryStream> GetClassesFaultsExcel(TimeFilterDto timeFilter)
         {
             var stats = await GetClassesFaults(timeFilter);
@@ -150,6 +157,7 @@ namespace Scool.ApplicationServices
             return outputStream;
         }
 
+        [Authorize(StatsPermissions.Statistics)]
         public async Task<MemoryStream> GetCommonFaultsExcel(TimeFilterDto timeFilter)
         {
             var stats = await GetCommonFaults(timeFilter);
@@ -159,6 +167,7 @@ namespace Scool.ApplicationServices
             return outputStream;
         }
 
+        [Authorize(StatsPermissions.Rankings)]
         public async Task<MemoryStream> GetDcpRankingExcel(TimeFilterDto timeFilter)
         {
             var stats = await GetDcpRanking(timeFilter);
@@ -168,6 +177,7 @@ namespace Scool.ApplicationServices
             return outputStream;
         }
 
+        [Authorize(StatsPermissions.Statistics)]
         public async Task<MemoryStream> GetStudentsWithMostFaultsExcel(TimeFilterDto timeFilter)
         {
             var stats = await GetStudentsWithMostFaults(timeFilter);

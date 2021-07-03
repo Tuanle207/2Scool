@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Scool.AppConsts;
 using Scool.Application.Dtos;
 using Scool.Application.IApplicationServices;
+using Scool.Application.Permissions;
 using Scool.Domain.Common;
 using Scool.Infrastructure.ApplicationServices;
 using Scool.Infrastructure.Common;
@@ -10,7 +12,6 @@ using Scool.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
 
@@ -39,45 +40,43 @@ namespace Scool.Application.ApplicationServices
             _usersRepo = usersRepo;
         }
         
+        [Authorize(TaskAssignmentPermissions.AssignDcpReport)]
         [HttpPost("api/app/task-assigment/create-update-schedule")]
         public async Task CreateUpdateAsync(CreateUpdateTaskAssignmentDto input)
         {
-            // for DCP Report schedules assignment
-            if (input.TaskType == TaskType.DcpReport)
+            // Clean all previous assigments
+            // TODO: instead of cleaning all stuff, we will change state of that, so that we can have somthing like "changes history"
+            var preItemIds = await _taskAssignmentRepo
+                .Where(x => x.TaskType == input.TaskType)
+                .Select(x => x.Id)
+                .ToListAsync();
+            await _taskAssignmentRepo.DeleteManyAsync(preItemIds);
+
+            await CurrentUnitOfWork.SaveChangesAsync();
+
+            var tasksNeedAssign = new List<TaskAssignment>();
+
+            foreach (var item in input.Items)
             {
-                // Clean all previous assigments
-                // TODO: instead of cleaning all stuff, we will change state of that, so that we can have somthing like "changes history"
-                var preItemIds = await _taskAssignmentRepo.Select(x => x.Id).ToListAsync();
-                await _taskAssignmentRepo.DeleteManyAsync(preItemIds);
-
-                var tasksNeedAssign = new List<TaskAssignment>();
-
-                foreach (var item in input.Items)
+                tasksNeedAssign.Add(new TaskAssignment
                 {
-                    tasksNeedAssign.Add(new TaskAssignment
-                    {
-                        AssigneeId = item.AssigneeId,
-                        ClassAssignedId = item.ClassId,
-                        StartTime = item.StartTime,
-                        EndTime = item.EndTime,
-                        TaskType = TaskType.DcpReport
-                    });
-                }
-
-                await _taskAssignmentRepo.InsertManyAsync(tasksNeedAssign);
+                    AssigneeId = item.AssigneeId,
+                    ClassAssignedId = item.ClassId,
+                    StartTime = item.StartTime,
+                    EndTime = item.EndTime,
+                    TaskType = input.TaskType
+                });
             }
-            // for Register-Lession report schedules assignment
-            else if (input.TaskType == TaskType.LessonRegisterReport)
-            {
 
-            }
+            await _taskAssignmentRepo.InsertManyAsync(tasksNeedAssign);
         }
 
+        [Authorize(TaskAssignmentPermissions.GetScheduleList)]
         [HttpGet("api/app/task-assigment/get-schedules")]
         public async Task<PagingModel<TaskAssignmentDto>> GetAllAsync(TaskAssignmentFilterDto input)
         {
             var query = _taskAssignmentRepo
-                     .WhereIf(String.IsNullOrEmpty(input.TaskType), x => x.TaskType == input.TaskType)
+                     .WhereIf(!String.IsNullOrEmpty(input.TaskType), x => x.TaskType == input.TaskType)
                      .Include(x => x.ClassAssigned)
                      .Include(x => x.AssigneeProfile)
                      .ThenInclude(y => y.Class)
@@ -100,6 +99,7 @@ namespace Scool.Application.ApplicationServices
             return new PagingModel<TaskAssignmentDto>(items, items.Count);
         }
 
+        [Authorize(TaskAssignmentPermissions.GetScheduleList)]
         [HttpGet("api/app/task-assigment/get-schedules-for-update")]
         public async Task<PagingModel<TaskAssignmentForUpdateDto>> GetForUpdateAsync(TaskAssignmentFilterDto input)
         {
@@ -112,8 +112,9 @@ namespace Scool.Application.ApplicationServices
             return new PagingModel<TaskAssignmentForUpdateDto>(items, items.Count);
         }
 
+        [Authorize(ReportsPermissions.CreateNewDcpReport)]
         [HttpGet("api/app/task-assigment/assigned-class-for-dcp-report")]
-        public async Task<PagingModel<ClassForSimpleListDto>> GetAssignedClassesForDcpReportAsync()
+        public async Task<PagingModel<ClassForSimpleListDto>> GetAssignedClassesForDcpReportAsync([FromQuery] string taskType)
         {
             var emptyRes = new PagingModel<ClassForSimpleListDto>(new List<ClassForSimpleListDto>(), 0);
             if (CurrentUser.Id != null)
@@ -126,7 +127,7 @@ namespace Scool.Application.ApplicationServices
 
                 var items = await _taskAssignmentRepo
                     .Where(x => x.AssigneeId == profile.Id)
-                    .Where(x => x.TaskType == TaskType.DcpReport)
+                    .Where(x => x.TaskType == taskType)
                     .Include(x => x.ClassAssigned)
                     .Select(x => ObjectMapper.Map<Class, ClassForSimpleListDto>(x.ClassAssigned))
                     .ToListAsync();

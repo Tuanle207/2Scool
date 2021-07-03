@@ -4,7 +4,7 @@ using Volo.Abp.Localization;
 
 namespace Scool.Application.Permissions
 {
-    internal class CoursesAppService : PermissionDefinitionProvider
+    internal class CoursesPermission: PermissionDefinitionProvider
     {
         public override void Define(IPermissionDefinitionContext context)
         {

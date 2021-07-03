@@ -44,8 +44,8 @@ const Endpoint = {
     `/api/app/app-identity-user/${id}`,
   RemoveUser: (id: string) =>
     `/api/identity/users/${id}`,
-  GetUsersForTaskAssignment: () => 
-    `/api/app/app-identity-user/user-for-task-assignment`
+  GetUsersForTaskAssignment: (classId?: string) => 
+    `/api/app/app-identity-user/user-for-task-assignment${classId ? `?classId =${classId}` : ''}`
   
 }
 

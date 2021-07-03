@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="AutoMapperProfiles\DcpReportAutoMapperProfile.cs~RF152f85.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Scool.Domain\Scool.Domain.csproj" />
     <ProjectReference Include="..\Scool.Application.Contracts\Scool.Application.Contracts.csproj" />
     <ProjectReference Include="..\Scool.EntityFrameworkCore\Scool.EntityFrameworkCore.csproj" />

@@ -25,13 +25,25 @@ const useSidebarStyles = makeStyles(theme => ({
   },
   titleWrapper: {
     padding: '3rem 4rem',
-    backdropFilter: 'blur(1px)'
+    backdropFilter: 'blur(1px)',
+    '& > h1': {
+      letterSpacing: 3,
+      display: 'inline-block',
+      borderBottom: '4px solid transparent',
+      cursor: 'pointer',
+      transition: 'border 500ms', 
+      userSelect: 'none',
+      '&:hover': {
+        borderBottom: `4px solid ${theme.palette.primary.main}`,
+      },
+    }
   },
   listItem: {
     padding: '1rem 2rem',
+    transition: 'background 500ms', 
     '&:hover': {
       background: 'rgba(0,0,0,0.25)',
-    }
+    },
   },
   listItemActive: {
     background: 'rgba(0,0,0,0.8)'

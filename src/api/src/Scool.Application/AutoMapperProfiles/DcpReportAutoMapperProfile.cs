@@ -3,6 +3,7 @@ using Scool.Application.Dtos;
 using Scool.Domain.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Scool.AutoMapperProfiles
 {
@@ -36,6 +37,10 @@ namespace Scool.AutoMapperProfiles
                 });
 
 
+            CreateMap<LessonsRegister, LRReportDto>()
+                .ForMember(dest => dest.AttachedPhotos, opt =>
+                    opt.MapFrom(src =>
+                        src.AttachedPhotos.Select(x => x.Photo).ToList()));
 
 
         }

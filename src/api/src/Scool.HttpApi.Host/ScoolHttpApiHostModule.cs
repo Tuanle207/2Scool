@@ -168,6 +168,8 @@ namespace Scool
                 options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
                 options.Languages.Add(new LanguageInfo("de-DE", "de-DE", "Deutsch", "de"));
                 options.Languages.Add(new LanguageInfo("es", "es", "Español", "es"));
+                options.Languages.Add(new LanguageInfo("vi", "vi-VN", "Tiếng Việt", "vn"));
+
             });
         }
 

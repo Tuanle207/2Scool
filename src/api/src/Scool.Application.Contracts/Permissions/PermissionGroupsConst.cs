@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Scool.Application.Permissions
+﻿namespace Scool.Application.Permissions
 {
     internal static class PermissionGroupsConst
     {
         public const string Courses = "Courses";
-        public const string DcpReports = "Dcp";
+        public const string Dcp = "Dcp";
+        public const string Stats = "Stats";
+        public const string TaskAssignment = "TaskAssignment";
     }
 }

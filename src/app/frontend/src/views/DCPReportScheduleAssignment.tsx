@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 import { Autocomplete } from '@material-ui/lab';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import FaceIcon from '@material-ui/icons/Face';
 import AlarmIcon from '@material-ui/icons/Alarm';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
@@ -155,7 +155,7 @@ const useStyles = makeStyles(theme => ({
   activeSelectedItem: {
     // borderBottomColor: `${theme.palette.primary.main} !important`,
     // borderColor: theme.palette.primary.main,
-    '& p, & button': {
+    '& p, & button, & svg': {
       color: theme.palette.primary.main
     },
   },
@@ -326,13 +326,13 @@ const DCPReportScheduleAssignment = () => {
       });
     }
 
-    if (dateRange.endTime.getTime() - dateRange.startTime.getTime() <= 0) {
+    if (new Date(dateRange.endTime).getTime() - new Date(dateRange.startTime).getTime() <= 0) {
       return toast.info('Thời gian kết thúc phải lớn hơn thời gian bắt đầu!', {
         autoClose: 5000
       });
     }
 
-    if (dateRange.endTime.getTime() - addDays(dateRange.startTime, 7).getTime() <= 0) {
+    if (new Date(dateRange.endTime).getTime() - addDays(dateRange.startTime, 7).getTime() <= 0) {
       return toast.info('Thời gian phân công ít nhất phải từ 1 tuần trở lên!', {
         autoClose: 5000
       });
@@ -476,8 +476,10 @@ const DCPReportScheduleAssignment = () => {
                 <Button 
                   variant={'contained'} 
                   color={'primary'}
-                  onClick={handleSubmit}>
-                  Phân công lịch trực
+                  onClick={handleSubmit}
+                  startIcon={<AssignmentTurnedInIcon/>}
+                >
+                  Lưu lịch trực
                 </Button>
               </Grid>
             </Grid>              

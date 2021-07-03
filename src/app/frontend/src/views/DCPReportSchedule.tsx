@@ -137,7 +137,7 @@ const DCPReportSchedule = () => {
 
   React.useEffect(() => {
     
-    document.title = '2Cool | Lịch trực cờ đỏ';
+    document.title = '2Cool | Phân công trực cờ đỏ';
     getData();
 
   }, []);

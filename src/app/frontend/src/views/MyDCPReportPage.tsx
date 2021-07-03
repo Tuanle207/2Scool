@@ -444,90 +444,91 @@ const MyDCPReportPage = () => {
               </Grid>
             </Grid>              
             <Grid item container direction={'row'} style={{ flex: 1, minHeight: 0, flexWrap: 'nowrap', padding: 16, paddingBottom: 0 }}>
-              <Grid item style={{ flex: 1, minHeight: 0, overflowY: 'auto' }}>
-                <List className={classes.list}>
-                  {
-                    loading && (
-                      <p className={classes.emptyText}>Đang tải dữ liệu...</p>
-                    )
-                  }
-                  {
-                    !loading && data.items.length === 0 && (
-                      <p className={classes.emptyText}>Không có dữ liệu.</p>
-                    )
-                  }
-                  {
-                    data.items.map((el, i) => (
-                    <ListItem key={el.id}>
-                      <DateCard 
-                        id={el.id}
-                        resetCache={resetCache}
-                        date={el.creationTime} 
-                        active={selectedReport?.id === el.id}
-                        onClick={() => setSelectedReport(el)}
-                      />
-                    </ListItem>))
-                  }
-                </List>
-              </Grid>
-              <Grid item container direction={'column'} alignItems={'stretch'} style={{ flex: 3 }}>
-                <Grid item container className={classes.dcpReportClassFilter} style={{flexWrap: 'wrap', width: '100%'}}>
-                  {/* {
-                    Array.from(Array(5), (_, i) => (
-                      <Chip
-                        key={`$class-{i}`}
-                        clickable
-                        variant={i === 0 ? 'default' : 'outlined'}
-                        color={'primary'}
-                        label={`Lớp 10A${i}`}
-                        className={classes.classFilter}
-                      />
-                    ))
-                  } */}
-                  {
-                    selectedReport === null && (
-                      <Grid item container justify='center' alignItems='center' style={{height: 50}}>
-                         <p className={classes.emptyText}>Không có dữ liệu.</p>
-                      </Grid>
-                    )
-                  }
-                  {
-                    selectedReport !== null && (
-                      <Tabs
-                        value={classTabIndex}
-                        onChange={handleTabIndexChange}
-                        indicatorColor='primary'
-                        textColor='primary'
-                        variant='scrollable'
-                        scrollButtons='auto'
-                        aria-label='scrollable class list tab'
-                        className={classes.classTabContainer}
-                      >
-                        {
-                          selectedReport.dcpClassReports.map((el, i) => (
-                            <Tab label={el.class.name} {...a11yProps(0)} />
-                          ))
-                        }
-                      </Tabs>
-                    )
-                  }
-                  
-                </Grid>
-                <Grid item style={{ flex: 1, minHeight: 0, minWidth: 0, overflowY: 'auto', overflowX: 'hidden' }}>
-                  {
-                    selectedReport === null && (
-                      <Grid item container justify='center' alignItems='center' style={{ height: '100%' }}>
-                         <p className={classes.emptyText}>Không có dữ liệu.</p>
-                      </Grid>
-                    )
-                  }
-                  {
-                    selectedReport && selectedReport.dcpClassReports.map((el, i) => (
-                      <TabPanel index={i} activeIndex={classTabIndex} data={el.faults}/>
-                    ))
-                  }
-                </Grid>
-              </Grid>
+              {
+                loading && (
+                  <Grid container justify='center' alignItems='center'>
+                    <p className={classes.emptyText}>Đang tải ...</p>
+                  </Grid>
+                )
+              }
+              {
+                !loading && data.items.length === 0 && (
+                  <Grid container justify='center' alignItems='center'>
+                    <p className={classes.emptyText}>Chưa có phiếu chấm nào!</p>
+                  </Grid>
+
+                )
+              }
+              {
+                !loading && data.items.length > 0 && (
+                  <Grid item style={{ flex: 1, minHeight: 0, overflowY: 'auto' }}>
+                    <List className={classes.list}>
+                      {
+                        data.items.map((el, i) => (
+                        <ListItem key={el.id}>
+                          <DateCard 
+                            id={el.id}
+                            resetCache={resetCache}
+                            date={el.creationTime} 
+                            active={selectedReport?.id === el.id}
+                            onClick={() => setSelectedReport(el)}
+                          />
+                        </ListItem>))
+                      }
+                    </List>
+                  </Grid>
+                )
+              }
+              {
+                !loading && data.items.length > 0 && (
+                  <Grid item container direction={'column'} alignItems={'stretch'} style={{ flex: 3 }}>
+                    <Grid item container className={classes.dcpReportClassFilter} style={{flexWrap: 'wrap', width: '100%'}}>
+                      {
+                        selectedReport === null && (
+                          <Grid item container justify='center' alignItems='center' style={{height: 50}}>
+                            <p className={classes.emptyText}>Không có dữ liệu.</p>
+                          </Grid>
+                        )
+                      }
+                      {
+                        selectedReport !== null && (
+                          <Tabs
+                            value={classTabIndex}
+                            onChange={handleTabIndexChange}
+                            indicatorColor='primary'
+                            textColor='primary'
+                            variant='scrollable'
+                            scrollButtons='auto'
+                            aria-label='scrollable class list tab'
+                            className={classes.classTabContainer}
+                          >
+                            {
+                              selectedReport.dcpClassReports.map((el, i) => (
+                                <Tab label={el.class.name} {...a11yProps(0)} />
+                              ))
+                            }
+                          </Tabs>
+                        )
+                      }
+                      
+                    </Grid>
+                    <Grid item style={{ flex: 1, minHeight: 0, minWidth: 0, overflowY: 'auto', overflowX: 'hidden' }}>
+                      {
+                        selectedReport === null && (
+                          <Grid item container justify='center' alignItems='center' style={{ height: '100%' }}>
+                            <p className={classes.emptyText}>Không có dữ liệu.</p>
+                          </Grid>
+                        )
+                      }
+                      {
+                        selectedReport && selectedReport.dcpClassReports.map((el, i) => (
+                          <TabPanel index={i} activeIndex={classTabIndex} data={el.faults}/>
+                        ))
+                      }
+                    </Grid>
+                  </Grid>
+                )
+              }
             </Grid>
           </Grid>
         </Grid>

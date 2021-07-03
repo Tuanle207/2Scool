@@ -8,6 +8,7 @@ import GradesService from './GradesService';
 import StudentsService from './StudentsService';
 import RegulationsService from './RegulationsService';
 import DcpReportsService from './DcpReportsService';
+import LrReportsService from './LrReportsService';
 import StatisticsService from './StatisticsService';
 import TaskAssignmentService from './TaskAssignmentService';
 
@@ -23,6 +24,7 @@ export {
   StudentsService,
   RegulationsService,
   DcpReportsService,
+  LrReportsService,
   StatisticsService,
   TaskAssignmentService
 };
