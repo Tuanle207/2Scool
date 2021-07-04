@@ -147,7 +147,6 @@ namespace Scool.ApplicationServices
             return new PagingModel<StudentWithMostFaults>(items, items.Count);
         }
 
-        [Authorize(StatsPermissions.Statistics)]
         public async Task<MemoryStream> GetClassesFaultsExcel(TimeFilterDto timeFilter)
         {
             var stats = await GetClassesFaults(timeFilter);
@@ -157,7 +156,6 @@ namespace Scool.ApplicationServices
             return outputStream;
         }
 
-        [Authorize(StatsPermissions.Statistics)]
         public async Task<MemoryStream> GetCommonFaultsExcel(TimeFilterDto timeFilter)
         {
             var stats = await GetCommonFaults(timeFilter);
@@ -167,7 +165,6 @@ namespace Scool.ApplicationServices
             return outputStream;
         }
 
-        [Authorize(StatsPermissions.Rankings)]
         public async Task<MemoryStream> GetDcpRankingExcel(TimeFilterDto timeFilter)
         {
             var stats = await GetDcpRanking(timeFilter);
@@ -177,7 +174,6 @@ namespace Scool.ApplicationServices
             return outputStream;
         }
 
-        [Authorize(StatsPermissions.Statistics)]
         public async Task<MemoryStream> GetStudentsWithMostFaultsExcel(TimeFilterDto timeFilter)
         {
             var stats = await GetStudentsWithMostFaults(timeFilter);
